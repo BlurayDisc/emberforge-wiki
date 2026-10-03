@@ -1,51 +1,70 @@
 import type { Material } from '../data/gameData';
 import type { GameIndex } from '../data/gameIndex';
 import type { GameText } from '../data/text';
-import { commaList, dataTable, definitionList, filterBox, loreText, pageHeading, panel, siteLink } from '../render/components';
+import { pixelArt } from '../render/art';
+import { commaList, dataTable, definitionList, filterBox, iconLink, jumpLinks, loreText, pageHeading, panel, siteLink, subheading } from '../render/components';
 import { formatMoney, formatPercent, formatQuantityRange } from '../render/format';
-import { html } from '../render/html';
+import { html, type Html } from '../render/html';
 import type { Page } from '../render/page';
-import { balanceNumber } from '../data/balance';
+import { itemLink } from './equipment';
 
 const materialPath = (material: Material) => `materials/${material.id}.html`;
+const materialLink = (material: Material): Html => iconLink(materialPath(material), material.name, pixelArt('materials', material.id, material.name, 2));
 
-function indexPage(game: GameIndex, text: GameText): Page {
-  const rows = [...game.data.materials]
-    .sort((a, b) => a.tier - b.tier || a.category.localeCompare(b.category))
+function materialTable(game: GameIndex, text: GameText, materials: Material[]): Html {
+  const rows = [...materials]
+    .sort((a, b) => a.category.localeCompare(b.category) || a.name.localeCompare(b.name))
     .map((material) => [
-      siteLink(materialPath(material), material.name),
-      material.tier,
+      materialLink(material),
       text.categoryName(material.category),
       formatMoney(material.sellValueCopper),
+      `${material.width}x${material.height}`,
     ]);
+  return dataTable(['Material', 'Category', 'Sells for', 'Backpack size'], rows, { sortable: true });
+}
+
+// Each tier belongs to one town. Inside a tier, crafting materials come before the ones no recipe uses.
+function indexPage(game: GameIndex, text: GameText): Page {
+  const tierPanels = game.tiers().map((tier) => {
+    const town = game.townOfTier(tier);
+    const ofTier = game.data.materials.filter((material) => material.tier === tier);
+    const crafting = ofTier.filter((material) => game.isCraftingMaterial(material));
+    const other = ofTier.filter((material) => !game.isCraftingMaterial(material));
+    const title = html`Tier ${tier}${town ? html` <span class="muted">${siteLink(`towns/${town.id}.html`, town.name)}</span>` : null}`;
+    return panel(title, html`
+      ${subheading('Crafting materials')}${materialTable(game, text, crafting)}
+      ${other.length ? html`${subheading('Other materials')}<p class="muted">No recipe uses these. They sell for coin.</p>${materialTable(game, text, other)}` : null}`,
+    { anchor: `tier-${tier}`, isFilterGroup: true });
+  });
   const body = html`
     ${pageHeading('Materials', 'Monsters drop materials. Crafters turn them into gear. A recipe uses one tier only.')}
     ${filterBox('Filter materials...')}
-    ${dataTable(['Material', 'Tier', 'Category', 'Sells for'], rows, { sortable: true })}`;
+    ${jumpLinks(game.tiers().map((tier) => ({ anchor: `tier-${tier}`, label: `Tier ${tier}` })))}
+    ${tierPanels}`;
   return { path: 'materials/index.html', title: 'Materials', section: 'materials', body };
 }
 
 function materialPage(game: GameIndex, text: GameText, material: Material): Page {
   const droppedBy = game.monstersDroppingMaterial(material.id);
   const usedIn = game.allRecipes().filter((recipe) => recipe.ingredients.some((ingredient) => ingredient.material.id === material.id));
-  const buyMultiplier = balanceNumber(game.data, 'economy', 'materialBuyPriceMultiplier');
   const dropRows = droppedBy.map((monster) => {
     const drop = monster.drops.find((candidate) => candidate.materialId === material.id)!;
     return [siteLink(`monsters/${monster.id}.html`, monster.name), monster.rank, formatPercent(drop.chance), formatQuantityRange(drop.minQuantity, drop.maxQuantity)];
   });
   const body = html`
     ${pageHeading(material.name, `Tier ${material.tier} ${text.categoryName(material.category).toLowerCase()}`)}
+    <div class="portrait">${pixelArt('materials', material.id, material.name, 6)}</div>
     ${loreText(text.find(`material.${material.id}.lore`))}
     ${panel('Overview', definitionList([
       ['Tier', material.tier],
       ['Category', text.categoryName(material.category)],
       ['Sell value', formatMoney(material.sellValueCopper)],
-      ['Merchant buy price', formatMoney(material.sellValueCopper * buyMultiplier)],
+      ['Backpack size', `${material.width} x ${material.height}`],
       ['Item name prefix', material.craftedItemPrefix ?? html`<span class="muted">none</span>`],
     ]))}
     ${panel('Dropped by', droppedBy.length ? dataTable(['Monster', 'Rank', 'Chance', 'Amount'], dropRows) : html`<p class="muted">No monster drops this yet.</p>`)}
     ${panel('Used in recipes', usedIn.length
-      ? html`<p>${commaList(usedIn.map((recipe) => siteLink(`equipment/${recipe.base.id}.html`, recipe.itemName)))}</p>`
+      ? html`<ul class="item-list">${usedIn.map((recipe) => html`<li>${itemLink(game, recipe.base)}</li>`)}</ul>`
       : html`<p class="muted">No recipe uses this material.</p>`)}`;
   return { path: materialPath(material), title: material.name, section: 'materials', body, searchKind: 'Material', searchKeywords: material.category };
 }

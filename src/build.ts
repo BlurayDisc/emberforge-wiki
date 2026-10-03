@@ -1,7 +1,7 @@
 import { cpSync, mkdirSync, rmSync, writeFileSync, copyFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { createRequire } from 'node:module';
-import { FONT_FILES, OUTPUT_FOLDER, STATIC_FOLDER } from './config';
+import { FONT_FILES, GAME_ART_FOLDER, OUTPUT_FOLDER, STATIC_FOLDER } from './config';
 import { loadGameData } from './data/gameData';
 import { GameIndex } from './data/gameIndex';
 import { GameText } from './data/text';
@@ -48,6 +48,7 @@ assertNoDuplicatePaths(pages);
 rmSync(OUTPUT_FOLDER, { recursive: true, force: true });
 mkdirSync(OUTPUT_FOLDER, { recursive: true });
 cpSync(STATIC_FOLDER, join(OUTPUT_FOLDER, 'assets'), { recursive: true });
+cpSync(GAME_ART_FOLDER, join(OUTPUT_FOLDER, 'assets/art'), { recursive: true });
 copyFonts();
 for (const page of pages) writeSiteFile(page.path, renderPage(page, data.source));
 writeSiteFile('assets/search-index.json', buildSearchIndex(pages));

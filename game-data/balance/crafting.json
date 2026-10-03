@@ -7,5 +7,7 @@
   "levelGapStep": 0.1,
   "levelGapFactorMinimum": 0.1,
   "craftSecondsBase": 5,
-  "craftSecondsPerRequiredLevel": 1.5
+  "craftSecondsPerRequiredLevel": 1.5,
+  "craftFeeBaseCopper": 3,
+  "craftFeePerRequiredLevelCopper": 0.5
 }

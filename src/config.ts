@@ -1,6 +1,7 @@
 import { resolve } from 'node:path';
 
 export const GAME_DATA_FOLDER = resolve(process.env.EMBERFORGE_DATA ?? 'game-data');
+export const GAME_ART_FOLDER = resolve(process.env.EMBERFORGE_ART ?? 'game-art');
 export const OUTPUT_FOLDER = resolve('dist');
 export const STATIC_FOLDER = resolve('src/static');
 export const FONT_FILES = [

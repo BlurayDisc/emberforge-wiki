@@ -1,10 +1,11 @@
 import { balanceNumber, balanceValue } from '../data/balance';
 import type { GameIndex, MonsterAppearance } from '../data/gameIndex';
-import type { Monster } from '../data/gameData';
+import type { Dungeon, Monster } from '../data/gameData';
 import type { GameText } from '../data/text';
-import { badge, cardGrid, card, dataTable, definitionList, filterBox, loreText, pageHeading, panel, siteLink } from '../render/components';
+import { pixelArt } from '../render/art';
+import { badge, cardGrid, card, dataTable, definitionList, filterBox, jumpLinks, loreText, pageHeading, panel, siteLink, subheading } from '../render/components';
 import { formatPercent, formatQuantityRange } from '../render/format';
-import { html } from '../render/html';
+import { html, type Html } from '../render/html';
 import type { Page } from '../render/page';
 
 const RANK_ORDER = ['normal', 'rare', 'boss'];
@@ -27,15 +28,31 @@ function monsterStatsAtLevel(game: GameIndex, monster: Monster, level: number) {
   };
 }
 
+function monsterCard(game: GameIndex, monster: Monster): Html {
+  return card(monsterPath(monster), monster.name, [`Speed ${monster.speed}`], badge(monster.rank, monster.rank), pixelArt('monsters', monster.spriteKey, monster.name, 2));
+}
+
+// Monsters are grouped by the town and the dungeon they fight in. Rare monsters and bosses follow the common ones.
 function indexPage(game: GameIndex): Page {
-  const monsters = [...game.data.monsters].sort((a, b) => rankSortKey(a) - rankSortKey(b));
+  const monstersOfDungeon = (dungeon: Dungeon) =>
+    game.dungeonMonsterIds(dungeon).map((id) => game.monster(id)).sort((a, b) => rankSortKey(a) - rankSortKey(b));
+  const townPanels = game.data.towns.flatMap((town) => {
+    const dungeons = game.dungeonsOfTown(town.id);
+    if (dungeons.length === 0) return [];
+    return [panel(town.name, html`${dungeons.map((dungeon) => html`
+      ${subheading(html`${siteLink(`dungeons/${dungeon.id}.html`, dungeon.name)} <span class="muted">level ${dungeon.level}</span>`)}
+      ${cardGrid(monstersOfDungeon(dungeon).map((monster) => monsterCard(game, monster)))}`)}`, { anchor: `town-${town.id}`, isFilterGroup: true })];
+  });
+  const monstersInNoDungeon = game.data.monsters.filter((monster) => game.appearancesOfMonster(monster.id).length === 0);
+  const jumpEntries = game.data.towns.filter((town) => game.dungeonsOfTown(town.id).length > 0).map((town) => ({ anchor: `town-${town.id}`, label: town.name }));
   const body = html`
-    ${pageHeading('Monsters', `${monsters.length} foes lurk in the dungeons. Rare monsters and bosses drop more.`)}
+    ${pageHeading('Monsters', `${game.data.monsters.length} foes lurk in the dungeons, grouped here by town and dungeon. Rare monsters and bosses drop more.`)}
     ${filterBox('Filter monsters...')}
-    <div data-filter-list>${cardGrid(monsters.map((monster) => {
-      const places = game.appearancesOfMonster(monster.id).map((appearance) => appearance.dungeon.name);
-      return card(monsterPath(monster), monster.name, [places.length ? `Found in ${places.join(', ')}` : 'Not in any dungeon yet'], badge(monster.rank, monster.rank));
-    }))}</div>`;
+    ${jumpLinks(jumpEntries)}
+    <div data-filter-list>
+      ${townPanels}
+      ${monstersInNoDungeon.length ? panel('Not in any dungeon yet', cardGrid(monstersInNoDungeon.map((monster) => monsterCard(game, monster))), { isFilterGroup: true }) : null}
+    </div>`;
   return { path: 'monsters/index.html', title: 'Monsters', section: 'monsters', body };
 }
 
@@ -67,6 +84,7 @@ function monsterPage(game: GameIndex, text: GameText, monster: Monster): Page {
   const appearances = game.appearancesOfMonster(monster.id);
   const body = html`
     ${pageHeading(monster.name)}
+    <div class="portrait">${pixelArt('monsters', monster.spriteKey, monster.name, 5)}</div>
     <p>${badge(monster.rank, monster.rank)}</p>
     ${loreText(text.find(`monster.${monster.id}.lore`))}
     ${panel('Battle traits', definitionList([

@@ -1,0 +1,6 @@
+{
+  "manaBase": 10,
+  "manaPerMagic": 4,
+  "attributeBarBase": 12,
+  "attributeBarPerLevel": 3
+}

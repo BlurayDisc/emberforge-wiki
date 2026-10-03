@@ -6,15 +6,15 @@
     "gearType": "sword",
     "width": 1,
     "height": 3,
-    "profession": "blacksmithing",
+    "profession": "weaponsmithing",
     "mainCategory": "ore",
-    "secondaryCategory": "fang",
+    "secondaryCategory": "bone",
     "baseStats": {
-      "strength": 6,
+      "physicalDamage": 6,
       "skill": 1
     },
     "armourWeight": null,
-    "craftLevelOffset": 3
+    "craftLevelOffset": 1
   },
   {
     "id": "axe",
@@ -23,14 +23,14 @@
     "gearType": "axe",
     "width": 1,
     "height": 3,
-    "profession": "blacksmithing",
+    "profession": "weaponsmithing",
     "mainCategory": "ore",
     "secondaryCategory": "fang",
     "baseStats": {
-      "strength": 8
+      "physicalDamage": 8
     },
     "armourWeight": null,
-    "craftLevelOffset": 5
+    "craftLevelOffset": 7
   },
   {
     "id": "mace",
@@ -39,16 +39,16 @@
     "gearType": "mace",
     "width": 1,
     "height": 3,
-    "profession": "blacksmithing",
+    "profession": "weaponsmithing",
     "mainCategory": "ore",
     "secondaryCategory": "bone",
     "baseStats": {
-      "strength": 5,
-      "magic": 2,
+      "physicalDamage": 5,
+      "magicalDamage": 2,
       "resistance": 2
     },
     "armourWeight": null,
-    "craftLevelOffset": 6
+    "craftLevelOffset": 4
   },
   {
     "id": "dagger",
@@ -57,12 +57,12 @@
     "gearType": "dagger",
     "width": 1,
     "height": 2,
-    "profession": "blacksmithing",
+    "profession": "weaponsmithing",
     "mainCategory": "ore",
-    "secondaryCategory": "fang",
+    "secondaryCategory": "bone",
     "baseStats": {
-      "strength": 4,
-      "speed": 4,
+      "physicalDamage": 4,
+      "speed": 1,
       "skill": 2
     },
     "armourWeight": null,
@@ -79,11 +79,11 @@
     "mainCategory": "wood",
     "secondaryCategory": "sinew",
     "baseStats": {
-      "strength": 6,
+      "physicalDamage": 6,
       "skill": 3
     },
     "armourWeight": null,
-    "craftLevelOffset": 4
+    "craftLevelOffset": 1
   },
   {
     "id": "staff",
@@ -96,10 +96,10 @@
     "mainCategory": "wood",
     "secondaryCategory": "bone",
     "baseStats": {
-      "magic": 8
+      "magicalDamage": 8
     },
     "armourWeight": null,
-    "craftLevelOffset": 4
+    "craftLevelOffset": 6
   },
   {
     "id": "wand",
@@ -112,8 +112,8 @@
     "mainCategory": "wood",
     "secondaryCategory": "bone",
     "baseStats": {
-      "magic": 5,
-      "speed": 2
+      "magicalDamage": 5,
+      "speed": 1
     },
     "armourWeight": null,
     "craftLevelOffset": 1
@@ -125,7 +125,7 @@
     "gearType": "shield",
     "width": 2,
     "height": 3,
-    "profession": "blacksmithing",
+    "profession": "armoursmithing",
     "mainCategory": "ore",
     "secondaryCategory": "bone",
     "baseStats": {
@@ -133,7 +133,7 @@
       "resistance": 1
     },
     "armourWeight": null,
-    "craftLevelOffset": 8
+    "craftLevelOffset": 7
   },
   {
     "id": "quiver",
@@ -146,11 +146,11 @@
     "mainCategory": "wood",
     "secondaryCategory": "sinew",
     "baseStats": {
-      "strength": 2,
+      "physicalDamage": 2,
       "skill": 3
     },
     "armourWeight": null,
-    "craftLevelOffset": 1
+    "craftLevelOffset": 5
   },
   {
     "id": "tome",
@@ -163,11 +163,11 @@
     "mainCategory": "cloth",
     "secondaryCategory": "sinew",
     "baseStats": {
-      "magic": 3,
+      "magicalDamage": 3,
       "resistance": 2
     },
     "armourWeight": null,
-    "craftLevelOffset": 8
+    "craftLevelOffset": 6
   },
   {
     "id": "parrying-dagger",
@@ -176,16 +176,16 @@
     "gearType": "dagger",
     "width": 1,
     "height": 2,
-    "profession": "blacksmithing",
+    "profession": "weaponsmithing",
     "mainCategory": "ore",
     "secondaryCategory": "fang",
     "baseStats": {
-      "strength": 2,
+      "physicalDamage": 2,
       "skill": 2,
-      "speed": 2
+      "speed": 1
     },
     "armourWeight": null,
-    "craftLevelOffset": 4
+    "craftLevelOffset": 9
   },
   {
     "id": "belt",
@@ -202,7 +202,7 @@
       "defence": 1
     },
     "armourWeight": null,
-    "craftLevelOffset": 1
+    "craftLevelOffset": 2
   },
   {
     "id": "ring",
@@ -219,7 +219,7 @@
       "hp": 2
     },
     "armourWeight": null,
-    "craftLevelOffset": 1
+    "craftLevelOffset": 6
   },
   {
     "id": "amulet",
@@ -236,7 +236,7 @@
       "resistance": 2
     },
     "armourWeight": null,
-    "craftLevelOffset": 4
+    "craftLevelOffset": 8
   },
   {
     "id": "helm-heavy",
@@ -246,7 +246,7 @@
     "armourWeight": "heavy",
     "width": 2,
     "height": 2,
-    "profession": "blacksmithing",
+    "profession": "armoursmithing",
     "mainCategory": "ore",
     "secondaryCategory": "bone",
     "baseStats": {
@@ -254,7 +254,7 @@
       "resistance": 1,
       "hp": 4
     },
-    "craftLevelOffset": 5
+    "craftLevelOffset": 1
   },
   {
     "id": "helm-medium",
@@ -272,7 +272,7 @@
       "resistance": 2,
       "hp": 4
     },
-    "craftLevelOffset": 2
+    "craftLevelOffset": 1
   },
   {
     "id": "helm-light",
@@ -290,7 +290,7 @@
       "resistance": 3,
       "hp": 4
     },
-    "craftLevelOffset": 3
+    "craftLevelOffset": 1
   },
   {
     "id": "armour-heavy",
@@ -300,7 +300,7 @@
     "armourWeight": "heavy",
     "width": 2,
     "height": 3,
-    "profession": "blacksmithing",
+    "profession": "armoursmithing",
     "mainCategory": "ore",
     "secondaryCategory": "bone",
     "baseStats": {
@@ -308,7 +308,7 @@
       "resistance": 2,
       "hp": 10
     },
-    "craftLevelOffset": 9
+    "craftLevelOffset": 10
   },
   {
     "id": "armour-medium",
@@ -326,7 +326,7 @@
       "resistance": 3,
       "hp": 10
     },
-    "craftLevelOffset": 6
+    "craftLevelOffset": 9
   },
   {
     "id": "armour-light",
@@ -344,7 +344,7 @@
       "resistance": 6,
       "hp": 10
     },
-    "craftLevelOffset": 7
+    "craftLevelOffset": 9
   },
   {
     "id": "gloves-heavy",
@@ -354,7 +354,7 @@
     "armourWeight": "heavy",
     "width": 2,
     "height": 2,
-    "profession": "blacksmithing",
+    "profession": "armoursmithing",
     "mainCategory": "ore",
     "secondaryCategory": "bone",
     "baseStats": {
@@ -362,7 +362,7 @@
       "resistance": 1,
       "skill": 1
     },
-    "craftLevelOffset": 6
+    "craftLevelOffset": 3
   },
   {
     "id": "gloves-medium",
@@ -398,7 +398,7 @@
       "resistance": 2,
       "skill": 1
     },
-    "craftLevelOffset": 4
+    "craftLevelOffset": 3
   },
   {
     "id": "boots-heavy",
@@ -408,7 +408,7 @@
     "armourWeight": "heavy",
     "width": 2,
     "height": 2,
-    "profession": "blacksmithing",
+    "profession": "armoursmithing",
     "mainCategory": "ore",
     "secondaryCategory": "bone",
     "baseStats": {
@@ -416,7 +416,7 @@
       "resistance": 1,
       "speed": 1
     },
-    "craftLevelOffset": 7
+    "craftLevelOffset": 5
   },
   {
     "id": "boots-medium",
@@ -434,7 +434,7 @@
       "resistance": 1,
       "speed": 1
     },
-    "craftLevelOffset": 4
+    "craftLevelOffset": 5
   },
   {
     "id": "boots-light",
@@ -453,5 +453,356 @@
       "speed": 1
     },
     "craftLevelOffset": 5
+  },
+  {
+    "id": "greataxe",
+    "name": "Greataxe",
+    "slot": "mainHand",
+    "gearType": "greataxe",
+    "width": 2,
+    "height": 3,
+    "profession": "weaponsmithing",
+    "mainCategory": "ore",
+    "secondaryCategory": "bone",
+    "baseStats": {
+      "physicalDamage": 12,
+      "speed": -1
+    },
+    "armourWeight": null,
+    "craftLevelOffset": 8
+  },
+  {
+    "id": "maul",
+    "name": "Maul",
+    "slot": "mainHand",
+    "gearType": "maul",
+    "width": 2,
+    "height": 3,
+    "profession": "weaponsmithing",
+    "mainCategory": "ore",
+    "secondaryCategory": "bone",
+    "baseStats": {
+      "physicalDamage": 10,
+      "defence": 1,
+      "speed": -1
+    },
+    "armourWeight": null,
+    "craftLevelOffset": 1
+  },
+  {
+    "id": "knuckles",
+    "name": "Knuckles",
+    "slot": "mainHand",
+    "gearType": "knuckles",
+    "width": 1,
+    "height": 2,
+    "profession": "weaponsmithing",
+    "mainCategory": "ore",
+    "secondaryCategory": "bone",
+    "baseStats": {
+      "physicalDamage": 4,
+      "speed": 1,
+      "skill": 1
+    },
+    "armourWeight": null,
+    "craftLevelOffset": 1
+  },
+  {
+    "id": "cestus",
+    "name": "Cestus",
+    "slot": "offHand",
+    "gearType": "knuckles",
+    "width": 1,
+    "height": 2,
+    "profession": "weaponsmithing",
+    "mainCategory": "ore",
+    "secondaryCategory": "hide",
+    "baseStats": {
+      "physicalDamage": 3,
+      "speed": 1,
+      "skill": 1
+    },
+    "armourWeight": null,
+    "craftLevelOffset": 6
+  },
+  {
+    "id": "broadsword",
+    "name": "Broadsword",
+    "slot": "mainHand",
+    "gearType": "sword",
+    "width": 1,
+    "height": 3,
+    "profession": "weaponsmithing",
+    "mainCategory": "ore",
+    "secondaryCategory": "fang",
+    "baseStats": {
+      "physicalDamage": 8,
+      "skill": 2
+    },
+    "armourWeight": null,
+    "craftLevelOffset": 10
+  },
+  {
+    "id": "longbow",
+    "name": "Longbow",
+    "slot": "mainHand",
+    "gearType": "bow",
+    "width": 2,
+    "height": 3,
+    "profession": "fletching",
+    "mainCategory": "wood",
+    "secondaryCategory": "sinew",
+    "baseStats": {
+      "physicalDamage": 7,
+      "skill": 3
+    },
+    "armourWeight": null,
+    "craftLevelOffset": 4
+  },
+  {
+    "id": "composite-bow",
+    "name": "Composite Bow",
+    "slot": "mainHand",
+    "gearType": "bow",
+    "width": 2,
+    "height": 3,
+    "profession": "fletching",
+    "mainCategory": "wood",
+    "secondaryCategory": "sinew",
+    "baseStats": {
+      "physicalDamage": 8,
+      "skill": 4
+    },
+    "armourWeight": null,
+    "craftLevelOffset": 7
+  },
+  {
+    "id": "warbow",
+    "name": "Warbow",
+    "slot": "mainHand",
+    "gearType": "bow",
+    "width": 2,
+    "height": 3,
+    "profession": "fletching",
+    "mainCategory": "wood",
+    "secondaryCategory": "sinew",
+    "baseStats": {
+      "physicalDamage": 9,
+      "skill": 4
+    },
+    "armourWeight": null,
+    "craftLevelOffset": 10
+  },
+  {
+    "id": "runed-wand",
+    "name": "Runed Wand",
+    "slot": "mainHand",
+    "gearType": "wand",
+    "width": 1,
+    "height": 2,
+    "profession": "woodworking",
+    "mainCategory": "wood",
+    "secondaryCategory": "bone",
+    "baseStats": {
+      "magicalDamage": 6,
+      "speed": 1
+    },
+    "armourWeight": null,
+    "craftLevelOffset": 3
+  },
+  {
+    "id": "arcane-staff",
+    "name": "Arcane Staff",
+    "slot": "mainHand",
+    "gearType": "staff",
+    "width": 1,
+    "height": 4,
+    "profession": "woodworking",
+    "mainCategory": "wood",
+    "secondaryCategory": "bone",
+    "baseStats": {
+      "magicalDamage": 9
+    },
+    "armourWeight": null,
+    "craftLevelOffset": 9
+  },
+  {
+    "id": "morning-star",
+    "name": "Morning Star",
+    "slot": "mainHand",
+    "gearType": "mace",
+    "width": 1,
+    "height": 3,
+    "profession": "weaponsmithing",
+    "mainCategory": "ore",
+    "secondaryCategory": "bone",
+    "baseStats": {
+      "physicalDamage": 6,
+      "magicalDamage": 3,
+      "resistance": 2
+    },
+    "armourWeight": null,
+    "craftLevelOffset": 7
+  },
+  {
+    "id": "stiletto",
+    "name": "Stiletto",
+    "slot": "mainHand",
+    "gearType": "dagger",
+    "width": 1,
+    "height": 2,
+    "profession": "weaponsmithing",
+    "mainCategory": "ore",
+    "secondaryCategory": "fang",
+    "baseStats": {
+      "physicalDamage": 5,
+      "speed": 1,
+      "skill": 2
+    },
+    "armourWeight": null,
+    "craftLevelOffset": 3
+  },
+  {
+    "id": "dirk",
+    "name": "Dirk",
+    "slot": "mainHand",
+    "gearType": "dagger",
+    "width": 1,
+    "height": 2,
+    "profession": "weaponsmithing",
+    "mainCategory": "ore",
+    "secondaryCategory": "fang",
+    "baseStats": {
+      "physicalDamage": 5,
+      "speed": 1,
+      "skill": 3
+    },
+    "armourWeight": null,
+    "craftLevelOffset": 6
+  },
+  {
+    "id": "kris",
+    "name": "Kris",
+    "slot": "mainHand",
+    "gearType": "dagger",
+    "width": 1,
+    "height": 2,
+    "profession": "weaponsmithing",
+    "mainCategory": "ore",
+    "secondaryCategory": "fang",
+    "baseStats": {
+      "physicalDamage": 5,
+      "speed": 1,
+      "skill": 3
+    },
+    "armourWeight": null,
+    "craftLevelOffset": 9
+  },
+  {
+    "id": "sledgehammer",
+    "name": "Sledgehammer",
+    "slot": "mainHand",
+    "gearType": "maul",
+    "width": 2,
+    "height": 3,
+    "profession": "weaponsmithing",
+    "mainCategory": "ore",
+    "secondaryCategory": "bone",
+    "baseStats": {
+      "physicalDamage": 11,
+      "defence": 1,
+      "speed": -1
+    },
+    "armourWeight": null,
+    "craftLevelOffset": 4
+  },
+  {
+    "id": "bearded-axe",
+    "name": "Bearded Axe",
+    "slot": "mainHand",
+    "gearType": "greataxe",
+    "width": 2,
+    "height": 3,
+    "profession": "weaponsmithing",
+    "mainCategory": "ore",
+    "secondaryCategory": "bone",
+    "baseStats": {
+      "physicalDamage": 11,
+      "skill": 1,
+      "speed": -1
+    },
+    "armourWeight": null,
+    "craftLevelOffset": 6
+  },
+  {
+    "id": "brass-knuckles",
+    "name": "Brass Knuckles",
+    "slot": "mainHand",
+    "gearType": "knuckles",
+    "width": 1,
+    "height": 2,
+    "profession": "weaponsmithing",
+    "mainCategory": "ore",
+    "secondaryCategory": "bone",
+    "baseStats": {
+      "physicalDamage": 5,
+      "speed": 1,
+      "skill": 1
+    },
+    "armourWeight": null,
+    "craftLevelOffset": 3
+  },
+  {
+    "id": "spiked-knuckles",
+    "name": "Spiked Knuckles",
+    "slot": "mainHand",
+    "gearType": "knuckles",
+    "width": 1,
+    "height": 2,
+    "profession": "weaponsmithing",
+    "mainCategory": "ore",
+    "secondaryCategory": "bone",
+    "baseStats": {
+      "physicalDamage": 5,
+      "speed": 1,
+      "skill": 2
+    },
+    "armourWeight": null,
+    "craftLevelOffset": 6
+  },
+  {
+    "id": "steel-claws",
+    "name": "Steel Claws",
+    "slot": "mainHand",
+    "gearType": "knuckles",
+    "width": 1,
+    "height": 2,
+    "profession": "weaponsmithing",
+    "mainCategory": "ore",
+    "secondaryCategory": "bone",
+    "baseStats": {
+      "physicalDamage": 6,
+      "speed": 1,
+      "skill": 2
+    },
+    "armourWeight": null,
+    "craftLevelOffset": 9
+  },
+  {
+    "id": "scepter",
+    "name": "Scepter",
+    "slot": "mainHand",
+    "gearType": "wand",
+    "width": 1,
+    "height": 2,
+    "profession": "woodworking",
+    "mainCategory": "wood",
+    "secondaryCategory": "bone",
+    "baseStats": {
+      "magicalDamage": 7,
+      "speed": 1
+    },
+    "armourWeight": null,
+    "craftLevelOffset": 7
   }
 ]

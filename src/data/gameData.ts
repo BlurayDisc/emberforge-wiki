@@ -7,6 +7,7 @@ export type MonsterRank = string;
 
 export interface HeroClass {
   id: string;
+  unlockAfterDungeonId: string | null;
   displayName: string;
   roleDescription: string;
   attackKind: string;
@@ -30,6 +31,7 @@ export interface Monster {
   id: string;
   name: string;
   rank: MonsterRank;
+  spriteKey: string;
   hpFactor: number;
   attackFactor: number;
   defenceFactor: number;
@@ -62,7 +64,26 @@ export interface Town {
 
 export interface Building {
   id: string;
-  label: string;
+  label: string | null;
+  panelId: string | null;
+  opens?: string;
+  style: string;
+}
+
+export interface Advancement {
+  id: string;
+  baseClassId: string;
+  promotesFrom: string;
+  requiredLevel: number;
+  displayName: string;
+  roleDescription: string;
+}
+
+export interface CastleSpot {
+  id: string;
+  screen: number;
+  kind: 'person' | 'landmark';
+  tales: number;
 }
 
 export interface Material {
@@ -72,6 +93,8 @@ export interface Material {
   category: string;
   sellValueCopper: number;
   craftedItemPrefix?: string;
+  width: number;
+  height: number;
 }
 
 export interface BaseItem {
@@ -114,6 +137,8 @@ export interface GameData {
   towns: Town[];
   startingTownId: string;
   buildings: Building[];
+  advancements: Advancement[];
+  castleSpots: CastleSpot[];
   materials: Material[];
   baseItems: BaseItem[];
   affixes: Affix[];
@@ -129,7 +154,7 @@ function readJson<T>(relativePath: string): T {
 }
 
 function readBalanceFiles(): Record<string, BalanceFile> {
-  const balanceFileNames = ['backpack', 'battle', 'crafting', 'dungeon-run', 'economy', 'items', 'monster-scaling', 'progression', 'recovery'];
+  const balanceFileNames = ['backpack', 'battle', 'crafting', 'dungeon-run', 'economy', 'hero-sheet', 'items', 'monster-scaling', 'progression', 'recovery'];
   return Object.fromEntries(balanceFileNames.map((name) => [name, readJson<BalanceFile>(`balance/${name}.json`)]));
 }
 
@@ -146,6 +171,8 @@ export function loadGameData(): GameData {
     towns: townFile.towns,
     startingTownId: townFile.startingTownId,
     buildings: readJson('buildings.json'),
+    advancements: readJson('advancements.json'),
+    castleSpots: readJson<{ spots: CastleSpot[] }>('castle.json').spots,
     materials: readJson('materials.json'),
     baseItems: readJson('base-items.json'),
     affixes: readJson('affixes.json'),

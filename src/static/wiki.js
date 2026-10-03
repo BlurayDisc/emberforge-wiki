@@ -50,6 +50,10 @@
         const query = filterBox.value.trim().toLowerCase();
         const rows = document.querySelectorAll('[data-filter-list] .card, tbody tr');
         for (const row of rows) row.hidden = query !== '' && !row.textContent.toLowerCase().includes(query);
+        for (const group of document.querySelectorAll('[data-filter-group]')) {
+          const items = group.querySelectorAll('.card, tbody tr');
+          group.hidden = query !== '' && items.length > 0 && [...items].every((item) => item.hidden);
+        }
       });
     }
   }

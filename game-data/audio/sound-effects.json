@@ -74,6 +74,33 @@
         }
       }
     ],
+    "attack-axe": [
+      {
+        "wave": "sawtooth",
+        "startFrequency": 260,
+        "endFrequency": 60,
+        "durationSeconds": 0.18,
+        "volume": 0.3
+      }
+    ],
+    "attack-fist": [
+      {
+        "wave": "triangle",
+        "startFrequency": 150,
+        "endFrequency": 50,
+        "durationSeconds": 0.08,
+        "volume": 0.3
+      },
+      {
+        "wave": "noise",
+        "durationSeconds": 0.04,
+        "volume": 0.15,
+        "filter": {
+          "type": "lowpass",
+          "frequency": 1200
+        }
+      }
+    ],
     "attack-bite": [
       {
         "wave": "noise",
@@ -350,19 +377,27 @@
     "archer": "attack-bow",
     "mage": "attack-magic",
     "priest": "attack-mace",
-    "thief": "attack-dagger"
+    "thief": "attack-dagger",
+    "barbarian": "attack-axe",
+    "fighter": "attack-fist"
   },
   "monsterAttack": {
     "monster-rat": "attack-bite",
+    "monster-scarecrow": "attack-club",
     "monster-wolf": "attack-bite",
     "monster-goblin": "attack-club",
-    "monster-goblin-chief": "attack-chief"
+    "monster-goblin-chief": "attack-chief",
+    "monster-spider": "attack-bite",
+    "monster-hobgoblin": "attack-club"
   },
   "monsterHurt": {
     "monster-rat": "hurt-rat",
+    "monster-scarecrow": "hurt-rat",
     "monster-wolf": "hurt-wolf",
     "monster-goblin": "hurt-goblin",
-    "monster-goblin-chief": "hurt-chief"
+    "monster-goblin-chief": "hurt-chief",
+    "monster-spider": "hurt-rat",
+    "monster-hobgoblin": "hurt-goblin"
   },
   "armourHit": {
     "heavy": "hit-armour-heavy",

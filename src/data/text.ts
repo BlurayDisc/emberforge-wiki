@@ -1,6 +1,6 @@
 import type { GameData } from './gameData';
 
-const STAT_DISPLAY_ORDER = ['hp', 'strength', 'magic', 'skill', 'speed', 'defence', 'resistance'];
+const STAT_DISPLAY_ORDER = ['hp', 'physicalDamage', 'magicalDamage', 'strength', 'magic', 'skill', 'speed', 'defence', 'resistance'];
 
 export function orderedStatIds(statIds: Iterable<string>): string[] {
   const known = new Set(statIds);
@@ -23,12 +23,15 @@ export class GameText {
     return this.text[key];
   }
 
-  statAbbreviation(statId: string): string {
-    return this.text[`stat.${statId}`] ?? statId.toUpperCase();
+  // A key the wiki depends on must exist, so a renamed key fails the build.
+  require(key: string): string {
+    const value = this.text[key];
+    if (value === undefined) throw new Error(`Game text key "${key}" is missing in data/i18n/en.json.`);
+    return value;
   }
 
   statName(statId: string): string {
-    return statId === 'hp' ? 'Health' : capitalised(statId);
+    return this.text[`statname.${statId}`] ?? capitalised(statId);
   }
 
   slotName(slotId: string): string {

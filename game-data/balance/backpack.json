@@ -1,1 +1,6 @@
-{ "columns": 10, "rows": 8, "materialStackLimit": 99 }
+{
+  "columns": 10,
+  "rows": 8,
+  "rowsPerExpansion": 2,
+  "expansionCostsCopper": [150, 400, 1000, 2500, 6000, 15000]
+}

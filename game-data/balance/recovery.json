@@ -1,5 +1,6 @@
 {
-  "baseRegenFractionPerMinute": 0.2,
+  "regenSecondsToFullAtLevelOne": 60,
+  "regenSecondsToFullAtMaxLevel": 300,
   "reviveBaseSeconds": 60,
   "reviveSecondsPerLevel": 5,
   "reviveHealthFraction": 0.3

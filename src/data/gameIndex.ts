@@ -1,4 +1,4 @@
-import type { BaseItem, Dungeon, GameData, HeroClass, Material, Monster, Town } from './gameData';
+import type { Advancement, BaseItem, Dungeon, GameData, HeroClass, Material, Monster, Town } from './gameData';
 import { balanceNumber } from './balance';
 
 export interface RecipeIngredient {
@@ -11,6 +11,7 @@ export interface Recipe {
   tier: number;
   itemName: string;
   requiredCraftLevel: number;
+  craftFeeCopper: number;
   craftSeconds: number;
   ingredients: RecipeIngredient[];
 }
@@ -87,15 +88,33 @@ export class GameIndex {
     return this.data.monsters.filter((monster) => monster.drops.some((drop) => drop.materialId === materialId));
   }
 
+  // Same rule as classIdsThatCanUse in the game: hands check the gear type, armour checks the weight, the rest is for everyone.
+  canClassUse(heroClass: HeroClass, base: BaseItem): boolean {
+    if (base.slot === 'mainHand' && !heroClass.weaponTypes.includes(base.gearType)) return false;
+    if (base.slot === 'offHand' && !heroClass.offHandTypes.includes(base.gearType)) return false;
+    return base.armourWeight === null || base.armourWeight === heroClass.armourWeight;
+  }
+
   itemsAllowedForClass(heroClass: HeroClass): BaseItem[] {
-    return this.data.baseItems.filter((base) => {
-      if (base.gearType === 'armour') return base.armourWeight === heroClass.armourWeight;
-      return heroClass.weaponTypes.includes(base.gearType) || heroClass.offHandTypes.includes(base.gearType);
-    });
+    return this.data.baseItems.filter((base) => this.canClassUse(heroClass, base));
   }
 
   classesAllowedForItem(base: BaseItem): HeroClass[] {
-    return this.data.classes.filter((heroClass) => this.itemsAllowedForClass(heroClass).includes(base));
+    return this.data.classes.filter((heroClass) => this.canClassUse(heroClass, base));
+  }
+
+  // The material that tints the item picture: the lowest tier material of the main category.
+  iconMaterialOfItem(base: BaseItem): Material | undefined {
+    return this.data.materials.filter((material) => material.category === base.mainCategory).sort((a, b) => a.tier - b.tier)[0];
+  }
+
+  advancementsOfClass(classId: string): Advancement[] {
+    return this.data.advancements.filter((advancement) => advancement.baseClassId === classId);
+  }
+
+  // A material is a crafting material when some item type uses its category in a recipe.
+  isCraftingMaterial(material: Material): boolean {
+    return this.data.baseItems.some((base) => base.mainCategory === material.category || base.secondaryCategory === material.category);
   }
 
   tiers(): number[] {
@@ -116,6 +135,8 @@ export class GameIndex {
     const largeItemSecondary = balanceNumber(d, 'items', 'secondaryIngredientLargeItem');
     const craftSecondsBase = balanceNumber(d, 'crafting', 'craftSecondsBase');
     const craftSecondsPerLevel = balanceNumber(d, 'crafting', 'craftSecondsPerRequiredLevel');
+    const craftFeeBase = balanceNumber(d, 'crafting', 'craftFeeBaseCopper');
+    const craftFeePerLevel = balanceNumber(d, 'crafting', 'craftFeePerRequiredLevelCopper');
     const materialOf = (category: string) => d.materials.find((m) => m.tier === tier && m.category === category);
 
     return d.baseItems.flatMap((base): Recipe[] => {
@@ -129,6 +150,8 @@ export class GameIndex {
         tier,
         itemName: `${main.craftedItemPrefix ?? main.name} ${base.name}`,
         requiredCraftLevel,
+        // Same formula as craftFeeCopper in the game.
+        craftFeeCopper: Math.round(craftFeeBase + craftFeePerLevel * requiredCraftLevel),
         craftSeconds: Math.round(craftSecondsBase + craftSecondsPerLevel * requiredCraftLevel),
         ingredients: [
           { material: main, quantity: Math.max(1, Math.ceil(cells / cellsPerMainUnit)) },

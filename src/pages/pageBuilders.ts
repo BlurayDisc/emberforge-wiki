@@ -3,6 +3,7 @@ import type { GameText } from '../data/text';
 import type { Page } from '../render/page';
 import { buildAbilityPages } from './abilities';
 import { buildAffixPages } from './affixes';
+import { buildCastlePages } from './castle';
 import { buildCrafterPages } from './crafters';
 import { buildDungeonPages } from './dungeons';
 import { buildEquipmentPages } from './equipment';
@@ -21,6 +22,7 @@ export const PAGE_BUILDERS: Array<(game: GameIndex, text: GameText) => Page[]> =
   buildMonsterPages,
   buildDungeonPages,
   buildTownPages,
+  buildCastlePages,
   buildEquipmentPages,
   buildMaterialPages,
   buildCrafterPages,

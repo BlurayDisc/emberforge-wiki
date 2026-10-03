@@ -145,8 +145,29 @@ h3 { font-size: 1.5rem; margin: 1.25rem 0 0.4rem; }
 }
 .card:hover, .card:focus-visible { transform: translate(-2px, -2px); border-color: var(--ember); box-shadow: 6px 6px 0 var(--wood-light); }
 .card:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--wood-light); }
+.card-with-picture { flex-direction: row; align-items: center; gap: 0.9rem; }
+.card-picture { flex: none; display: flex; align-items: center; justify-content: center; min-width: 4rem; }
+.card-text { display: flex; flex-direction: column; gap: 0.3rem; min-width: 0; }
 .card-title { font-family: var(--title-font); font-size: 1.7rem; line-height: 1.1; color: var(--link); }
 .card-line { font-size: 0.97rem; color: var(--ink-soft); }
+
+.pixel-art { image-rendering: pixelated; vertical-align: middle; }
+.portrait { float: right; margin: 0 0 0.75rem 1rem; padding: 0.6rem; background: var(--parchment-dark); border: 2px solid var(--parchment-edge); box-shadow: 3px 3px 0 var(--wood-light); }
+.portrait .pixel-art { display: block; }
+.icon-link { display: inline-flex; align-items: center; gap: 0.5rem; }
+.item-list { display: flex; flex-wrap: wrap; gap: 0.35rem 1.25rem; margin: 0; padding: 0; list-style: none; }
+.panel h2 .pixel-art { margin-right: 0.4rem; }
+
+.jump-links { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.75rem 0 0; }
+.jump-links a { padding: 0.15rem 0.7rem; color: var(--ink); text-decoration: none; background: var(--parchment-dark); border: 2px solid var(--parchment-edge); }
+.jump-links a:hover, .jump-links a:focus-visible { border-color: var(--ember); color: var(--ember); }
+.group-heading { margin: 1.25rem 0 0.4rem; padding-bottom: 0.1rem; border-bottom: 1px dotted var(--parchment-edge); }
+.group-note { margin: 0.9rem 0 0; font-weight: 700; }
+.castle-spot { margin: 1rem 0; }
+.castle-spot .group-heading { margin-top: 0; }
+.castle-spot > .muted { margin: 0 0 0.25rem; }
+.panel { overflow: auto; }
+.panel[id] { scroll-margin-top: 1rem; }
 
 .table-scroll { overflow-x: auto; margin: 0.5rem 0; }
 .data-table { width: 100%; border-collapse: collapse; background: rgba(255,255,255,.35); }

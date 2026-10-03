@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "sync": "tsx tools/sync-game-data.ts",
+    "sync": "tsx tools/sync-game-data.ts && tsx tools/render-game-art.ts",
     "build": "tsx src/build.ts",
     "update": "npm run sync && npm run build",
     "check": "tsc --noEmit && npm run build && tsx tools/check-links.ts",

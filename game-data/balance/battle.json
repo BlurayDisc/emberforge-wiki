@@ -9,5 +9,6 @@
   "mitigationPerAttackerLevel": 10,
   "damageVarianceFraction": 0.1,
   "healBelowHealthFraction": 0.5,
-  "healPowerMultiplier": 1.5
+  "healPowerMultiplier": 1.5,
+  "logTurnSeconds": 1
 }

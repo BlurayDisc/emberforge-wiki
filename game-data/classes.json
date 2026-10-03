@@ -1,6 +1,7 @@
 [
   {
     "id": "warrior",
+    "unlockAfterDungeonId": null,
     "recoveryRate": 1.0,
     "displayName": "Warrior",
     "roleDescription": "Front-line melee fighter with high HP and Defence.",
@@ -15,6 +16,7 @@
   },
   {
     "id": "archer",
+    "unlockAfterDungeonId": null,
     "recoveryRate": 1.0,
     "displayName": "Archer",
     "roleDescription": "Ranged physical damage. Fast and accurate.",
@@ -29,6 +31,7 @@
   },
   {
     "id": "mage",
+    "unlockAfterDungeonId": null,
     "recoveryRate": 0.8,
     "displayName": "Mage",
     "roleDescription": "Ranged magic damage. Fragile.",
@@ -43,6 +46,7 @@
   },
   {
     "id": "priest",
+    "unlockAfterDungeonId": "goblin-camp",
     "recoveryRate": 1.25,
     "displayName": "Priest",
     "roleDescription": "Heals allies below half health.",
@@ -57,6 +61,7 @@
   },
   {
     "id": "thief",
+    "unlockAfterDungeonId": "wolf-trail",
     "recoveryRate": 1.75,
     "displayName": "Thief",
     "roleDescription": "Very fast melee attacker with high critical chance.",
@@ -68,5 +73,35 @@
     "armourWeight": "medium",
     "baseStats": { "hp": 38, "strength": 8, "magic": 1, "skill": 12, "speed": 125, "defence": 4, "resistance": 3 },
     "growthPerLevel": { "hp": 7, "strength": 1.7, "magic": 0.2, "skill": 1.2, "speed": 0.2, "defence": 0.8, "resistance": 0.6 }
+  },
+  {
+    "id": "barbarian",
+    "unlockAfterDungeonId": "goblin-chief-lair",
+    "recoveryRate": 1.0,
+    "displayName": "Barbarian",
+    "roleDescription": "Two-handed melee brute. Huge damage, no shield.",
+    "attackKind": "physical",
+    "behavior": "fighter",
+    "spriteKey": "hero-barbarian",
+    "weaponTypes": ["greataxe", "maul"],
+    "offHandTypes": [],
+    "armourWeight": "medium",
+    "baseStats": { "hp": 48, "strength": 10, "magic": 1, "skill": 5, "speed": 98, "defence": 4, "resistance": 2 },
+    "growthPerLevel": { "hp": 9.5, "strength": 2.1, "magic": 0.2, "skill": 0.7, "speed": 0.1, "defence": 0.8, "resistance": 0.5 }
+  },
+  {
+    "id": "fighter",
+    "unlockAfterDungeonId": "old-wood-hollow",
+    "recoveryRate": 1.25,
+    "displayName": "Fighter",
+    "roleDescription": "Bare-handed brawler. Knuckles in both hands, fast strikes.",
+    "attackKind": "physical",
+    "behavior": "fighter",
+    "spriteKey": "hero-fighter",
+    "weaponTypes": ["knuckles"],
+    "offHandTypes": ["knuckles"],
+    "armourWeight": "medium",
+    "baseStats": { "hp": 42, "strength": 8, "magic": 1, "skill": 10, "speed": 118, "defence": 4, "resistance": 3 },
+    "growthPerLevel": { "hp": 8, "strength": 1.7, "magic": 0.2, "skill": 1.1, "speed": 0.15, "defence": 0.9, "resistance": 0.6 }
   }
 ]

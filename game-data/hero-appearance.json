@@ -59,6 +59,20 @@
       "cloth": "#454356",
       "clothShade": "#2e2c3b",
       "trim": "#b23a3a"
+    },
+    "barbarian": {
+      "background": "#4a2f24",
+      "backgroundShade": "#3b261d",
+      "cloth": "#8a5a3a",
+      "clothShade": "#5e3d27",
+      "trim": "#d8d4cc"
+    },
+    "fighter": {
+      "background": "#4a2a2a",
+      "backgroundShade": "#3b2121",
+      "cloth": "#c24a3a",
+      "clothShade": "#8a3226",
+      "trim": "#f2c14e"
     }
   }
 }
