@@ -335,40 +335,140 @@
         "wave": "triangle",
         "startFrequency": 523,
         "endFrequency": 523,
-        "durationSeconds": 0.1,
-        "volume": 0.22
+        "durationSeconds": 0.12,
+        "volume": 0.2
       },
       {
         "wave": "triangle",
         "startFrequency": 659,
         "endFrequency": 659,
-        "durationSeconds": 0.1,
-        "volume": 0.22,
-        "delaySeconds": 0.09
+        "durationSeconds": 0.12,
+        "volume": 0.2,
+        "delaySeconds": 0.1
       },
       {
         "wave": "triangle",
         "startFrequency": 784,
         "endFrequency": 784,
-        "durationSeconds": 0.1,
-        "volume": 0.22,
-        "delaySeconds": 0.18
+        "durationSeconds": 0.12,
+        "volume": 0.2,
+        "delaySeconds": 0.2
       },
       {
         "wave": "triangle",
         "startFrequency": 1047,
         "endFrequency": 1047,
-        "durationSeconds": 0.1,
-        "volume": 0.22,
-        "delaySeconds": 0.27
+        "durationSeconds": 0.12,
+        "volume": 0.2,
+        "delaySeconds": 0.3
+      },
+      {
+        "wave": "triangle",
+        "startFrequency": 784,
+        "endFrequency": 784,
+        "durationSeconds": 0.12,
+        "volume": 0.2,
+        "delaySeconds": 0.45
+      },
+      {
+        "wave": "triangle",
+        "startFrequency": 1047,
+        "endFrequency": 1047,
+        "durationSeconds": 0.12,
+        "volume": 0.2,
+        "delaySeconds": 0.55
       },
       {
         "wave": "square",
         "startFrequency": 1319,
         "endFrequency": 1319,
-        "durationSeconds": 0.3,
+        "durationSeconds": 0.5,
+        "volume": 0.12,
+        "delaySeconds": 0.65
+      },
+      {
+        "wave": "triangle",
+        "startFrequency": 1047,
+        "endFrequency": 1047,
+        "durationSeconds": 0.5,
+        "volume": 0.2,
+        "delaySeconds": 0.65
+      },
+      {
+        "wave": "triangle",
+        "startFrequency": 784,
+        "endFrequency": 784,
+        "durationSeconds": 0.5,
+        "volume": 0.16,
+        "delaySeconds": 0.65
+      },
+      {
+        "wave": "triangle",
+        "startFrequency": 523,
+        "endFrequency": 523,
+        "durationSeconds": 0.5,
+        "volume": 0.16,
+        "delaySeconds": 0.65
+      }
+    ],
+    "crafter-level-up": [
+      {
+        "wave": "triangle",
+        "startFrequency": 140,
+        "endFrequency": 55,
+        "durationSeconds": 0.14,
+        "volume": 0.3
+      },
+      {
+        "wave": "noise",
+        "durationSeconds": 0.06,
+        "volume": 0.18,
+        "filter": {
+          "type": "highpass",
+          "frequency": 3000
+        }
+      },
+      {
+        "wave": "square",
+        "startFrequency": 988,
+        "endFrequency": 988,
+        "durationSeconds": 0.35,
+        "volume": 0.1,
+        "delaySeconds": 0.16
+      },
+      {
+        "wave": "triangle",
+        "startFrequency": 1319,
+        "endFrequency": 1319,
+        "durationSeconds": 0.35,
+        "volume": 0.18,
+        "delaySeconds": 0.16
+      },
+      {
+        "wave": "noise",
+        "durationSeconds": 0.05,
         "volume": 0.14,
-        "delaySeconds": 0.36
+        "delaySeconds": 0.4,
+        "filter": {
+          "type": "highpass",
+          "frequency": 4000
+        }
+      },
+      {
+        "wave": "square",
+        "startFrequency": 1319,
+        "endFrequency": 1319,
+        "durationSeconds": 0.4,
+        "volume": 0.1,
+        "delaySeconds": 0.4
+      },
+      {
+        "wave": "triangle",
+        "startFrequency": 1760,
+        "endFrequency": 1760,
+        "durationSeconds": 0.5,
+        "volume": 0.18,
+        "delaySeconds": 0.4
       }
     ]
   },
@@ -388,6 +488,7 @@
     "monster-goblin": "attack-club",
     "monster-goblin-chief": "attack-chief",
     "monster-spider": "attack-bite",
+    "monster-toad": "attack-bite",
     "monster-hobgoblin": "attack-club"
   },
   "monsterHurt": {
@@ -397,6 +498,7 @@
     "monster-goblin": "hurt-goblin",
     "monster-goblin-chief": "hurt-chief",
     "monster-spider": "hurt-rat",
+    "monster-toad": "hurt-rat",
     "monster-hobgoblin": "hurt-goblin"
   },
   "armourHit": {

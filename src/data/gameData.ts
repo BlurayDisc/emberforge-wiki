@@ -12,10 +12,11 @@ export interface HeroClass {
   roleDescription: string;
   attackKind: string;
   behavior: string;
+  resourceId: string;
   recoveryRate: number;
   weaponTypes: string[];
   offHandTypes: string[];
-  armourWeight: string;
+  armourWeights: string[];
   baseStats: Stats;
   growthPerLevel: Stats;
 }
@@ -48,7 +49,7 @@ export interface Dungeon {
   rareMonsterId: string | null;
   bossMonsterId: string | null;
   maxPartySize: number;
-  recommendedMinLevel: number;
+  minimumHeroLevel: number;
   recommendedMaxLevel: number;
   unlockAfter: string | null;
 }
@@ -93,6 +94,9 @@ export interface Material {
   category: string;
   sellValueCopper: number;
   craftedItemPrefix?: string;
+  setBonus?: { stat: string; value: number };
+  setCraftLevelOffset?: number;
+  setBodyArmourCraftLevelOffset?: number;
   width: number;
   height: number;
 }
@@ -107,9 +111,24 @@ export interface BaseItem {
   height: number;
   profession: string;
   mainCategory: string;
-  secondaryCategory: string;
   baseStats: Stats;
   craftLevelOffset: number;
+}
+
+export type SpellEffect =
+  | { kind: 'damage'; damageKind: string; target: string; hits: number; power: number }
+  | { kind: 'drain'; damageKind: string; target: string; hits: number; power: number; healFraction: number }
+  | { kind: 'heal'; target: string; power: number }
+  | { kind: 'status'; status: string; target: string; strength: number; durationSeconds: number };
+
+export interface Spell {
+  id: string;
+  classId: string;
+  unlockLevel: number;
+  isUltimate: boolean;
+  cooldownSeconds: number;
+  resourceCost: number;
+  effect: SpellEffect;
 }
 
 export interface Affix {
@@ -142,6 +161,7 @@ export interface GameData {
   materials: Material[];
   baseItems: BaseItem[];
   affixes: Affix[];
+  spells: Spell[];
   professions: Record<string, string>;
   heroNames: string[];
   balance: Record<string, BalanceFile>;
@@ -154,7 +174,7 @@ function readJson<T>(relativePath: string): T {
 }
 
 function readBalanceFiles(): Record<string, BalanceFile> {
-  const balanceFileNames = ['backpack', 'battle', 'crafting', 'dungeon-run', 'economy', 'hero-sheet', 'items', 'monster-scaling', 'progression', 'recovery'];
+  const balanceFileNames = ['backpack', 'battle', 'crafting', 'dungeon-run', 'economy', 'hero-sheet', 'items', 'mill', 'monster-scaling', 'progression', 'recovery', 'resources', 'spells'];
   return Object.fromEntries(balanceFileNames.map((name) => [name, readJson<BalanceFile>(`balance/${name}.json`)]));
 }
 
@@ -176,6 +196,7 @@ export function loadGameData(): GameData {
     materials: readJson('materials.json'),
     baseItems: readJson('base-items.json'),
     affixes: readJson('affixes.json'),
+    spells: readJson('spells.json'),
     professions: readJson('professions.json'),
     heroNames: readJson('hero-names.json'),
     balance: readBalanceFiles(),

@@ -1,3 +1,4 @@
+import { balanceValue } from '../data/balance';
 import type { Material } from '../data/gameData';
 import type { GameIndex } from '../data/gameIndex';
 import type { GameText } from '../data/text';
@@ -6,8 +7,9 @@ import { commaList, dataTable, definitionList, filterBox, iconLink, jumpLinks, l
 import { formatMoney, formatPercent, formatQuantityRange } from '../render/format';
 import { html, type Html } from '../render/html';
 import type { Page } from '../render/page';
-import { itemLink } from './equipment';
+import { itemLink, setBonusText } from './equipment';
 
+const commaListText = (names: string[]): string => names.join(', ');
 const materialPath = (material: Material) => `materials/${material.id}.html`;
 const materialLink = (material: Material): Html => iconLink(materialPath(material), material.name, pixelArt('materials', material.id, material.name, 2));
 
@@ -45,8 +47,10 @@ function indexPage(game: GameIndex, text: GameText): Page {
 }
 
 function materialPage(game: GameIndex, text: GameText, material: Material): Page {
+  const setSlotNames = balanceValue<string[]>(game.data, 'items', 'setRecipeSlots').map((slot) => text.slotName(slot).toLowerCase());
   const droppedBy = game.monstersDroppingMaterial(material.id);
-  const usedIn = game.allRecipes().filter((recipe) => recipe.ingredients.some((ingredient) => ingredient.material.id === material.id));
+  const usingRecipes = game.allRecipes().filter((recipe) => recipe.ingredients.some((ingredient) => ingredient.material.id === material.id));
+  const usedIn = [...new Map(usingRecipes.map((recipe) => [recipe.base.id, recipe])).values()];
   const dropRows = droppedBy.map((monster) => {
     const drop = monster.drops.find((candidate) => candidate.materialId === material.id)!;
     return [siteLink(`monsters/${monster.id}.html`, monster.name), monster.rank, formatPercent(drop.chance), formatQuantityRange(drop.minQuantity, drop.maxQuantity)];
@@ -61,6 +65,7 @@ function materialPage(game: GameIndex, text: GameText, material: Material): Page
       ['Sell value', formatMoney(material.sellValueCopper)],
       ['Backpack size', `${material.width} x ${material.height}`],
       ['Item name prefix', material.craftedItemPrefix ?? html`<span class="muted">none</span>`],
+      ...(material.setBonus ? [['Set bonus', `${setBonusText(text, material)} on every ${commaListText(setSlotNames)} piece made with it`] as [string, string]] : []),
     ]))}
     ${panel('Dropped by', droppedBy.length ? dataTable(['Monster', 'Rank', 'Chance', 'Amount'], dropRows) : html`<p class="muted">No monster drops this yet.</p>`)}
     ${panel('Used in recipes', usedIn.length

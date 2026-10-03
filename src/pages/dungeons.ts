@@ -20,12 +20,13 @@ function indexPage(game: GameIndex): Page {
     const rows = game.dungeonsOfTown(town.id).map((dungeon) => [
       dungeonLink(dungeon),
       dungeon.level,
-      `${dungeon.recommendedMinLevel}-${dungeon.recommendedMaxLevel}`,
+      dungeon.minimumHeroLevel,
+      dungeon.recommendedMaxLevel,
       dungeon.bossMonsterId ? badge('boss', 'boss') : 'Normal',
       dungeon.maxPartySize,
     ]);
     return panel(html`${siteLink(`towns/${town.id}.html`, town.name)} <span class="muted">levels ${town.firstLevel}-${town.lastLevel}</span>`,
-      dataTable(['Dungeon', 'Level', 'Recommended hero level', 'Type', 'Heroes allowed'], rows), { anchor: `town-${town.id}` });
+      dataTable(['Dungeon', 'Level', 'Hero level needed', 'Recommended up to', 'Type', 'Heroes allowed'], rows), { anchor: `town-${town.id}` });
   });
   const body = html`
     ${pageHeading('Dungeons', 'Each dungeon is one fight, run again and again. Clear one to open the next. Dungeons are grouped by town.')}
@@ -45,7 +46,8 @@ function dungeonPage(game: GameIndex, text: GameText, dungeon: Dungeon): Page {
     ${panel('Overview', definitionList([
       ['Town', siteLink(`towns/${town.id}.html`, town.name)],
       ['Dungeon level', dungeon.level],
-      ['Recommended hero level', `${dungeon.recommendedMinLevel}-${dungeon.recommendedMaxLevel}`],
+      ['Hero level needed', dungeon.minimumHeroLevel],
+      ['Recommended up to hero level', dungeon.recommendedMaxLevel],
       ['Heroes allowed', dungeon.maxPartySize],
       ['Opens after', unlockedBy],
       ['Opens next', commaList(unlocks.map((next) => siteLink(dungeonPath(next), next.name)))],

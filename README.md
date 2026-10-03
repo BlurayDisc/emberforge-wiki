@@ -36,4 +36,4 @@ New monsters, items, dungeons and so on show up by themselves: pages are made by
 
 ## Known gaps
 
-The game data has no skill data yet. The Abilities page shows combat roles and battle rules from the data. Promotions are shown on the Heroes pages, but the game has no promotion command yet. When the game adds skills to its data, extend `src/pages/abilities.ts`.
+The Abilities page shows combat roles, battle rules, class resources and how spells work. Each hero page lists the spells of its class (`src/pages/spellTable.ts`). Promotions are shown on the Heroes pages, but the game has no promotion command yet.

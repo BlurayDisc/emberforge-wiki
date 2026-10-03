@@ -1,0 +1,5 @@
+{
+  "productionIntervalSeconds": 600,
+  "storageCapacity": 6,
+  "producedMaterialIds": ["copper-ore", "pine-wood", "rawhide", "linen"]
+}

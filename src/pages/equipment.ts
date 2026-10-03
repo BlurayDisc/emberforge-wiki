@@ -1,5 +1,5 @@
 import { balanceNumber, balanceValue } from '../data/balance';
-import type { BaseItem, HeroClass } from '../data/gameData';
+import type { BaseItem, HeroClass, Material } from '../data/gameData';
 import type { GameIndex, Recipe } from '../data/gameIndex';
 import { orderedStatIds, type GameText } from '../data/text';
 import { pixelArt } from '../render/art';
@@ -16,6 +16,15 @@ const slotRank = (slot: string) => (SLOT_ORDER.includes(slot) ? SLOT_ORDER.index
 
 export function sortedForDisplay(items: BaseItem[]): BaseItem[] {
   return [...items].sort((a, b) => slotRank(a.slot) - slotRank(b.slot) || a.slot.localeCompare(b.slot) || a.craftLevelOffset - b.craftLevelOffset || a.name.localeCompare(b.name));
+}
+
+export function armourWeightList(text: GameText, heroClass: HeroClass): string {
+  return heroClass.armourWeights.map((weight) => text.armourWeightName(weight).toLowerCase()).join(' or ');
+}
+
+export function setBonusText(text: GameText, material: Material): string {
+  const bonus = material.setBonus!;
+  return `+${bonus.value} ${text.statName(bonus.stat)}`;
 }
 
 export function itemPicture(game: GameIndex, base: BaseItem, scale: number): Html | null {
@@ -52,7 +61,7 @@ const ITEM_TABLE_HEADERS = ['Item', 'Slot', 'Backpack size', 'Base stats', 'Craf
 function classPanel(game: GameIndex, text: GameText, heroClass: HeroClass, items: BaseItem[]): Html {
   const heading = html`${pixelArt('heroes', heroClass.id, heroClass.displayName, 2)} ${siteLink(`heroes/${heroClass.id}.html`, heroClass.displayName)}`;
   return panel(heading, html`
-    <p class="muted">${heroClass.roleDescription} Wears ${text.armourWeightName(heroClass.armourWeight).toLowerCase()} armour.</p>
+    <p class="muted">${heroClass.roleDescription} Wears ${armourWeightList(text, heroClass)} armour.</p>
     ${dataTable(ITEM_TABLE_HEADERS, itemRows(game, text, items))}`, { anchor: `class-${heroClass.id}`, isFilterGroup: true });
 }
 
@@ -79,9 +88,9 @@ function indexPage(game: GameIndex, text: GameText): Page {
   return { path: 'equipment/index.html', title: 'Equipment', section: 'equipment', body };
 }
 
-function recipeRows(game: GameIndex, base: BaseItem) {
+function recipeRows(game: GameIndex, text: GameText, base: BaseItem) {
   return game.allRecipes().filter((recipe) => recipe.base.id === base.id).map((recipe) => [
-    recipe.itemName,
+    recipe.setMaterial ? html`${recipe.itemName} <span class="muted">(${setBonusText(text, recipe.setMaterial)})</span>` : recipe.itemName,
     `Tier ${recipe.tier}`,
     recipe.requiredCraftLevel,
     recipeIngredientLinks(recipe),
@@ -99,6 +108,7 @@ function itemPage(game: GameIndex, text: GameText, base: BaseItem): Page {
   const spreadFraction = balanceNumber(game.data, 'items', 'baseStatSpreadFraction');
   const unscaledStatIds = balanceValue<string[]>(game.data, 'items', 'unscaledBaseStats');
   const unscaledStatsOfItem = Object.keys(base.baseStats).filter((statId) => unscaledStatIds.includes(statId));
+  const setRecipeSlots = balanceValue<string[]>(game.data, 'items', 'setRecipeSlots');
   const wearers = game.classesAllowedForItem(base);
   const line = sameLine(game, base);
   const picture = itemPicture(game, base, 6);
@@ -120,11 +130,11 @@ function itemPage(game: GameIndex, text: GameText, base: BaseItem): Page {
     ${panel('Crafting', definitionList([
       ['Crafter', siteLink(`crafters/${base.profession}.html`, game.data.professions[base.profession] ?? base.profession)],
       ['Main material', text.categoryName(base.mainCategory)],
-      ['Second material', text.categoryName(base.secondaryCategory)],
+      ...(setRecipeSlots.includes(base.slot) ? [['Set material', 'Optional. A set material adds a fixed bonus to the piece. See the recipes below.'] as [string, string]] : []),
       ['Crafter level offset', `+${base.craftLevelOffset}`],
     ]))}
-    ${panel('Recipes', recipeRows(game, base).length
-      ? dataTable(['Result', 'Tier', 'Crafter level', 'Ingredients', 'Crafter fee', 'Craft time'], recipeRows(game, base))
+    ${panel('Recipes', recipeRows(game, text, base).length
+      ? dataTable(['Result', 'Tier', 'Crafter level', 'Ingredients', 'Crafter fee', 'Craft time'], recipeRows(game, text, base))
       : html`<p class="muted">No recipe yet: the needed materials are not in the game data.</p>`)}`;
   return { path: itemPath(base), title: base.name, section: 'equipment', body, searchKind: 'Equipment', searchKeywords: `${base.slot} ${base.gearType} ${wearers.map((heroClass) => heroClass.displayName).join(' ')}` };
 }

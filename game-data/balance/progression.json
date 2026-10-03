@@ -7,5 +7,12 @@
   "levelGapStep": 0.1,
   "levelGapFactorMinimum": 0.05,
   "levelGapFactorMaximum": 1.5,
-  "experienceRankMultiplier": { "hero": 0, "normal": 1, "rare": 5, "boss": 20 }
+  "earlyExperienceBonus": 2.5,
+  "earlyExperienceFadeLevels": 10,
+  "experienceRankMultiplier": {
+    "hero": 0,
+    "normal": 1,
+    "rare": 5,
+    "boss": 20
+  }
 }

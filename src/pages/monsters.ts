@@ -74,7 +74,6 @@ function dropRows(game: GameIndex, monster: Monster) {
 function rewardNotes(game: GameIndex, monster: Monster) {
   const rankMultiplier = (fileName: string, key: string) => balanceValue<Record<string, number>>(game.data, fileName, key)[monster.rank];
   return definitionList([
-    ['Copper drop multiplier', `${rankMultiplier('economy', 'copperDropRankMultiplier') ?? '?'}x`],
     ['Experience multiplier', `${rankMultiplier('progression', 'experienceRankMultiplier') ?? '?'}x`],
     ['Guaranteed material drops', balanceNumber(game.data, 'dungeon-run', 'guaranteedMaterialDrops')],
   ]);

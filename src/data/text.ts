@@ -30,6 +30,11 @@ export class GameText {
     return value;
   }
 
+  // Fills {name} slots in a game text, like the game does.
+  format(key: string, params: Record<string, string | number>): string {
+    return this.require(key).replace(/\{(\w+)\}/g, (slot, name: string) => String(params[name] ?? slot));
+  }
+
   statName(statId: string): string {
     return this.text[`statname.${statId}`] ?? capitalised(statId);
   }

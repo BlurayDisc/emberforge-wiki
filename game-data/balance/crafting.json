@@ -1,13 +1,17 @@
 {
   "maximumLevel": 100,
-  "experienceToNextBase": 15,
-  "experienceToNextExponent": 1.4,
-  "experienceBase": 10,
+  "experienceToNextBase": 10,
+  "experienceToNextExponent": 1.3,
+  "experienceBase": 14,
   "experiencePerRequiredLevel": 3,
-  "levelGapStep": 0.1,
+  "levelGapStep": 0.08,
   "levelGapFactorMinimum": 0.1,
   "craftSecondsBase": 5,
   "craftSecondsPerRequiredLevel": 1.5,
   "craftFeeBaseCopper": 3,
-  "craftFeePerRequiredLevelCopper": 0.5
+  "craftFeePerRequiredLevelCopper": 0.5,
+  "upgradeMaximumLevel": 7,
+  "upgradeChanceAtRecipeLevel": [0.05, 0.005, 0.0005, 0.00005, 0.000005, 0.0000005, 0.00000005],
+  "upgradeChanceFarAboveRecipe": [0.23, 0.14, 0.085, 0.05, 0.03, 0.017, 0.009],
+  "upgradeFarAboveLevels": 9
 }

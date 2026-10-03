@@ -1,6 +1,8 @@
 {
-  "columns": 10,
-  "rows": 8,
-  "rowsPerExpansion": 2,
-  "expansionCostsCopper": [150, 400, 1000, 2500, 6000, 15000]
+  "columns": 6,
+  "rows": 5,
+  "rowsPerExpansion": 1,
+  "expansionBaseCostCopper": 100,
+  "expansionCostGrowth": 1.5,
+  "maximumExpansions": 14
 }

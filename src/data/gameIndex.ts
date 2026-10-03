@@ -1,5 +1,5 @@
-import type { Advancement, BaseItem, Dungeon, GameData, HeroClass, Material, Monster, Town } from './gameData';
-import { balanceNumber } from './balance';
+import type { Advancement, BaseItem, Dungeon, GameData, HeroClass, Material, Monster, Spell, Town } from './gameData';
+import { balanceNumber, balanceValue } from './balance';
 
 export interface RecipeIngredient {
   material: Material;
@@ -9,6 +9,7 @@ export interface RecipeIngredient {
 export interface Recipe {
   base: BaseItem;
   tier: number;
+  setMaterial: Material | null;
   itemName: string;
   requiredCraftLevel: number;
   craftFeeCopper: number;
@@ -92,7 +93,7 @@ export class GameIndex {
   canClassUse(heroClass: HeroClass, base: BaseItem): boolean {
     if (base.slot === 'mainHand' && !heroClass.weaponTypes.includes(base.gearType)) return false;
     if (base.slot === 'offHand' && !heroClass.offHandTypes.includes(base.gearType)) return false;
-    return base.armourWeight === null || base.armourWeight === heroClass.armourWeight;
+    return base.armourWeight === null || heroClass.armourWeights.includes(base.armourWeight);
   }
 
   itemsAllowedForClass(heroClass: HeroClass): BaseItem[] {
@@ -112,9 +113,17 @@ export class GameIndex {
     return this.data.advancements.filter((advancement) => advancement.baseClassId === classId);
   }
 
-  // A material is a crafting material when some item type uses its category in a recipe.
+  // A material is a crafting material when it is the main material of an item type, or it gives a set bonus.
   isCraftingMaterial(material: Material): boolean {
-    return this.data.baseItems.some((base) => base.mainCategory === material.category || base.secondaryCategory === material.category);
+    return material.setBonus !== undefined || this.data.baseItems.some((base) => base.mainCategory === material.category);
+  }
+
+  spellsOfClass(classId: string): Spell[] {
+    return this.data.spells.filter((spell) => spell.classId === classId).sort((a, b) => a.unlockLevel - b.unlockLevel);
+  }
+
+  setMaterialsOfTier(tier: number): Material[] {
+    return this.data.materials.filter((material) => material.tier === tier && material.setBonus !== undefined);
   }
 
   tiers(): number[] {
@@ -125,39 +134,48 @@ export class GameIndex {
     return this.data.towns[tier - 1];
   }
 
-  // Mirrors createRecipe in the game: a recipe exists only when the tier has both materials.
+  // Mirrors listRecipes and createRecipe in the game: a basic recipe needs the main material of the tier.
+  // Armour pieces also get one set recipe for each set material of the tier.
   recipesOfTier(tier: number): Recipe[] {
     const d = this.data;
     const levelsPerBracket = balanceNumber(d, 'items', 'levelsPerBracket');
     const cellsPerMainUnit = balanceNumber(d, 'items', 'mainIngredientCellsPerUnit');
     const largeItemCellThreshold = balanceNumber(d, 'items', 'largeItemCellThreshold');
-    const smallItemSecondary = balanceNumber(d, 'items', 'secondaryIngredientSmallItem');
-    const largeItemSecondary = balanceNumber(d, 'items', 'secondaryIngredientLargeItem');
+    const setMaterialSmallItem = balanceNumber(d, 'items', 'setMaterialSmallItem');
+    const setMaterialLargeItem = balanceNumber(d, 'items', 'setMaterialLargeItem');
+    const setRecipeLevelStep = balanceNumber(d, 'items', 'setRecipeLevelStep');
+    const setRecipeSlots = balanceValue<string[]>(d, 'items', 'setRecipeSlots');
     const craftSecondsBase = balanceNumber(d, 'crafting', 'craftSecondsBase');
     const craftSecondsPerLevel = balanceNumber(d, 'crafting', 'craftSecondsPerRequiredLevel');
     const craftFeeBase = balanceNumber(d, 'crafting', 'craftFeeBaseCopper');
     const craftFeePerLevel = balanceNumber(d, 'crafting', 'craftFeePerRequiredLevelCopper');
-    const materialOf = (category: string) => d.materials.find((m) => m.tier === tier && m.category === category);
+    const setMaterials = this.setMaterialsOfTier(tier);
 
     return d.baseItems.flatMap((base): Recipe[] => {
-      const main = materialOf(base.mainCategory);
-      const secondary = materialOf(base.secondaryCategory);
-      if (!main || !secondary) return [];
+      const main = d.materials.find((material) => material.tier === tier && material.category === base.mainCategory);
+      if (!main) return [];
       const cells = base.width * base.height;
-      const requiredCraftLevel = (tier - 1) * levelsPerBracket + base.craftLevelOffset;
-      return [{
-        base,
-        tier,
-        itemName: `${main.craftedItemPrefix ?? main.name} ${base.name}`,
-        requiredCraftLevel,
-        // Same formula as craftFeeCopper in the game.
-        craftFeeCopper: Math.round(craftFeeBase + craftFeePerLevel * requiredCraftLevel),
-        craftSeconds: Math.round(craftSecondsBase + craftSecondsPerLevel * requiredCraftLevel),
-        ingredients: [
-          { material: main, quantity: Math.max(1, Math.ceil(cells / cellsPerMainUnit)) },
-          { material: secondary, quantity: cells >= largeItemCellThreshold ? largeItemSecondary : smallItemSecondary },
-        ],
-      }];
+      const variants = [null, ...(setRecipeSlots.includes(base.slot) ? setMaterials : [])];
+      return variants.map((setMaterial): Recipe => {
+        const setLevelFloor = base.slot === 'armour' ? setMaterial?.setBodyArmourCraftLevelOffset : setMaterial?.setCraftLevelOffset;
+        const craftLevelOffset = setMaterial ? Math.max(base.craftLevelOffset + setRecipeLevelStep, setLevelFloor ?? 0) : base.craftLevelOffset;
+        const requiredCraftLevel = (tier - 1) * levelsPerBracket + craftLevelOffset;
+        const namingMaterial = setMaterial ?? main;
+        return {
+          base,
+          tier,
+          setMaterial,
+          itemName: `${namingMaterial.craftedItemPrefix ?? namingMaterial.name} ${base.name}`,
+          requiredCraftLevel,
+          // Same formula as craftFeeCopper in the game.
+          craftFeeCopper: Math.round(craftFeeBase + craftFeePerLevel * requiredCraftLevel),
+          craftSeconds: Math.round(craftSecondsBase + craftSecondsPerLevel * requiredCraftLevel),
+          ingredients: [
+            { material: main, quantity: Math.max(1, Math.ceil(cells / cellsPerMainUnit)) },
+            ...(setMaterial ? [{ material: setMaterial, quantity: cells >= largeItemCellThreshold ? setMaterialLargeItem : setMaterialSmallItem }] : []),
+          ],
+        };
+      });
     });
   }
 

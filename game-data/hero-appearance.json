@@ -1,16 +1,17 @@
 {
   "skinTones": [
-    "#f2c9a0",
-    "#e0a878",
-    "#b97b52",
-    "#8a5636"
+    "#f8e0c8",
+    "#f4d3b4",
+    "#f0c8a4",
+    "#ebbd98"
   ],
   "skinShades": [
-    "#d9a87c",
-    "#c58a5c",
-    "#9a6440",
-    "#6e4228"
+    "#e2bc9a",
+    "#dcb08c",
+    "#d6a680",
+    "#d09c76"
   ],
+  "femaleNames": ["Brenna", "Dara", "Fenna", "Hilda", "Jessa", "Lyra", "Nessa", "Petra", "Sigrid", "Tamsin"],
   "hairColors": [
     "#3a2a1e",
     "#6a4a2a",
@@ -26,6 +27,7 @@
   ],
   "classLooks": {
     "warrior": {
+      "gender": "male",
       "background": "#3b4a6b",
       "backgroundShade": "#2f3b57",
       "cloth": "#9aa6b8",
@@ -33,6 +35,9 @@
       "trim": "#f2c14e"
     },
     "archer": {
+      "gender": "female",
+      "hair": "#6a4a2a",
+      "slender": true,
       "background": "#2d4a33",
       "backgroundShade": "#243d29",
       "cloth": "#3f7a4a",
@@ -40,6 +45,9 @@
       "trim": "#c9a24e"
     },
     "mage": {
+      "gender": "female",
+      "hair": "#d23a2a",
+      "slender": true,
       "background": "#3d2a5a",
       "backgroundShade": "#31224a",
       "cloth": "#7b4bb7",

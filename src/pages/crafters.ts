@@ -1,8 +1,8 @@
-import { balanceNumber } from '../data/balance';
+import { balanceNumber, balanceValue } from '../data/balance';
 import type { GameIndex } from '../data/gameIndex';
 import type { GameText } from '../data/text';
 import { card, cardGrid, dataTable, definitionList, pageHeading, panel, siteLink } from '../render/components';
-import { formatDuration, formatMoney } from '../render/format';
+import { formatDuration, formatMoney, formatPercent } from '../render/format';
 import { html, type Html } from '../render/html';
 import type { Page } from '../render/page';
 import { itemLink, recipeIngredientLinks, sortedForDisplay } from './equipment';
@@ -16,8 +16,25 @@ function indexPage(game: GameIndex): Page {
       const makes = game.data.baseItems.filter((base) => base.profession === professionId);
       return card(crafterPath(professionId), professionName, [`Makes ${makes.map((base) => base.name).join(', ') || 'nothing yet'}`]);
     }))}
-    ${panel('Crafting levels', craftingNumbers(game))}`;
+    ${panel('Crafting levels', craftingNumbers(game))}
+    ${panel('Item upgrades', upgradeOdds(game))}`;
   return { path: 'crafters/index.html', title: 'Crafters', section: 'crafters', body };
+}
+
+// Same rule as upgradeReachChance in the game: a straight line between the two odds lists.
+function upgradeOdds(game: GameIndex) {
+  const d = game.data;
+  const atRecipeLevel = balanceValue<number[]>(d, 'crafting', 'upgradeChanceAtRecipeLevel');
+  const farAbove = balanceValue<number[]>(d, 'crafting', 'upgradeChanceFarAboveRecipe');
+  const farAboveLevels = balanceNumber(d, 'crafting', 'upgradeFarAboveLevels');
+  const rows = Array.from({ length: balanceNumber(d, 'crafting', 'upgradeMaximumLevel') }, (_, index) => [
+    `+${index + 1} or better`,
+    formatPercent(atRecipeLevel[index] ?? 0),
+    formatPercent(farAbove[index] ?? 0),
+  ]);
+  return html`
+    <p>A crafted item can roll an upgrade level. The roll stops at the first failed step, so +N needs N steps in a row. The odds grow with each crafter level above the recipe level, until the crafter is ${farAboveLevels} levels above it.</p>
+    ${dataTable(['Upgrade', 'Crafter at recipe level', `Crafter ${farAboveLevels}+ levels above`], rows)}`;
 }
 
 function craftingNumbers(game: GameIndex) {

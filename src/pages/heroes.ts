@@ -1,11 +1,12 @@
 import { balanceNumber } from '../data/balance';
 import type { GameIndex } from '../data/gameIndex';
 import type { HeroClass } from '../data/gameData';
-import { orderedStatIds, type GameText } from '../data/text';
+import { capitalised, orderedStatIds, type GameText } from '../data/text';
 import { pixelArt } from '../render/art';
 import { badge, card, cardGrid, commaList, dataTable, definitionList, jumpLinks, loreText, pageHeading, panel, siteLink } from '../render/components';
 import { formatNumber } from '../render/format';
-import { itemLink, sortedForDisplay } from './equipment';
+import { armourWeightList, itemLink, sortedForDisplay } from './equipment';
+import { spellTable } from './spellTable';
 import { html, type Html } from '../render/html';
 import type { Page } from '../render/page';
 
@@ -18,7 +19,7 @@ export function heroStatAtLevel(base: number, growthPerLevel: number, level: num
 const classPath = (heroClass: HeroClass) => `heroes/${heroClass.id}.html`;
 
 function heroCard(game: GameIndex, text: GameText, heroClass: HeroClass): Html {
-  return card(classPath(heroClass), heroClass.displayName, [heroClass.roleDescription, `${text.armourWeightName(heroClass.armourWeight)} armour`], undefined,
+  return card(classPath(heroClass), heroClass.displayName, [heroClass.roleDescription, `${armourWeightList(text, heroClass)} armour`, `${text.require(`resource.${heroClass.resourceId}`)}`], undefined,
     pixelArt('heroes', heroClass.id, heroClass.displayName, 2));
 }
 
@@ -102,7 +103,7 @@ function gearPanel(game: GameIndex, text: GameText, heroClass: HeroClass) {
   return panel('Gear this class can use', definitionList([
     ['Weapons', itemLinks(inSlots('mainHand'))],
     ['Off hand', itemLinks(inSlots('offHand'))],
-    [`${text.armourWeightName(heroClass.armourWeight)} armour`, itemLinks(allowedItems.filter((base) => base.armourWeight !== null))],
+    [`${capitalised(armourWeightList(text, heroClass))} armour`, itemLinks(allowedItems.filter((base) => base.armourWeight !== null))],
     ['Jewellery and belts', itemLinks(allowedItems.filter((base) => base.armourWeight === null && !['mainHand', 'offHand'].includes(base.slot)))],
   ]));
 }
@@ -132,10 +133,12 @@ function classPage(game: GameIndex, text: GameText, heroClass: HeroClass): Page 
         : 'From the start'],
       ['Attack type', html`${badge(heroClass.attackKind, heroClass.attackKind)} uses ${damageStat}`],
       ['Combat role', siteLink('abilities/index.html', heroClass.behavior)],
-      ['Armour', text.armourWeightName(heroClass.armourWeight)],
+      ['Armour', capitalised(armourWeightList(text, heroClass))],
+      ['Resource', text.require(`resource.${heroClass.resourceId}`)],
       ['Recovery rate', `${heroClass.recoveryRate}x`],
     ]))}
     ${panel('Stats by level', levelCalculator(game, text, heroClass))}
+    ${panel('Spells', html`<p>Learned at the ${siteLink('abilities/index.html#spells', 'Academy')}. A hero fights with ${balanceNumber(game.data, 'spells', 'normalSlotCount')} spells and 1 ultimate.</p>${spellTable(game, text, heroClass)}`)}
     ${gearPanel(game, text, heroClass)}
     ${game.advancementsOfClass(heroClass.id).length ? promotionPanel(game, heroClass) : null}`;
   return { path: classPath(heroClass), title: heroClass.displayName, section: 'heroes', body, searchKind: 'Hero', searchKeywords: `${heroClass.roleDescription} ${game.advancementsOfClass(heroClass.id).map((advancement) => advancement.displayName).join(' ')}` };
