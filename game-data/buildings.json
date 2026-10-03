@@ -1,0 +1,7 @@
+[
+  {"id": "tavern", "label": "Tavern", "panelId": "tavern", "style": "tavern", "x": 96, "y": 134, "width": 84, "height": 72},
+  {"id": "workshop", "label": "Workshop", "panelId": "workshop", "style": "workshop", "x": 372, "y": 138, "width": 84, "height": 72},
+  {"id": "merchant", "label": "Merchant", "panelId": "merchant", "style": "merchant", "x": 112, "y": 240, "width": 84, "height": 72},
+  {"id": "dungeon-gate", "label": "Dungeons", "panelId": "dungeons", "style": "gate", "x": 410, "y": 238, "width": 72, "height": 72},
+  {"id": "keep", "label": "Lord's Keep", "panelId": null, "style": "keep", "x": 240, "y": 112, "width": 112, "height": 84}
+]

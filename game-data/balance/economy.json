@@ -1,0 +1,36 @@
+{
+  "copperPerSilver": 100,
+  "silverPerGold": 100,
+  "maximumCompanySize": 12,
+  "heroHireCostByCompanySize": [
+    0,
+    100,
+    300,
+    900,
+    2700,
+    8100,
+    24300,
+    72900,
+    218700,
+    656100,
+    1968300,
+    5904900
+  ],
+  "copperDropBase": 3,
+  "copperDropPerLevel": 2,
+  "copperDropSpreadFraction": 0.3,
+  "copperDropRankMultiplier": {
+    "hero": 0,
+    "normal": 1,
+    "rare": 3,
+    "boss": 8
+  },
+  "materialBuyPriceMultiplier": 4,
+  "trainingExperienceFraction": 0.5,
+  "trainingCostPerExperienceBase": 4,
+  "trainingCostPerExperienceGrowth": 0.1,
+  "merchantSaleSlots": 3,
+  "saleSecondsMinimum": 5,
+  "saleSecondsPerCopper": 0.6,
+  "saleSecondsMaximum": 600
+}

@@ -1,0 +1,6 @@
+{
+  "maximumMonstersPerEncounter": 3,
+  "maximumBossAdds": 2,
+  "rareMonsterChance": 0.02,
+  "guaranteedMaterialDrops": 1
+}

@@ -1,0 +1,11 @@
+{
+  "levelCap": 100,
+  "experienceToNextLevelBase": 40,
+  "experienceToNextLevelExponent": 1.5,
+  "killsPerLevelBase": 10,
+  "killsPerLevelGrowth": 0.15,
+  "levelGapStep": 0.1,
+  "levelGapFactorMinimum": 0.05,
+  "levelGapFactorMaximum": 1.5,
+  "experienceRankMultiplier": { "hero": 0, "normal": 1, "rare": 5, "boss": 20 }
+}

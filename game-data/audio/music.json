@@ -1,0 +1,67 @@
+{
+  "tracks": {
+    "town": {
+      "tempoBpm": 92,
+      "stepsPerBeat": 2,
+      "voices": [
+        {
+          "wave": "square",
+          "volume": 0.07,
+          "notes": "D5:2 F5:2 A5:2 G5:1 F5:1 E5:2 D5:2 C5:2 D5:2 F5:2 A5:2 C6:2 A5:1 G5:1 F5:4 E5:2 -:2 D5:2 F5:2 A5:2 G5:1 F5:1 E5:2 G5:2 B4:2 C5:2 D5:2 A4:2 F5:2 E5:1 D5:1 D5:6 -:2"
+        },
+        {
+          "wave": "triangle",
+          "volume": 0.16,
+          "notes": "D3:4 A3:4 F3:4 C3:4 Bb2:4 F3:4 C3:4 G3:4 D3:4 A3:4 G2:4 D3:4 F3:4 C3:4 D3:8"
+        },
+        {
+          "wave": "noise",
+          "volume": 0.04,
+          "notes": "x:1 -:1 -:1 -:1 x:1 -:1 -:1 -:1 x:1 -:1 -:1 -:1 x:1 -:1 -:1 -:1 x:1 -:1 -:1 -:1 x:1 -:1 -:1 -:1 x:1 -:1 -:1 -:1 x:1 -:1 -:1 -:1 x:1 -:1 -:1 -:1 x:1 -:1 -:1 -:1 x:1 -:1 -:1 -:1 x:1 -:1 -:1 -:1 x:1 -:1 -:1 -:1 x:1 -:1 -:1 -:1 x:1 -:1 -:1 -:1 x:1 -:1 -:1 -:1"
+        }
+      ]
+    },
+    "battle": {
+      "tempoBpm": 148,
+      "stepsPerBeat": 2,
+      "voices": [
+        {
+          "wave": "square",
+          "volume": 0.07,
+          "notes": "A4:1 D5:1 F5:2 E5:1 D5:1 A4:2 G4:1 Bb4:1 D5:2 C5:1 Bb4:1 G4:2 G4:1 C5:1 E5:2 D5:1 C5:1 G4:2 A4:2 C#5:2 E5:2 A5:2"
+        },
+        {
+          "wave": "triangle",
+          "volume": 0.2,
+          "notes": "D2:1 D2:1 D3:1 D2:1 D2:1 D3:1 D2:1 D3:1 Bb1:1 Bb1:1 Bb2:1 Bb1:1 Bb1:1 Bb2:1 Bb1:1 Bb2:1 C2:1 C2:1 C3:1 C2:1 C2:1 C3:1 C2:1 C3:1 A1:1 A1:1 A2:1 A1:1 A1:1 A2:1 A1:1 A2:1"
+        },
+        {
+          "wave": "noise",
+          "volume": 0.06,
+          "notes": "x:1 -:1 x:1 -:1 x:1 -:1 x:1 x:1 x:1 -:1 x:1 -:1 x:1 -:1 x:1 x:1 x:1 -:1 x:1 -:1 x:1 -:1 x:1 x:1 x:1 -:1 x:1 -:1 x:1 -:1 x:1 x:1"
+        }
+      ]
+    },
+    "boss": {
+      "tempoBpm": 126,
+      "stepsPerBeat": 2,
+      "voices": [
+        {
+          "wave": "sawtooth",
+          "volume": 0.05,
+          "notes": "E4:2 G4:2 F#4:2 B3:2 E4:2 G4:2 A4:2 B4:2 C5:2 B4:2 A4:2 G4:2 F#4:4 B3:2 -:2"
+        },
+        {
+          "wave": "triangle",
+          "volume": 0.22,
+          "notes": "E2:2 E2:2 E2:2 E2:2 E2:2 E2:2 G2:2 A2:2 C2:2 C2:2 C2:2 C2:2 B1:2 B1:2 B1:2 B1:2"
+        },
+        {
+          "wave": "noise",
+          "volume": 0.07,
+          "notes": "x:2 -:2 x:2 x:1 x:1 x:2 -:2 x:2 x:1 x:1 x:2 -:2 x:2 x:1 x:1 x:2 -:2 x:2 x:1 x:1"
+        }
+      ]
+    }
+  }
+}

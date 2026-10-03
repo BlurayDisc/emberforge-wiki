@@ -1,0 +1,7 @@
+{
+  "hp": { "base": 56, "perLevel": 39 },
+  "attack": { "base": 2, "perLevel": 0.95 },
+  "defence": { "base": 2, "perLevel": 1.2 },
+  "resistance": { "base": 1, "perLevel": 0.8 },
+  "criticalChance": 0.05
+}

@@ -1,0 +1,23 @@
+{
+  "qualityWeightsWithoutCatalyst": { "common": 55, "magic": 35, "rare": 10 },
+  "qualityWeightsWithCatalyst": { "common": 25, "magic": 45, "rare": 30 },
+  "catalystMaterialId": "tarnished-catalyst",
+  "levelsPerBracket": 10,
+  "itemLevelAboveHighestHero": 0,
+  "itemLevelRollsKeepHighest": 2,
+  "baseStatGrowthPerItemLevel": 0.12,
+  "baseStatSpreadFraction": 0.15,
+  "affixGrowthPerItemLevel": 0.1,
+  "magicAffixCounts": [1, 2],
+  "rareAffixCounts": [3, 4],
+  "maximumAffixesPerKindMagic": 1,
+  "maximumAffixesPerKindRare": 2,
+  "sellQualityFactor": { "common": 1, "magic": 2, "rare": 4, "unique": 10 },
+  "sellGrowthPerItemLevel": 0.1,
+  "mainIngredientCellsPerUnit": 2,
+  "largeItemCellThreshold": 6,
+  "secondaryIngredientSmallItem": 1,
+  "secondaryIngredientLargeItem": 2,
+  "rareNameFirstParts": ["Grim", "Doom", "Storm", "Ash", "Dread", "Iron", "Night", "Blood", "Wrath", "Gloom"],
+  "rareNameSecondParts": ["Bite", "Song", "Edge", "Ward", "Grip", "Mark", "Veil", "Spire", "Thorn", "Coil"]
+}

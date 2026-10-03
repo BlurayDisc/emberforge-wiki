@@ -1,0 +1,6 @@
+{
+  "baseRegenFractionPerMinute": 0.2,
+  "reviveBaseSeconds": 60,
+  "reviveSecondsPerLevel": 5,
+  "reviveHealthFraction": 0.3
+}

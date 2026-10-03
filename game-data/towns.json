@@ -1,0 +1,21 @@
+{
+  "startingTownId": "hollowbrook",
+  "towns": [
+    {
+      "id": "hollowbrook", "mapX": 18, "mapY": 80, "biome": "farmland",
+      "name": "Hollowbrook",
+      "region": "Farmland and Old Wood",
+      "firstLevel": 1,
+      "lastLevel": 10
+    },
+    { "id": "barrowgate", "mapX": 30, "mapY": 66, "biome": "barrow", "name": "Barrowgate", "region": "Barrow Downs", "firstLevel": 11, "lastLevel": 20 },
+    { "id": "mirewatch", "mapX": 18, "mapY": 50, "biome": "marsh", "name": "Mirewatch", "region": "Marshes", "firstLevel": 21, "lastLevel": 30 },
+    { "id": "deepdelve", "mapX": 34, "mapY": 36, "biome": "mines", "name": "Deepdelve", "region": "Ruined mines", "firstLevel": 31, "lastLevel": 40 },
+    { "id": "highpass", "mapX": 48, "mapY": 30, "biome": "mountain", "name": "Highpass", "region": "Mountain pass", "firstLevel": 41, "lastLevel": 50 },
+    { "id": "frostmere", "mapX": 62, "mapY": 12, "biome": "frozen", "name": "Frostmere", "region": "Frozen north", "firstLevel": 51, "lastLevel": 60 },
+    { "id": "sunscar", "mapX": 70, "mapY": 40, "biome": "desert", "name": "Sunscar", "region": "Desert ruins", "firstLevel": 61, "lastLevel": 70 },
+    { "id": "emberhold", "mapX": 80, "mapY": 62, "biome": "volcano", "name": "Emberhold", "region": "Volcano", "firstLevel": 71, "lastLevel": 80 },
+    { "id": "blackspire", "mapX": 86, "mapY": 34, "biome": "fortress", "name": "Blackspire", "region": "Dark fortress", "firstLevel": 81, "lastLevel": 90 },
+    { "id": "worldsend", "mapX": 90, "mapY": 12, "biome": "abyss", "name": "Worldsend", "region": "Dragon abyss", "firstLevel": 91, "lastLevel": 100 }
+  ]
+}

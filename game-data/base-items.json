@@ -1,0 +1,457 @@
+[
+  {
+    "id": "sword",
+    "name": "Sword",
+    "slot": "mainHand",
+    "gearType": "sword",
+    "width": 1,
+    "height": 3,
+    "profession": "blacksmithing",
+    "mainCategory": "ore",
+    "secondaryCategory": "fang",
+    "baseStats": {
+      "strength": 6,
+      "skill": 1
+    },
+    "armourWeight": null,
+    "craftLevelOffset": 3
+  },
+  {
+    "id": "axe",
+    "name": "Axe",
+    "slot": "mainHand",
+    "gearType": "axe",
+    "width": 1,
+    "height": 3,
+    "profession": "blacksmithing",
+    "mainCategory": "ore",
+    "secondaryCategory": "fang",
+    "baseStats": {
+      "strength": 8
+    },
+    "armourWeight": null,
+    "craftLevelOffset": 5
+  },
+  {
+    "id": "mace",
+    "name": "Mace",
+    "slot": "mainHand",
+    "gearType": "mace",
+    "width": 1,
+    "height": 3,
+    "profession": "blacksmithing",
+    "mainCategory": "ore",
+    "secondaryCategory": "bone",
+    "baseStats": {
+      "strength": 5,
+      "magic": 2,
+      "resistance": 2
+    },
+    "armourWeight": null,
+    "craftLevelOffset": 6
+  },
+  {
+    "id": "dagger",
+    "name": "Dagger",
+    "slot": "mainHand",
+    "gearType": "dagger",
+    "width": 1,
+    "height": 2,
+    "profession": "blacksmithing",
+    "mainCategory": "ore",
+    "secondaryCategory": "fang",
+    "baseStats": {
+      "strength": 4,
+      "speed": 4,
+      "skill": 2
+    },
+    "armourWeight": null,
+    "craftLevelOffset": 1
+  },
+  {
+    "id": "bow",
+    "name": "Bow",
+    "slot": "mainHand",
+    "gearType": "bow",
+    "width": 2,
+    "height": 3,
+    "profession": "fletching",
+    "mainCategory": "wood",
+    "secondaryCategory": "sinew",
+    "baseStats": {
+      "strength": 6,
+      "skill": 3
+    },
+    "armourWeight": null,
+    "craftLevelOffset": 4
+  },
+  {
+    "id": "staff",
+    "name": "Staff",
+    "slot": "mainHand",
+    "gearType": "staff",
+    "width": 1,
+    "height": 4,
+    "profession": "woodworking",
+    "mainCategory": "wood",
+    "secondaryCategory": "bone",
+    "baseStats": {
+      "magic": 8
+    },
+    "armourWeight": null,
+    "craftLevelOffset": 4
+  },
+  {
+    "id": "wand",
+    "name": "Wand",
+    "slot": "mainHand",
+    "gearType": "wand",
+    "width": 1,
+    "height": 2,
+    "profession": "woodworking",
+    "mainCategory": "wood",
+    "secondaryCategory": "bone",
+    "baseStats": {
+      "magic": 5,
+      "speed": 2
+    },
+    "armourWeight": null,
+    "craftLevelOffset": 1
+  },
+  {
+    "id": "shield",
+    "name": "Shield",
+    "slot": "offHand",
+    "gearType": "shield",
+    "width": 2,
+    "height": 3,
+    "profession": "blacksmithing",
+    "mainCategory": "ore",
+    "secondaryCategory": "bone",
+    "baseStats": {
+      "defence": 4,
+      "resistance": 1
+    },
+    "armourWeight": null,
+    "craftLevelOffset": 8
+  },
+  {
+    "id": "quiver",
+    "name": "Quiver",
+    "slot": "offHand",
+    "gearType": "quiver",
+    "width": 1,
+    "height": 2,
+    "profession": "fletching",
+    "mainCategory": "wood",
+    "secondaryCategory": "sinew",
+    "baseStats": {
+      "strength": 2,
+      "skill": 3
+    },
+    "armourWeight": null,
+    "craftLevelOffset": 1
+  },
+  {
+    "id": "tome",
+    "name": "Tome",
+    "slot": "offHand",
+    "gearType": "tome",
+    "width": 2,
+    "height": 2,
+    "profession": "tailoring",
+    "mainCategory": "cloth",
+    "secondaryCategory": "sinew",
+    "baseStats": {
+      "magic": 3,
+      "resistance": 2
+    },
+    "armourWeight": null,
+    "craftLevelOffset": 8
+  },
+  {
+    "id": "parrying-dagger",
+    "name": "Parrying Dagger",
+    "slot": "offHand",
+    "gearType": "dagger",
+    "width": 1,
+    "height": 2,
+    "profession": "blacksmithing",
+    "mainCategory": "ore",
+    "secondaryCategory": "fang",
+    "baseStats": {
+      "strength": 2,
+      "skill": 2,
+      "speed": 2
+    },
+    "armourWeight": null,
+    "craftLevelOffset": 4
+  },
+  {
+    "id": "belt",
+    "name": "Belt",
+    "slot": "belt",
+    "gearType": "accessory",
+    "width": 2,
+    "height": 1,
+    "profession": "tailoring",
+    "mainCategory": "hide",
+    "secondaryCategory": "sinew",
+    "baseStats": {
+      "hp": 6,
+      "defence": 1
+    },
+    "armourWeight": null,
+    "craftLevelOffset": 1
+  },
+  {
+    "id": "ring",
+    "name": "Ring",
+    "slot": "ring",
+    "gearType": "accessory",
+    "width": 1,
+    "height": 1,
+    "profession": "jewelcrafting",
+    "mainCategory": "gem",
+    "secondaryCategory": "ore",
+    "baseStats": {
+      "skill": 2,
+      "hp": 2
+    },
+    "armourWeight": null,
+    "craftLevelOffset": 1
+  },
+  {
+    "id": "amulet",
+    "name": "Amulet",
+    "slot": "amulet",
+    "gearType": "accessory",
+    "width": 1,
+    "height": 1,
+    "profession": "jewelcrafting",
+    "mainCategory": "gem",
+    "secondaryCategory": "ore",
+    "baseStats": {
+      "hp": 4,
+      "resistance": 2
+    },
+    "armourWeight": null,
+    "craftLevelOffset": 4
+  },
+  {
+    "id": "helm-heavy",
+    "name": "Helm",
+    "slot": "helm",
+    "gearType": "armour",
+    "armourWeight": "heavy",
+    "width": 2,
+    "height": 2,
+    "profession": "blacksmithing",
+    "mainCategory": "ore",
+    "secondaryCategory": "bone",
+    "baseStats": {
+      "defence": 3,
+      "resistance": 1,
+      "hp": 4
+    },
+    "craftLevelOffset": 5
+  },
+  {
+    "id": "helm-medium",
+    "name": "Cap",
+    "slot": "helm",
+    "gearType": "armour",
+    "armourWeight": "medium",
+    "width": 2,
+    "height": 2,
+    "profession": "tailoring",
+    "mainCategory": "hide",
+    "secondaryCategory": "sinew",
+    "baseStats": {
+      "defence": 2,
+      "resistance": 2,
+      "hp": 4
+    },
+    "craftLevelOffset": 2
+  },
+  {
+    "id": "helm-light",
+    "name": "Hood",
+    "slot": "helm",
+    "gearType": "armour",
+    "armourWeight": "light",
+    "width": 2,
+    "height": 2,
+    "profession": "tailoring",
+    "mainCategory": "cloth",
+    "secondaryCategory": "sinew",
+    "baseStats": {
+      "defence": 1,
+      "resistance": 3,
+      "hp": 4
+    },
+    "craftLevelOffset": 3
+  },
+  {
+    "id": "armour-heavy",
+    "name": "Cuirass",
+    "slot": "armour",
+    "gearType": "armour",
+    "armourWeight": "heavy",
+    "width": 2,
+    "height": 3,
+    "profession": "blacksmithing",
+    "mainCategory": "ore",
+    "secondaryCategory": "bone",
+    "baseStats": {
+      "defence": 6,
+      "resistance": 2,
+      "hp": 10
+    },
+    "craftLevelOffset": 9
+  },
+  {
+    "id": "armour-medium",
+    "name": "Jerkin",
+    "slot": "armour",
+    "gearType": "armour",
+    "armourWeight": "medium",
+    "width": 2,
+    "height": 3,
+    "profession": "tailoring",
+    "mainCategory": "hide",
+    "secondaryCategory": "sinew",
+    "baseStats": {
+      "defence": 4,
+      "resistance": 3,
+      "hp": 10
+    },
+    "craftLevelOffset": 6
+  },
+  {
+    "id": "armour-light",
+    "name": "Robe",
+    "slot": "armour",
+    "gearType": "armour",
+    "armourWeight": "light",
+    "width": 2,
+    "height": 3,
+    "profession": "tailoring",
+    "mainCategory": "cloth",
+    "secondaryCategory": "sinew",
+    "baseStats": {
+      "defence": 2,
+      "resistance": 6,
+      "hp": 10
+    },
+    "craftLevelOffset": 7
+  },
+  {
+    "id": "gloves-heavy",
+    "name": "Gauntlets",
+    "slot": "gloves",
+    "gearType": "armour",
+    "armourWeight": "heavy",
+    "width": 2,
+    "height": 2,
+    "profession": "blacksmithing",
+    "mainCategory": "ore",
+    "secondaryCategory": "bone",
+    "baseStats": {
+      "defence": 2,
+      "resistance": 1,
+      "skill": 1
+    },
+    "craftLevelOffset": 6
+  },
+  {
+    "id": "gloves-medium",
+    "name": "Gloves",
+    "slot": "gloves",
+    "gearType": "armour",
+    "armourWeight": "medium",
+    "width": 2,
+    "height": 2,
+    "profession": "tailoring",
+    "mainCategory": "hide",
+    "secondaryCategory": "sinew",
+    "baseStats": {
+      "defence": 1,
+      "resistance": 1,
+      "skill": 1
+    },
+    "craftLevelOffset": 3
+  },
+  {
+    "id": "gloves-light",
+    "name": "Mitts",
+    "slot": "gloves",
+    "gearType": "armour",
+    "armourWeight": "light",
+    "width": 2,
+    "height": 2,
+    "profession": "tailoring",
+    "mainCategory": "cloth",
+    "secondaryCategory": "sinew",
+    "baseStats": {
+      "defence": 1,
+      "resistance": 2,
+      "skill": 1
+    },
+    "craftLevelOffset": 4
+  },
+  {
+    "id": "boots-heavy",
+    "name": "Greaves",
+    "slot": "boots",
+    "gearType": "armour",
+    "armourWeight": "heavy",
+    "width": 2,
+    "height": 2,
+    "profession": "blacksmithing",
+    "mainCategory": "ore",
+    "secondaryCategory": "bone",
+    "baseStats": {
+      "defence": 2,
+      "resistance": 1,
+      "speed": 1
+    },
+    "craftLevelOffset": 7
+  },
+  {
+    "id": "boots-medium",
+    "name": "Boots",
+    "slot": "boots",
+    "gearType": "armour",
+    "armourWeight": "medium",
+    "width": 2,
+    "height": 2,
+    "profession": "tailoring",
+    "mainCategory": "hide",
+    "secondaryCategory": "sinew",
+    "baseStats": {
+      "defence": 1,
+      "resistance": 1,
+      "speed": 1
+    },
+    "craftLevelOffset": 4
+  },
+  {
+    "id": "boots-light",
+    "name": "Slippers",
+    "slot": "boots",
+    "gearType": "armour",
+    "armourWeight": "light",
+    "width": 2,
+    "height": 2,
+    "profession": "tailoring",
+    "mainCategory": "cloth",
+    "secondaryCategory": "sinew",
+    "baseStats": {
+      "defence": 1,
+      "resistance": 2,
+      "speed": 1
+    },
+    "craftLevelOffset": 5
+  }
+]

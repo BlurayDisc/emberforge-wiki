@@ -1,0 +1,64 @@
+{
+  "skinTones": [
+    "#f2c9a0",
+    "#e0a878",
+    "#b97b52",
+    "#8a5636"
+  ],
+  "skinShades": [
+    "#d9a87c",
+    "#c58a5c",
+    "#9a6440",
+    "#6e4228"
+  ],
+  "hairColors": [
+    "#3a2a1e",
+    "#6a4a2a",
+    "#c9a24e",
+    "#a63a2a",
+    "#d8d4cc"
+  ],
+  "eyeColors": [
+    "#2a3a5a",
+    "#3a6a3a",
+    "#5a3a2a",
+    "#2a2a2a"
+  ],
+  "classLooks": {
+    "warrior": {
+      "background": "#3b4a6b",
+      "backgroundShade": "#2f3b57",
+      "cloth": "#9aa6b8",
+      "clothShade": "#6f7a8c",
+      "trim": "#f2c14e"
+    },
+    "archer": {
+      "background": "#2d4a33",
+      "backgroundShade": "#243d29",
+      "cloth": "#3f7a4a",
+      "clothShade": "#2c5736",
+      "trim": "#c9a24e"
+    },
+    "mage": {
+      "background": "#3d2a5a",
+      "backgroundShade": "#31224a",
+      "cloth": "#7b4bb7",
+      "clothShade": "#58337f",
+      "trim": "#f2c14e"
+    },
+    "priest": {
+      "background": "#5a4a2a",
+      "backgroundShade": "#4a3d22",
+      "cloth": "#ead9a8",
+      "clothShade": "#b9a77a",
+      "trim": "#f2c14e"
+    },
+    "thief": {
+      "background": "#2a2a35",
+      "backgroundShade": "#22222b",
+      "cloth": "#454356",
+      "clothShade": "#2e2c3b",
+      "trim": "#b23a3a"
+    }
+  }
+}

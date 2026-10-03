@@ -1,0 +1,372 @@
+{
+  "effects": {
+    "ui-click": [
+      {
+        "wave": "square",
+        "startFrequency": 660,
+        "endFrequency": 880,
+        "durationSeconds": 0.04,
+        "volume": 0.12
+      }
+    ],
+    "attack-sword": [
+      {
+        "wave": "noise",
+        "durationSeconds": 0.12,
+        "volume": 0.22,
+        "filter": {
+          "type": "highpass",
+          "frequency": 2500
+        }
+      }
+    ],
+    "attack-bow": [
+      {
+        "wave": "triangle",
+        "startFrequency": 900,
+        "endFrequency": 300,
+        "durationSeconds": 0.09,
+        "volume": 0.2
+      },
+      {
+        "wave": "noise",
+        "durationSeconds": 0.05,
+        "volume": 0.12,
+        "filter": {
+          "type": "highpass",
+          "frequency": 4000
+        }
+      }
+    ],
+    "attack-magic": [
+      {
+        "wave": "square",
+        "startFrequency": 300,
+        "endFrequency": 1400,
+        "durationSeconds": 0.18,
+        "volume": 0.14
+      },
+      {
+        "wave": "triangle",
+        "startFrequency": 600,
+        "endFrequency": 1800,
+        "durationSeconds": 0.18,
+        "volume": 0.12
+      }
+    ],
+    "attack-mace": [
+      {
+        "wave": "triangle",
+        "startFrequency": 200,
+        "endFrequency": 70,
+        "durationSeconds": 0.14,
+        "volume": 0.32
+      }
+    ],
+    "attack-dagger": [
+      {
+        "wave": "noise",
+        "durationSeconds": 0.06,
+        "volume": 0.22,
+        "filter": {
+          "type": "bandpass",
+          "frequency": 3500
+        }
+      }
+    ],
+    "attack-bite": [
+      {
+        "wave": "noise",
+        "durationSeconds": 0.08,
+        "volume": 0.22,
+        "filter": {
+          "type": "bandpass",
+          "frequency": 1800
+        }
+      },
+      {
+        "wave": "square",
+        "startFrequency": 140,
+        "endFrequency": 90,
+        "durationSeconds": 0.08,
+        "volume": 0.12
+      }
+    ],
+    "attack-club": [
+      {
+        "wave": "triangle",
+        "startFrequency": 130,
+        "endFrequency": 60,
+        "durationSeconds": 0.12,
+        "volume": 0.3
+      }
+    ],
+    "attack-chief": [
+      {
+        "wave": "triangle",
+        "startFrequency": 90,
+        "endFrequency": 40,
+        "durationSeconds": 0.25,
+        "volume": 0.4
+      },
+      {
+        "wave": "noise",
+        "durationSeconds": 0.2,
+        "volume": 0.2,
+        "filter": {
+          "type": "lowpass",
+          "frequency": 800
+        }
+      }
+    ],
+    "hit-armour-heavy": [
+      {
+        "wave": "square",
+        "startFrequency": 1200,
+        "endFrequency": 700,
+        "durationSeconds": 0.1,
+        "volume": 0.16
+      },
+      {
+        "wave": "noise",
+        "durationSeconds": 0.09,
+        "volume": 0.26,
+        "filter": {
+          "type": "highpass",
+          "frequency": 3000
+        }
+      },
+      {
+        "wave": "triangle",
+        "startFrequency": 400,
+        "endFrequency": 300,
+        "durationSeconds": 0.15,
+        "volume": 0.18,
+        "delaySeconds": 0.01
+      }
+    ],
+    "hit-armour-medium": [
+      {
+        "wave": "triangle",
+        "startFrequency": 220,
+        "endFrequency": 110,
+        "durationSeconds": 0.1,
+        "volume": 0.32
+      },
+      {
+        "wave": "noise",
+        "durationSeconds": 0.08,
+        "volume": 0.18,
+        "filter": {
+          "type": "lowpass",
+          "frequency": 900
+        }
+      }
+    ],
+    "hit-armour-light": [
+      {
+        "wave": "noise",
+        "durationSeconds": 0.14,
+        "volume": 0.22,
+        "filter": {
+          "type": "lowpass",
+          "frequency": 500
+        }
+      },
+      {
+        "wave": "triangle",
+        "startFrequency": 140,
+        "endFrequency": 90,
+        "durationSeconds": 0.1,
+        "volume": 0.14
+      }
+    ],
+    "hurt-rat": [
+      {
+        "wave": "square",
+        "startFrequency": 1500,
+        "endFrequency": 900,
+        "durationSeconds": 0.07,
+        "volume": 0.14
+      }
+    ],
+    "hurt-wolf": [
+      {
+        "wave": "sawtooth",
+        "startFrequency": 500,
+        "endFrequency": 250,
+        "durationSeconds": 0.15,
+        "volume": 0.16
+      }
+    ],
+    "hurt-goblin": [
+      {
+        "wave": "square",
+        "startFrequency": 300,
+        "endFrequency": 180,
+        "durationSeconds": 0.14,
+        "volume": 0.16
+      }
+    ],
+    "hurt-chief": [
+      {
+        "wave": "sawtooth",
+        "startFrequency": 180,
+        "endFrequency": 80,
+        "durationSeconds": 0.25,
+        "volume": 0.24
+      }
+    ],
+    "critical-ping": [
+      {
+        "wave": "square",
+        "startFrequency": 1800,
+        "endFrequency": 2400,
+        "durationSeconds": 0.08,
+        "volume": 0.12,
+        "delaySeconds": 0.04
+      }
+    ],
+    "heal-chime": [
+      {
+        "wave": "triangle",
+        "startFrequency": 880,
+        "endFrequency": 880,
+        "durationSeconds": 0.12,
+        "volume": 0.2
+      },
+      {
+        "wave": "triangle",
+        "startFrequency": 1175,
+        "endFrequency": 1175,
+        "durationSeconds": 0.12,
+        "volume": 0.2,
+        "delaySeconds": 0.08
+      },
+      {
+        "wave": "triangle",
+        "startFrequency": 1568,
+        "endFrequency": 1568,
+        "durationSeconds": 0.18,
+        "volume": 0.2,
+        "delaySeconds": 0.16
+      }
+    ],
+    "defeat-monster": [
+      {
+        "wave": "square",
+        "startFrequency": 400,
+        "endFrequency": 60,
+        "durationSeconds": 0.35,
+        "volume": 0.2
+      }
+    ],
+    "defeat-hero": [
+      {
+        "wave": "triangle",
+        "startFrequency": 300,
+        "endFrequency": 50,
+        "durationSeconds": 0.5,
+        "volume": 0.3
+      }
+    ],
+    "victory": [
+      {
+        "wave": "square",
+        "startFrequency": 523,
+        "endFrequency": 523,
+        "durationSeconds": 0.12,
+        "volume": 0.14
+      },
+      {
+        "wave": "square",
+        "startFrequency": 659,
+        "endFrequency": 659,
+        "durationSeconds": 0.12,
+        "volume": 0.14,
+        "delaySeconds": 0.1
+      },
+      {
+        "wave": "square",
+        "startFrequency": 784,
+        "endFrequency": 784,
+        "durationSeconds": 0.12,
+        "volume": 0.14,
+        "delaySeconds": 0.2
+      },
+      {
+        "wave": "square",
+        "startFrequency": 1047,
+        "endFrequency": 1047,
+        "durationSeconds": 0.3,
+        "volume": 0.14,
+        "delaySeconds": 0.3
+      }
+    ],
+    "level-up": [
+      {
+        "wave": "triangle",
+        "startFrequency": 523,
+        "endFrequency": 523,
+        "durationSeconds": 0.1,
+        "volume": 0.22
+      },
+      {
+        "wave": "triangle",
+        "startFrequency": 659,
+        "endFrequency": 659,
+        "durationSeconds": 0.1,
+        "volume": 0.22,
+        "delaySeconds": 0.09
+      },
+      {
+        "wave": "triangle",
+        "startFrequency": 784,
+        "endFrequency": 784,
+        "durationSeconds": 0.1,
+        "volume": 0.22,
+        "delaySeconds": 0.18
+      },
+      {
+        "wave": "triangle",
+        "startFrequency": 1047,
+        "endFrequency": 1047,
+        "durationSeconds": 0.1,
+        "volume": 0.22,
+        "delaySeconds": 0.27
+      },
+      {
+        "wave": "square",
+        "startFrequency": 1319,
+        "endFrequency": 1319,
+        "durationSeconds": 0.3,
+        "volume": 0.14,
+        "delaySeconds": 0.36
+      }
+    ]
+  },
+  "classAttack": {
+    "warrior": "attack-sword",
+    "archer": "attack-bow",
+    "mage": "attack-magic",
+    "priest": "attack-mace",
+    "thief": "attack-dagger"
+  },
+  "monsterAttack": {
+    "monster-rat": "attack-bite",
+    "monster-wolf": "attack-bite",
+    "monster-goblin": "attack-club",
+    "monster-goblin-chief": "attack-chief"
+  },
+  "monsterHurt": {
+    "monster-rat": "hurt-rat",
+    "monster-wolf": "hurt-wolf",
+    "monster-goblin": "hurt-goblin",
+    "monster-goblin-chief": "hurt-chief"
+  },
+  "armourHit": {
+    "heavy": "hit-armour-heavy",
+    "medium": "hit-armour-medium",
+    "light": "hit-armour-light"
+  }
+}

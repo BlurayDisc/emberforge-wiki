@@ -1,0 +1,118 @@
+[
+  {
+    "id": "cave-rat",
+    "name": "Cave Rat",
+    "rank": "normal",
+    "spriteKey": "monster-rat",
+    "hpFactor": 0.8,
+    "attackFactor": 0.8,
+    "defenceFactor": 0.7,
+    "speed": 110,
+    "drops": [
+      { "materialId": "rawhide", "chance": 0.35, "minQuantity": 1, "maxQuantity": 1 },
+      { "materialId": "sharp-fang", "chance": 0.35, "minQuantity": 1, "maxQuantity": 1 },
+      { "materialId": "coarse-sinew", "chance": 0.2, "minQuantity": 1, "maxQuantity": 1 },
+      { "materialId": "faint-essence", "chance": 0.1, "minQuantity": 1, "maxQuantity": 1 }
+    ]
+  },
+  {
+    "id": "wolf",
+    "name": "Wolf",
+    "rank": "normal",
+    "spriteKey": "monster-wolf",
+    "hpFactor": 1,
+    "attackFactor": 1,
+    "defenceFactor": 0.9,
+    "speed": 115,
+    "drops": [
+      { "materialId": "rawhide", "chance": 0.5, "minQuantity": 1, "maxQuantity": 2 },
+      { "materialId": "sharp-fang", "chance": 0.45, "minQuantity": 1, "maxQuantity": 1 },
+      { "materialId": "coarse-sinew", "chance": 0.4, "minQuantity": 1, "maxQuantity": 1 },
+      { "materialId": "faint-essence", "chance": 0.12, "minQuantity": 1, "maxQuantity": 1 }
+    ]
+  },
+  {
+    "id": "goblin",
+    "name": "Goblin",
+    "rank": "normal",
+    "spriteKey": "monster-goblin",
+    "hpFactor": 1.1,
+    "attackFactor": 1,
+    "defenceFactor": 1.1,
+    "speed": 100,
+    "drops": [
+      { "materialId": "copper-ore", "chance": 0.5, "minQuantity": 1, "maxQuantity": 2 },
+      { "materialId": "linen", "chance": 0.4, "minQuantity": 1, "maxQuantity": 1 },
+      { "materialId": "bone-shard", "chance": 0.4, "minQuantity": 1, "maxQuantity": 1 },
+      { "materialId": "pine-wood", "chance": 0.5, "minQuantity": 1, "maxQuantity": 1 },
+      { "materialId": "quartz", "chance": 0.1, "minQuantity": 1, "maxQuantity": 1 },
+      { "materialId": "faint-essence", "chance": 0.12, "minQuantity": 1, "maxQuantity": 1 }
+    ]
+  },
+  {
+    "id": "rat-king",
+    "name": "Rat King",
+    "rank": "rare",
+    "spriteKey": "monster-rat",
+    "hpFactor": 2.5,
+    "attackFactor": 1.1,
+    "defenceFactor": 1,
+    "speed": 105,
+    "drops": [
+      { "materialId": "rawhide", "chance": 1, "minQuantity": 2, "maxQuantity": 3 },
+      { "materialId": "sharp-fang", "chance": 0.8, "minQuantity": 2, "maxQuantity": 3 },
+      { "materialId": "faint-essence", "chance": 0.5, "minQuantity": 1, "maxQuantity": 2 },
+      { "materialId": "tarnished-catalyst", "chance": 1, "minQuantity": 1, "maxQuantity": 1 }
+    ]
+  },
+  {
+    "id": "alpha-wolf",
+    "name": "Alpha Wolf",
+    "rank": "rare",
+    "spriteKey": "monster-wolf",
+    "hpFactor": 2.5,
+    "attackFactor": 1.2,
+    "defenceFactor": 1,
+    "speed": 120,
+    "drops": [
+      { "materialId": "rawhide", "chance": 1, "minQuantity": 2, "maxQuantity": 3 },
+      { "materialId": "coarse-sinew", "chance": 0.8, "minQuantity": 1, "maxQuantity": 2 },
+      { "materialId": "faint-essence", "chance": 0.5, "minQuantity": 1, "maxQuantity": 2 },
+      { "materialId": "tarnished-catalyst", "chance": 1, "minQuantity": 1, "maxQuantity": 1 }
+    ]
+  },
+  {
+    "id": "goblin-captain",
+    "name": "Goblin Captain",
+    "rank": "rare",
+    "spriteKey": "monster-goblin",
+    "hpFactor": 2.5,
+    "attackFactor": 1.2,
+    "defenceFactor": 1.2,
+    "speed": 100,
+    "drops": [
+      { "materialId": "copper-ore", "chance": 1, "minQuantity": 2, "maxQuantity": 3 },
+      { "materialId": "bone-shard", "chance": 0.8, "minQuantity": 1, "maxQuantity": 3 },
+      { "materialId": "quartz", "chance": 0.5, "minQuantity": 1, "maxQuantity": 1 },
+      { "materialId": "tarnished-catalyst", "chance": 1, "minQuantity": 1, "maxQuantity": 1 }
+    ]
+  },
+  {
+    "id": "goblin-chief",
+    "name": "Goblin Chief",
+    "rank": "boss",
+    "spriteKey": "monster-goblin-chief",
+    "hpFactor": 14,
+    "attackFactor": 0.75,
+    "defenceFactor": 1.3,
+    "speed": 95,
+    "drops": [
+      { "materialId": "copper-ore", "chance": 1, "minQuantity": 3, "maxQuantity": 5 },
+      { "materialId": "linen", "chance": 1, "minQuantity": 2, "maxQuantity": 4 },
+      { "materialId": "bone-shard", "chance": 1, "minQuantity": 2, "maxQuantity": 3 },
+      { "materialId": "quartz", "chance": 0.8, "minQuantity": 1, "maxQuantity": 2 },
+      { "materialId": "faint-essence", "chance": 1, "minQuantity": 2, "maxQuantity": 3 },
+      { "materialId": "tarnished-catalyst", "chance": 1, "minQuantity": 2, "maxQuantity": 2 }
+    ]
+  }
+]

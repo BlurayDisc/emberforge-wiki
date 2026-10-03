@@ -1,0 +1,13 @@
+{
+  "actionThreshold": 100,
+  "secondsPerTick": 0.1,
+  "maximumBattleSeconds": 1200,
+  "criticalDamageMultiplier": 1.5,
+  "criticalChancePerSkillPoint": 0.0025,
+  "maximumCriticalChance": 0.5,
+  "mitigationBase": 50,
+  "mitigationPerAttackerLevel": 10,
+  "damageVarianceFraction": 0.1,
+  "healBelowHealthFraction": 0.5,
+  "healPowerMultiplier": 1.5
+}

@@ -1,0 +1,35 @@
+export function formatPercent(fraction: number): string {
+  const percent = fraction * 100;
+  return `${Number.isInteger(percent) ? percent : percent.toFixed(1).replace(/\.0$/, '')}%`;
+}
+
+export function formatNumber(value: number): string {
+  return Number.isInteger(value) ? value.toLocaleString('en-US') : String(Math.round(value * 100) / 100);
+}
+
+export function formatQuantityRange(minimum: number, maximum: number): string {
+  return minimum === maximum ? String(minimum) : `${minimum}-${maximum}`;
+}
+
+export function formatSignedValueRange(minimum: number, maximum: number): string {
+  return `+${formatQuantityRange(minimum, maximum)}`;
+}
+
+export function formatMoney(copper: number, copperPerSilver = 100, silverPerGold = 100): string {
+  const gold = Math.floor(copper / (copperPerSilver * silverPerGold));
+  const silver = Math.floor(copper / copperPerSilver) % silverPerGold;
+  const remainingCopper = copper % copperPerSilver;
+  const parts = [gold ? `${gold}g` : '', silver ? `${silver}s` : '', remainingCopper || copper === 0 ? `${remainingCopper}c` : ''];
+  return parts.filter(Boolean).join(' ');
+}
+
+export function formatDuration(totalSeconds: number): string {
+  if (totalSeconds < 60) return `${totalSeconds}s`;
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return seconds ? `${minutes}m ${seconds}s` : `${minutes}m`;
+}
+
+export function slugFromId(id: string): string {
+  return encodeURIComponent(id);
+}
