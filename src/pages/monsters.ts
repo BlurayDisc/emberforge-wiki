@@ -5,6 +5,7 @@ import type { GameText } from '../data/text';
 import { pixelArt } from '../render/art';
 import { badge, cardGrid, card, dataTable, definitionList, filterBox, jumpLinks, loreText, pageHeading, panel, siteLink, subheading } from '../render/components';
 import { formatPercent, formatQuantityRange } from '../render/format';
+import { monsterSpellTable } from './spellTable';
 import { html, type Html } from '../render/html';
 import type { Page } from '../render/page';
 import { t } from '../i18n/ui';
@@ -14,18 +15,22 @@ const RANK_ORDER = ['normal', 'rare', 'boss'];
 const monsterPath = (monster: Monster) => `monsters/${monster.id}.html`;
 const rankSortKey = (monster: Monster) => (RANK_ORDER.includes(monster.rank) ? RANK_ORDER.indexOf(monster.rank) : RANK_ORDER.length);
 
+// Same formula as scaledAtLevel in the game. The exponent bends the curve.
 function scaledStat(game: GameIndex, key: string, level: number): number {
-  const scaling = balanceValue<{ base: number; perLevel: number }>(game.data, 'monster-scaling', key);
-  return scaling.base + scaling.perLevel * level;
+  const scaling = balanceValue<{ base: number; perLevel: number; exponent?: number }>(game.data, 'monster-scaling', key);
+  return scaling.base + scaling.perLevel * level ** (scaling.exponent ?? 1);
 }
 
-// Same formulas as createMonsterUnit in the game.
+const roundedToHundredths = (value: number): number => Math.round(value * 100) / 100;
+
+// Same formulas as statsOf in the game: a boss uses its own numbers, other monsters follow the level curve.
 function monsterStatsAtLevel(game: GameIndex, monster: Monster, level: number) {
+  if (monster.fixedStats) return { ...monster.fixedStats, attack: roundedToHundredths(monster.fixedStats.attack) };
   return {
-    hp: Math.round(scaledStat(game, 'hp', level) * monster.hpFactor),
-    attack: Math.round(scaledStat(game, 'attack', level) * monster.attackFactor),
-    defence: Math.round(scaledStat(game, 'defence', level) * monster.defenceFactor),
-    resistance: Math.round(scaledStat(game, 'resistance', level) * monster.defenceFactor),
+    hp: Math.round(scaledStat(game, 'hp', level) * (monster.hpFactor ?? 1)),
+    attack: roundedToHundredths(scaledStat(game, 'attack', level) * (monster.attackFactor ?? 1)),
+    defence: Math.round(scaledStat(game, 'defence', level) * (monster.defenceFactor ?? 1)),
+    resistance: Math.round(scaledStat(game, 'resistance', level) * (monster.defenceFactor ?? 1)),
   };
 }
 
@@ -82,6 +87,7 @@ function rewardNotes(game: GameIndex, monster: Monster) {
 
 function monsterPage(game: GameIndex, text: GameText, monster: Monster): Page {
   const appearances = game.appearancesOfMonster(monster.id);
+  const spells = game.data.monsterSpells.filter((spell) => (monster.spellIds ?? []).includes(spell.id));
   const body = html`
     ${pageHeading(monster.name)}
     <div class="portrait">${pixelArt('monsters', monster.spriteKey, monster.name, 5)}</div>
@@ -89,10 +95,15 @@ function monsterPage(game: GameIndex, text: GameText, monster: Monster): Page {
     ${loreText(text.find(`monster.${monster.id}.lore`))}
     ${panel(t('Battle traits'), definitionList([
       [t('Speed'), monster.speed],
-      [t('Health factor'), `${monster.hpFactor}x`],
-      [t('Attack factor'), `${monster.attackFactor}x`],
-      [t('Defence factor'), `${monster.defenceFactor}x`],
+      ...(monster.fixedStats
+        ? [[t('Stats'), t('Fixed numbers. They do not follow the level curve.')] as [string, string]]
+        : [
+            [t('Health factor'), `${monster.hpFactor ?? 1}x`] as [string, string],
+            [t('Attack factor'), `${monster.attackFactor ?? 1}x`] as [string, string],
+            [t('Defence factor'), `${monster.defenceFactor ?? 1}x`] as [string, string],
+          ]),
     ]))}
+    ${spells.length ? panel(t('Spells'), html`<p>${t('A monster spell costs no resource. It waits only for its cooldown.')}</p>${monsterSpellTable(text, spells)}`) : null}
     ${panel(t('Stats by dungeon'), appearances.length
       ? dataTable([t('Dungeon'), t('Role'), t('Level'), t('Health'), t('Attack'), t('Defence'), t('Resistance')], appearanceRows(game, monster, appearances))
       : html`<p class="muted">${t('This monster is not placed in a dungeon yet.')}</p>`)}

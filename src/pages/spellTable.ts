@@ -1,5 +1,5 @@
 import { balanceNumber } from '../data/balance';
-import type { HeroClass, Spell, SpellEffect } from '../data/gameData';
+import type { HeroClass, MonsterSpell, Spell, SpellEffect } from '../data/gameData';
 import type { GameIndex } from '../data/gameIndex';
 import type { GameText } from '../data/text';
 import { badge, dataTable } from '../render/components';
@@ -10,13 +10,20 @@ import { t } from '../i18n/ui';
 const percentOf = (fraction: number): number => Math.round(fraction * 100);
 
 // Same wording rules as describeEffect in the game, so the wiki shows the text the player sees.
+function describeInflictedStatus(text: GameText, inflicts: { status: string; strength: number; durationSeconds: number }): string {
+  return text.format('spell.effect.inflicts', { effect: text.format(`spell.status.${inflicts.status}`, { percent: percentOf(inflicts.strength) }), seconds: inflicts.durationSeconds });
+}
+
 function describeEffect(text: GameText, effect: SpellEffect): string {
   switch (effect.kind) {
-    case 'damage':
-      if (effect.target === 'allEnemies') return text.format('spell.effect.damageAllEnemies', { percent: percentOf(effect.power) });
-      return effect.hits > 1
-        ? text.format('spell.effect.damageEnemyMulti', { hits: effect.hits, percent: percentOf(effect.power) })
-        : text.format('spell.effect.damageEnemy', { percent: percentOf(effect.power) });
+    case 'damage': {
+      const damageText = effect.target === 'allEnemies'
+        ? text.format('spell.effect.damageAllEnemies', { percent: percentOf(effect.power) })
+        : effect.hits > 1
+          ? text.format('spell.effect.damageEnemyMulti', { hits: effect.hits, percent: percentOf(effect.power) })
+          : text.format('spell.effect.damageEnemy', { percent: percentOf(effect.power) });
+      return effect.inflicts ? `${damageText} ${describeInflictedStatus(text, effect.inflicts)}` : damageText;
+    }
     case 'drain':
       return text.format('spell.effect.drain', { percent: percentOf(effect.power), heal: percentOf(effect.healFraction) });
     case 'heal':
@@ -28,6 +35,27 @@ function describeEffect(text: GameText, effect: SpellEffect): string {
         seconds: effect.durationSeconds,
       });
   }
+}
+
+// A monster casts at heroes, so the words "you" and "enemy" of a hero spell would be wrong here. Same rule as describeMonsterSpell in the game.
+function describeMonsterEffect(text: GameText, effect: SpellEffect): string {
+  if (effect.kind === 'damage') {
+    const damageText = text.format('spell.monster.damage', { percent: percentOf(effect.power) });
+    return effect.inflicts ? `${damageText} ${describeInflictedStatus(text, effect.inflicts)}` : damageText;
+  }
+  if (effect.kind === 'status') {
+    return text.format('spell.effect.status', {
+      effect: text.format(`spell.status.${effect.status}`, { percent: percentOf(effect.strength) }),
+      target: text.require(`spell.monster.target.${effect.target}`),
+      seconds: effect.durationSeconds,
+    });
+  }
+  return describeEffect(text, effect);
+}
+
+export function monsterSpellTable(text: GameText, spells: MonsterSpell[]): Html {
+  const rows = spells.map((spell) => [text.require(`spell.${spell.id}`), describeMonsterEffect(text, spell.effect), formatDuration(spell.cooldownSeconds)]);
+  return dataTable([t('Spell'), t('Effect'), t('Cooldown')], rows);
 }
 
 export const spellName = (text: GameText, spell: Spell): string => text.require(`spell.${spell.id}`);

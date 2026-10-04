@@ -15,6 +15,7 @@ export interface HeroClass {
   attackKind: string;
   behavior: string;
   resourceId: string;
+  primaryAttribute: string;
   recoveryRate: number;
   weaponTypes: string[];
   offHandTypes: string[];
@@ -35,9 +36,12 @@ export interface Monster {
   name: string;
   rank: MonsterRank;
   spriteKey: string;
-  hpFactor: number;
-  attackFactor: number;
-  defenceFactor: number;
+  // A boss has fixedStats and no factors. Other monsters follow the level curve times the factors.
+  hpFactor?: number;
+  attackFactor?: number;
+  defenceFactor?: number;
+  fixedStats?: { hp: number; attack: number; defence: number; resistance: number };
+  spellIds?: string[];
   speed: number;
   drops: MonsterDrop[];
 }
@@ -118,7 +122,7 @@ export interface BaseItem {
 }
 
 export type SpellEffect =
-  | { kind: 'damage'; damageKind: string; target: string; hits: number; power: number }
+  | { kind: 'damage'; damageKind: string; target: string; hits: number; power: number; inflicts?: { status: string; strength: number; durationSeconds: number } }
   | { kind: 'drain'; damageKind: string; target: string; hits: number; power: number; healFraction: number }
   | { kind: 'heal'; target: string; power: number }
   | { kind: 'status'; status: string; target: string; strength: number; durationSeconds: number };
@@ -127,6 +131,14 @@ export interface Spell {
   id: string;
   classId: string;
   unlockLevel: number;
+  isUltimate: boolean;
+  cooldownSeconds: number;
+  resourceCost: number;
+  effect: SpellEffect;
+}
+
+export interface MonsterSpell {
+  id: string;
   isUltimate: boolean;
   cooldownSeconds: number;
   resourceCost: number;
@@ -164,6 +176,7 @@ export interface GameData {
   baseItems: BaseItem[];
   affixes: Affix[];
   spells: Spell[];
+  monsterSpells: MonsterSpell[];
   professions: Record<string, string>;
   heroNames: string[];
   balance: Record<string, BalanceFile>;
@@ -199,6 +212,7 @@ export function loadGameData(language: Language): GameData {
     baseItems: readJson('base-items.json'),
     affixes: readJson('affixes.json'),
     spells: readJson('spells.json'),
+    monsterSpells: readJson('monster-spells.json'),
     professions: readJson('professions.json'),
     heroNames: readJson('hero-names.json'),
     balance: readBalanceFiles(),

@@ -1,0 +1,5 @@
+[
+  {"id": "goblin-chief.crushing-cleaver", "isUltimate": false, "cooldownSeconds": 9, "resourceCost": 0, "effect": {"kind": "damage", "damageKind": "physical", "target": "enemy", "hits": 1, "power": 4.0, "inflicts": {"status": "wound", "strength": 0.85, "durationSeconds": 9}}},
+  {"id": "goblin-chief.war-cry", "isUltimate": false, "cooldownSeconds": 24, "resourceCost": 0, "effect": {"kind": "status", "status": "haste", "target": "self", "strength": 0.25, "durationSeconds": 8}},
+  {"id": "goblin-chief.cowing-roar", "isUltimate": false, "cooldownSeconds": 20, "resourceCost": 0, "effect": {"kind": "status", "status": "weaken", "target": "enemy", "strength": 0.2, "durationSeconds": 8}}
+]

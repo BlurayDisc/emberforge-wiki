@@ -1,7 +1,10 @@
 import { balanceNumber, balanceValue } from '../data/balance';
 import type { GameIndex } from '../data/gameIndex';
-import type { GameText } from '../data/text';
-import { badge, commaList, dataTable, pageHeading, panel, siteLink } from '../render/components';
+import { capitalised, type GameText } from '../data/text';
+import { badge, commaList, dataTable, jumpLinks, pageHeading, panel, siteLink } from '../render/components';
+import { pixelArt } from '../render/art';
+import type { SpellEffect } from '../data/gameData';
+import { monsterSpellTable, spellTable } from './spellTable';
 import { formatPercent } from '../render/format';
 import { html } from '../render/html';
 import type { Page } from '../render/page';
@@ -16,6 +19,29 @@ interface ResourceBalance {
   regenFractionPerSecond: number;
   gainFractionPerHitDealt: number;
   gainFractionPerHitTaken: number;
+}
+
+const statusesOfEffect = (effect: SpellEffect): Array<{ status: string; strength: number }> => {
+  if (effect.kind === 'status') return [{ status: effect.status, strength: effect.strength }];
+  if (effect.kind === 'damage' && effect.inflicts) return [{ status: effect.inflicts.status, strength: effect.inflicts.strength }];
+  return [];
+};
+
+// One row for each status that a hero spell or a monster spell can cause. The strength is a range when spells differ.
+function statusUsage(game: GameIndex, text: GameText) {
+  const castable = [...game.data.spells, ...game.data.monsterSpells];
+  const statusIds = [...new Set(castable.flatMap((spell) => statusesOfEffect(spell.effect).map(({ status }) => status)))];
+  return statusIds.map((statusId) => {
+    const users = castable.filter((spell) => statusesOfEffect(spell.effect).some(({ status }) => status === statusId));
+    const percents = users.flatMap((spell) => statusesOfEffect(spell.effect).filter(({ status }) => status === statusId).map(({ strength }) => Math.round(strength * 100)));
+    const weakest = Math.min(...percents);
+    const strongest = Math.max(...percents);
+    return [
+      t(capitalised(statusId)),
+      text.format(`spell.status.${statusId}`, { percent: weakest === strongest ? weakest : `${weakest}-${strongest}` }),
+      users.map((spell) => text.require(`spell.${spell.id}`)).join(t(', ')),
+    ];
+  });
 }
 
 export function buildAbilityPages(game: GameIndex, text: GameText): Page[] {
@@ -52,9 +78,24 @@ export function buildAbilityPages(game: GameIndex, text: GameText): Page[] {
   const attackKinds = [...new Set(d.classes.map((heroClass) => heroClass.attackKind))];
   const attackKindRows = attackKinds.map((kind) => [badge(t(kind), kind), attackStatByKind[kind] ?? kind]);
 
+  const classSpellPanels = d.classes.map((heroClass) => panel(
+    html`${pixelArt('heroes', heroClass.id, heroClass.displayName, 2)} ${siteLink(`heroes/${heroClass.id}.html`, heroClass.displayName)}`,
+    html`<p class="muted">${t('Resource: {resource}. A hero fights with {count} spells and 1 ultimate.', { resource: text.require(`resource.${heroClass.resourceId}`), count: spells('normalSlotCount') })}</p>${spellTable(game, text, heroClass)}`,
+    { anchor: `spells-${heroClass.id}` }));
+  const bossesWithSpells = d.monsters.filter((monster) => (monster.spellIds ?? []).length > 0);
+  const statusRows = statusUsage(game, text);
   const body = html`
-    ${pageHeading(t('Abilities'), t('Heroes fight on their own. This page explains what they do on each turn.'))}
-    ${panel(t('Combat roles'), dataTable([t('Role'), t('What it does'), t('Classes')], behaviorRows))}
+    ${pageHeading(t('Abilities and spells'), t('Heroes fight on their own. This page explains what they do on each turn, and lists the spells of every class.'))}
+    ${jumpLinks([
+      { anchor: 'roles', label: t('Combat roles') },
+      { anchor: 'damage', label: t('Damage and criticals') },
+      { anchor: 'statuses', label: t('Statuses') },
+      { anchor: 'spells', label: t('How spells work') },
+      { anchor: 'resources', label: t('Class resources') },
+      ...d.classes.map((heroClass) => ({ anchor: `spells-${heroClass.id}`, label: heroClass.displayName })),
+      ...(bossesWithSpells.length ? [{ anchor: 'monster-spells', label: t('Monster spells') }] : []),
+    ])}
+    ${panel(t('Combat roles'), dataTable([t('Role'), t('What it does'), t('Classes')], behaviorRows), { anchor: 'roles' })}
     ${panel(t('Attack types'), dataTable([t('Type'), t('Damage')], attackKindRows))}
     ${panel(t('Turns and speed'), html`<p>${t('Every unit has a charge meter that fills at its {speed}. At {threshold} the unit acts. A unit with {speed} 100 acts once every {seconds} second.', { speed: text.statName('speed'), threshold: battle('actionThreshold'), seconds: secondsPerAction })}</p>`)}
     ${panel(t('Damage and criticals'), html`
@@ -64,8 +105,9 @@ export function buildAbilityPages(game: GameIndex, text: GameText): Page[] {
         <li>${t('Critical chance = {skill} x {perPoint}, up to {maximum}.', { skill: text.statName('skill'), perPoint: formatPercent(battle('criticalChancePerSkillPoint')), maximum: formatPercent(battle('maximumCriticalChance')) })}</li>
         <li>${t('A critical hit does {multiplier}x damage.', { multiplier: battle('criticalDamageMultiplier') })}</li>
         <li>${t('A battle ends after {seconds} seconds at most.', { seconds: battle('maximumBattleSeconds') })}</li>
-      </ul>`)}
-    ${panel(t('Spells'), html`
+      </ul>`, { anchor: 'damage' })}
+    ${panel(t('Statuses'), html`<p>${t('A status lasts a few seconds. A unit has one status of each kind at a time, and a new one replaces the old one.')}</p>${dataTable([t('Status'), t('Effect'), t('Cast by')], statusRows)}`, { anchor: 'statuses' })}
+    ${panel(t('How spells work'), html`
       <p>${text.require('spells.hint')}</p>
       <ul>
         <li>${text.require('academy.intro')}</li>
@@ -74,10 +116,12 @@ export function buildAbilityPages(game: GameIndex, text: GameText): Page[] {
         <li>${t('A heal spell is cast only when an ally is below {percent} health.', { percent: formatPercent(spells('healCastBelowHealthFraction')) })}</li>
         <li>${t('Every spell has its own cooldown and costs the resource of the class.')}</li>
       </ul>
-      <p>${tHtml('The spells of each class are on its {link}.', { link: siteLink('heroes/index.html', t('hero page')) })}</p>`, { anchor: 'spells' })}
+`, { anchor: 'spells' })}
     ${panel(t('Class resources'), html`
       <p>${t('Each class spends one resource on spells. The pool is: base + per level x level + per point x the attribute.')}</p>
       ${dataTable([t('Resource'), t('Classes'), t('Pool'), t('Attribute'), t('At the start'), t('Regeneration per second'), t('Gain per hit dealt'), t('Gain per hit taken')], resourceRows)}`, { anchor: 'resources' })}
-    ${panel(t('Promotions'), html`<p>${tHtml('Promotion classes are in the game data (see {link}), but the game has no promotion command yet.', { link: siteLink('heroes/index.html#promotions', t('Heroes')) })}</p>`)}`;
-  return [{ path: 'abilities/index.html', title: t('Abilities'), section: 'abilities', body }];
+    ${classSpellPanels}
+    ${bossesWithSpells.length ? panel(t('Monster spells'), html`<p>${t('A monster spell costs no resource. It waits only for its cooldown.')}</p>${bossesWithSpells.map((monster) => html`<h3 class="group-heading">${siteLink(`monsters/${monster.id}.html`, monster.name)}</h3>${monsterSpellTable(text, d.monsterSpells.filter((spell) => (monster.spellIds ?? []).includes(spell.id)))}`)}`, { anchor: 'monster-spells' }) : null}`;
+  const spellNames = d.spells.map((spell) => text.require(`spell.${spell.id}`)).join(' ');
+  return [{ path: 'abilities/index.html', title: t('Abilities and spells'), section: 'abilities', body, searchKind: t('Abilities'), searchKeywords: spellNames }];
 }

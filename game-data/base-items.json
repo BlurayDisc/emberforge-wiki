@@ -58,7 +58,7 @@
     "baseStats": {
       "physicalDamage": 4,
       "speed": 1,
-      "skill": 2
+      "skill": 1
     },
     "armourWeight": null,
     "craftLevelOffset": 1
@@ -74,7 +74,7 @@
     "mainCategory": "wood",
     "baseStats": {
       "physicalDamage": 6,
-      "skill": 3
+      "skill": 1
     },
     "armourWeight": null,
     "craftLevelOffset": 1
@@ -137,7 +137,7 @@
     "mainCategory": "wood",
     "baseStats": {
       "physicalDamage": 2,
-      "skill": 3
+      "skill": 1
     },
     "armourWeight": null,
     "craftLevelOffset": 5
@@ -169,7 +169,7 @@
     "mainCategory": "ore",
     "baseStats": {
       "physicalDamage": 2,
-      "skill": 2,
+      "skill": 1,
       "speed": 1
     },
     "armourWeight": null,
@@ -521,7 +521,7 @@
     "mainCategory": "wood",
     "baseStats": {
       "physicalDamage": 7,
-      "skill": 3
+      "skill": 1
     },
     "armourWeight": null,
     "craftLevelOffset": 3
@@ -537,7 +537,7 @@
     "mainCategory": "wood",
     "baseStats": {
       "physicalDamage": 8,
-      "skill": 4
+      "skill": 2
     },
     "armourWeight": null,
     "craftLevelOffset": 5
@@ -553,7 +553,7 @@
     "mainCategory": "wood",
     "baseStats": {
       "physicalDamage": 9,
-      "skill": 4
+      "skill": 2
     },
     "armourWeight": null,
     "craftLevelOffset": 7
@@ -617,7 +617,7 @@
     "baseStats": {
       "physicalDamage": 5,
       "speed": 1,
-      "skill": 2
+      "skill": 1
     },
     "armourWeight": null,
     "craftLevelOffset": 3
@@ -634,7 +634,7 @@
     "baseStats": {
       "physicalDamage": 6,
       "speed": 1,
-      "skill": 3
+      "skill": 1
     },
     "armourWeight": null,
     "craftLevelOffset": 5
@@ -651,7 +651,7 @@
     "baseStats": {
       "physicalDamage": 7,
       "speed": 1,
-      "skill": 3
+      "skill": 1
     },
     "armourWeight": null,
     "craftLevelOffset": 7

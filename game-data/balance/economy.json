@@ -19,7 +19,7 @@
   ],
   "merchantSaleSlots": 3,
   "merchantExtraSlotCostsCopper": [200, 600, 1800, 5400],
-  "bankUnlockCostsCopper": { "backpackSorting": 150, "dropRates": 300, "monsterStatistics": 500 },
+  "bankUnlockCostsCopper": { "backpackSorting": 150, "dropRates": 300, "monsterStatistics": 500, "quickDispatch": 250, "mainStatGrowth": 200, "attributeGrowth": 200 },
   "saleSecondsMinimum": 5,
   "saleSecondsPerCopper": 0.6,
   "saleSecondsMaximum": 600

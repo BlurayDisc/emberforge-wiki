@@ -24,7 +24,7 @@ export interface SectionDefinition {
 
 export const SECTIONS: SectionDefinition[] = [
   { id: 'heroes', label: 'Heroes', indexPath: 'heroes/index.html', tagline: 'Classes, stats and the gear each one can wear.' },
-  { id: 'abilities', label: 'Abilities', indexPath: 'abilities/index.html', tagline: 'How heroes act in battle: attacks, healing and criticals.' },
+  { id: 'abilities', label: 'Abilities and spells', indexPath: 'abilities/index.html', tagline: 'How heroes act in battle, and every spell of every class.' },
   { id: 'monsters', label: 'Monsters', indexPath: 'monsters/index.html', tagline: 'Beasts, rare foes and bosses, with their loot.' },
   { id: 'dungeons', label: 'Dungeons', indexPath: 'dungeons/index.html', tagline: 'Where to fight, and what to bring.' },
   { id: 'towns', label: 'Towns', indexPath: 'towns/index.html', tagline: 'Ten towns, ten brackets of levels.' },

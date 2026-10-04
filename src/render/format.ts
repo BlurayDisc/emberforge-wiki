@@ -3,7 +3,7 @@ import { t } from '../i18n/ui';
 export function formatPercent(fraction: number): string {
   const percent = fraction * 100;
   if (percent > 0 && percent < 0.1) return `${Number(percent.toPrecision(2))}%`;
-  return `${Number.isInteger(percent) ? percent : percent.toFixed(1).replace(/\.0$/, '')}%`;
+  return `${Number(percent.toFixed(2))}%`;
 }
 
 export function formatNumber(value: number): string {

@@ -256,3 +256,22 @@ h3 { font-size: 1.5rem; margin: 1.25rem 0 0.4rem; }
 :lang(zh-Hans) { --body-font: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", "Noto Sans SC", sans-serif; --title-font: "Songti SC", "STSong", "Noto Serif CJK SC", "Noto Serif SC", "SimSun", serif; }
 :lang(zh-Hans) h1, :lang(zh-Hans) h2, :lang(zh-Hans) h3, :lang(zh-Hans) .site-title, :lang(zh-Hans) .card-title, :lang(zh-Hans) .highlight strong { font-weight: 700; }
 :lang(zh-Hans) .site-title { font-family: var(--title-font), "Jacquard 12"; }
+
+.tree-scroll { overflow-x: auto; padding-bottom: 0.5rem; }
+.promotion-tree, .promotion-tree ul { display: flex; justify-content: center; margin: 0; padding: 1rem 0 0; list-style: none; position: relative; }
+.promotion-tree { padding-top: 0; min-width: min-content; }
+.promotion-tree li { position: relative; padding: 1rem 0.5rem 0; text-align: center; }
+.promotion-tree > li { padding-top: 0; }
+.promotion-tree li::before, .promotion-tree li::after { content: ""; position: absolute; top: 0; right: 50%; width: 50%; height: 1rem; border-top: 2px solid var(--parchment-edge); }
+.promotion-tree li::after { right: auto; left: 50%; border-left: 2px solid var(--parchment-edge); }
+.promotion-tree > li::before, .promotion-tree > li::after { display: none; }
+.promotion-tree li:only-child::before, .promotion-tree li:only-child::after { display: none; }
+.promotion-tree li:first-child::before, .promotion-tree li:last-child::after { border: 0; }
+.promotion-tree li:last-child::before { border-right: 2px solid var(--parchment-edge); }
+.promotion-tree ul::before { content: ""; position: absolute; top: 0; left: 50%; height: 1rem; border-left: 2px solid var(--parchment-edge); }
+.promotion-tree li:only-child { padding-top: 1rem; }
+.promotion-tree > li, .promotion-tree > li:only-child { padding-top: 0; }
+.tree-node { display: inline-flex; flex-direction: column; gap: 0.15rem; width: 13rem; max-width: 100%; padding: 0.5rem 0.7rem; text-align: center; background: var(--parchment-dark); border: 2px solid var(--parchment-edge); box-shadow: 3px 3px 0 var(--wood-light); }
+.tree-node strong { font-family: var(--title-font); font-weight: 400; font-size: 1.35rem; line-height: 1.1; }
+.tree-level { font-size: 0.85rem; font-weight: 700; color: var(--ember); }
+.tree-role { font-size: 0.85rem; color: var(--ink-soft); }
