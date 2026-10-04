@@ -58,23 +58,27 @@ function promotionNote(): Html {
   return html`<p class="muted">${t('Promotions are in the game data, but the game has no promotion command yet.')}</p>`;
 }
 
-function treeNode(label: string | Html, detail: string, role: string): Html {
-  return html`<span class="tree-node"><strong>${label}</strong><span class="tree-level">${detail}</span><span class="tree-role">${role}</span></span>`;
+// The game has no picture for an advanced class yet, so every step shows the picture of the base class in a frame of its tier.
+function advanceNode(heroClass: HeroClass, tier: 'base' | 'branch' | 'master', name: string | Html, detail: string, role: string): Html {
+  return html`<span class="advance-node advance-${tier}">
+    <span class="advance-icon">${pixelArt('heroes', heroClass.id, heroClass.displayName, 2)}</span>
+    <span class="advance-text"><strong>${name}</strong><span class="advance-level">${detail}</span><span class="advance-role">${role}</span></span>
+  </span>`;
 }
 
-// Each base class has branches at one level and a master class after each branch, chained by "promotesFrom".
+// A path from the base class that splits into the branches, and a branch continues to its master class. The data chains them by "promotesFrom".
 export function promotionTree(game: GameIndex, heroClass: HeroClass): Html {
   const advancements = game.advancementsOfClass(heroClass.id);
   const branches = advancements.filter((advancement) => advancement.promotesFrom === heroClass.id);
-  const branchItems = branches.map((branch) => {
+  const branchRows = branches.map((branch) => {
     const masters = advancements.filter((advancement) => advancement.promotesFrom === branch.id);
-    const masterList = masters.length
-      ? html`<ul>${masters.map((master) => html`<li>${treeNode(master.displayName, t('Master, level {level}', { level: master.requiredLevel }), master.roleDescription)}</li>`)}</ul>`
+    const masterColumn = masters.length
+      ? html`<span class="advance-link"></span><span class="advance-masters">${masters.map((master) => advanceNode(heroClass, 'master', master.displayName, t('Master, level {level}', { level: master.requiredLevel }), master.roleDescription))}</span>`
       : null;
-    return html`<li>${treeNode(branch.displayName, t('Branch, level {level}', { level: branch.requiredLevel }), branch.roleDescription)}${masterList}</li>`;
+    return html`<li class="advance-row">${advanceNode(heroClass, 'branch', branch.displayName, t('Branch, level {level}', { level: branch.requiredLevel }), branch.roleDescription)}${masterColumn}</li>`;
   });
-  const rootNode = treeNode(siteLink(classPath(heroClass), heroClass.displayName), t('Base class'), heroClass.roleDescription);
-  return html`<div class="tree-scroll"><ul class="promotion-tree"><li>${rootNode}${branches.length ? html`<ul>${branchItems}</ul>` : null}</li></ul></div>`;
+  const baseNode = advanceNode(heroClass, 'base', siteLink(classPath(heroClass), heroClass.displayName), t('Base class'), heroClass.roleDescription);
+  return html`<div class="tree-scroll"><div class="advance-path">${baseNode}${branches.length ? html`<span class="advance-trunk"></span><ul class="advance-fork">${branchRows}</ul>` : null}</div></div>`;
 }
 
 function promotionTrees(game: GameIndex): Html {
@@ -148,14 +152,14 @@ function classPage(game: GameIndex, text: GameText, heroClass: HeroClass): Page 
         ? tHtml('After you clear {dungeon}', { dungeon: siteLink(`dungeons/${heroClass.unlockAfterDungeonId}.html`, unlockDungeonName(game, heroClass)!) })
         : t('From the start')],
       [t('Attack type'), tHtml('{kind} uses {damage}', { kind: badge(t(heroClass.attackKind), heroClass.attackKind), damage: damageStat })],
-      [t('Combat role'), siteLink('abilities/index.html', t(heroClass.behavior))],
+      [t('Combat role'), siteLink('mechanics/index.html#roles', t(heroClass.behavior))],
       [t('Armour'), capitalised(armourWeightList(text, heroClass))],
       [t('Resource'), text.require(`resource.${heroClass.resourceId}`)],
       [t('Recovery rate'), `${heroClass.recoveryRate}x`],
     ]))}
     ${panel(t('Attributes'), attributePanel(game, text, heroClass), { anchor: 'attributes' })}
     ${panel(t('Stats by level'), levelCalculator(game, text, heroClass))}
-    ${panel(t('Spells'), html`<p>${tHtml('Learned at the {academy}. A hero fights with {count} spells and 1 ultimate.', { academy: siteLink('abilities/index.html#spells', t('Academy')), count: balanceNumber(game.data, 'spells', 'normalSlotCount') })}</p>${spellTable(game, text, heroClass)}`)}
+    ${panel(t('Spells'), html`<p>${tHtml('Learned at the {academy}. A hero fights with {count} spells and 1 ultimate.', { academy: siteLink('buildings/index.html#academy', t('Academy')), count: balanceNumber(game.data, 'spells', 'normalSlotCount') })}</p>${spellTable(game, text, heroClass)}`)}
     ${gearPanel(game, text, heroClass)}
     ${game.advancementsOfClass(heroClass.id).length ? panel(t('Promotions'), html`${promotionNote()}${promotionTree(game, heroClass)}`) : null}`;
   return { path: classPath(heroClass), title: heroClass.displayName, section: 'heroes', body, searchKind: t('Hero'), searchKeywords: `${heroClass.roleDescription} ${game.advancementsOfClass(heroClass.id).map((advancement) => advancement.displayName).join(' ')}` };

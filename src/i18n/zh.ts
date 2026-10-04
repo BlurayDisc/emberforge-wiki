@@ -18,7 +18,6 @@ export const CHINESE: Record<string, string> = {
   // Sections
   'Heroes': '英雄',
   'Classes, stats and the gear each one can wear.': '职业、属性，以及每个职业可以穿戴的装备。',
-  'Abilities': '能力',
   'Monsters': '怪物',
   'Beasts, rare foes and bosses, with their loot.': '野兽、稀有敌人和首领，以及它们的掉落。',
   'Dungeons': '地下城',
@@ -40,7 +39,6 @@ export const CHINESE: Record<string, string> = {
 
   // Home
   '{count} classes': '{count} 个职业',
-  'Combat rules': '战斗规则',
   '{count} monsters': '{count} 种怪物',
   '{count} dungeons': '{count} 个地下城',
   '{count} towns': '{count} 座城镇',
@@ -206,7 +204,6 @@ export const CHINESE: Record<string, string> = {
   'Critical chance = {skill} x {perPoint}, up to {maximum}.': '暴击率 = {skill} x {perPoint}，最高 {maximum}。',
   'A critical hit does {multiplier}x damage.': '暴击造成 {multiplier} 倍伤害。',
   'A battle ends after {seconds} seconds at most.': '一场战斗最多持续 {seconds} 秒。',
-  'Price at the Academy = {base} copper x spell level to the power {exponent}. An ultimate costs {factor}x more.': '学院价格 = {base} 铜 x 法术等级的 {exponent} 次方。终极法术贵 {factor} 倍。',
   'An ultimate is first ready {seconds} seconds into a battle.': '终极法术在战斗开始 {seconds} 秒后才可首次施放。',
   'A heal spell is cast only when an ally is below {percent} health.': '只有友军生命低于 {percent} 时，才会施放治疗法术。',
   'Every spell has its own cooldown and costs the resource of the class.': '每个法术都有自己的冷却时间，并消耗职业的资源。',
@@ -331,7 +328,6 @@ export const CHINESE: Record<string, string> = {
   'Affix values grow by {percent}% for each item level.': '词缀数值每个物品等级成长 {percent}%。',
 
   // Mechanics
-  'The numbers behind the game. They are read from the game data, so they stay current.': '游戏背后的数值。它们直接读自游戏数据，所以始终是最新的。',
   'Experience to the next level = {base} x level to the power {exponent}.': '升级所需经验 = {base} x 等级的 {exponent} 次方。',
   'Level cap: {level}.': '等级上限：{level}。',
   'A monster far above the hero gives more experience, and one far below gives less. The factor changes by {percent} for each level of difference, between {minimum}x and {maximum}x.': '比英雄高很多级的怪物给更多经验，低很多级的给更少。每相差一级，系数变化 {percent}，范围在 {minimum} 倍到 {maximum} 倍之间。',
@@ -343,7 +339,6 @@ export const CHINESE: Record<string, string> = {
   'Merchant sale slots': '商人出售栏位',
   'Sale time': '出售时间',
   '{minimum}s plus {perCopper}s per copper, up to {maximum}s': '{minimum} 秒，每 1 铜再加 {perCopper} 秒，最多 {maximum} 秒',
-  'Hiring heroes': '雇佣英雄',
   'Heroes already in company': '小队已有英雄数',
   'Cost of the next hero': '下一位英雄的价格',
   'The company holds up to {count} heroes.': '小队最多容纳 {count} 位英雄。',
@@ -365,13 +360,8 @@ export const CHINESE: Record<string, string> = {
   'Knocked-out hero returns after': '倒下的英雄归来时间',
   '{base}s plus {perLevel}s per level, divided by the class recovery rate': '{base} 秒，每级再加 {perLevel} 秒，再除以职业恢复速度',
   'Health on return': '归来时的生命',
-  'Grid at the start': '初始格子',
-  'Rows added by each upgrade': '每次升级增加的行数',
-  'Upgrades for sale': '可购买的升级数',
 
   // Attributes, spells and promotion trees
-  'Abilities and spells': '能力与法术',
-  'How heroes act in battle, and every spell of every class.': '英雄在战斗中如何行动，以及每个职业的所有法术。',
   '{resource}, primary attribute {attribute}': '{resource}，主属性：{attribute}',
   'Base class': '基础职业',
   'Attributes': '属性',
@@ -388,7 +378,6 @@ export const CHINESE: Record<string, string> = {
   'Weaken': '虚弱',
   'Slow': '减速',
   'Wound': '创伤',
-  'Heroes fight on their own. This page explains what they do on each turn, and lists the spells of every class.': '英雄会自己战斗。本页说明他们每个回合做什么，并列出每个职业的法术。',
   'Statuses': '状态',
   'How spells work': '法术如何运作',
   'Monster spells': '怪物法术',
@@ -411,12 +400,34 @@ export const CHINESE: Record<string, string> = {
   'Spell resource (grows with)': '法术资源（随何属性增长）',
   'Main stats': '主要属性',
   'The life of the hero. A hero at zero is knocked out.': '英雄的生命。生命降到零的英雄会倒下。',
-  'Cuts physical damage taken. The formula is on the {link} page.': '减少受到的物理伤害。公式见{link}页面。',
   'Cuts magical damage taken in the same way.': '以同样的方式减少受到的魔法伤害。',
   'How fast the charge meter fills, so how often the hero acts.': '蓄力条填充的快慢，也就是英雄行动的频率。',
   'Gear adds to every attribute and stat. Weapons also add damage of their own.': '装备可以增加每一项属性。武器还会带来自身的伤害。',
   'Kills per level = {base} + {growth} x hero level.': '每级击杀数 = {base} + {growth} x 英雄等级。',
   'A kill gives (experience to the next level / kills per level) x the level gap factor x the rank multiplier below.': '每次击杀获得的经验 =（升级所需经验 / 每级击杀数）x 等级差系数 x 下表的阶级倍率。',
+
+  // Buildings, spells and mechanics pages
+  '{count} spells': '{count} 个法术',
+  'Town services': '城镇服务',
+  'Every spell of every class, with cost, cooldown and effect.': '每个职业的所有法术，含消耗、冷却和效果。',
+  'The Tavern, Merchant, Bank, Mill and Academy, and what each one costs.': '酒馆、商人、银行、磨坊和学院，以及各自的价格。',
+  'Every spell of every class, with its effect, cost, cooldown and price at the Academy.': '每个职业的所有法术，含效果、消耗、冷却和学院价格。',
+  'Spells are learned at the {academy}. The price is on that page.': '法术在{academy}学习。价格见该页面。',
+  'The rules of statuses and class resources are on the {mechanics} page.': '状态和职业资源的规则见{mechanics}页面。',
+  'The services of the town and what each one costs. The numbers are read from the game data.': '城镇里的各种服务，以及各自的价格。数值直接读自游戏数据。',
+  'Heroes are hired here. The first hero is free, and each next hero costs more.': '在这里雇佣英雄。第一位英雄免费，之后每位都更贵。',
+  'The merchant buys materials and gear. A sale takes time, and the merchant sells a limited number of goods at once.': '商人收购材料和装备。出售需要时间，商人同时能卖的货物数量有限。',
+  'More sale slots are sold at the {bank}.': '更多出售栏位可以在{bank}购买。',
+  'Crafters make gear here. Recipes, levels and quality are on the {link} pages.': '工匠在这里制作装备。配方、等级和品质见{link}页面。',
+  'The backpack starts as a grid of {columns} x {rows} cells.': '背包一开始是 {columns} x {rows} 格的网格。',
+  'Spell price': '法术价格',
+  '{base} copper x spell level to the power {exponent}': '{base} 铜 x 法术等级的 {exponent} 次方',
+  'Ultimate price': '终极法术价格',
+  '{factor}x the price of a normal spell': '普通法术价格的 {factor} 倍',
+  'Every spell and its price is on the {link} page.': '每个法术及其价格见{link}页面。',
+  'The rules and numbers behind the game. They are read from the game data, so they stay current.': '游戏背后的规则和数值。它们直接读自游戏数据，所以始终是最新的。',
+  'Cuts physical damage taken. The formula is under {link}.': '减少受到的物理伤害。公式见“{link}”。',
+  'Prices of heroes, spells, storage and sales are on the {link} page.': '英雄、法术、储存和出售的价格见{link}页面。',
 
   // Changelog
   'Version notes': '版本说明',

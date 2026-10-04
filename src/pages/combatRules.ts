@@ -1,14 +1,11 @@
 import { balanceNumber, balanceValue } from '../data/balance';
 import type { GameIndex } from '../data/gameIndex';
 import { capitalised, type GameText } from '../data/text';
-import { badge, commaList, dataTable, jumpLinks, pageHeading, panel, siteLink } from '../render/components';
-import { pixelArt } from '../render/art';
+import { badge, commaList, dataTable, panel, siteLink } from '../render/components';
 import type { SpellEffect } from '../data/gameData';
-import { monsterSpellTable, spellTable } from './spellTable';
 import { formatPercent } from '../render/format';
-import { html } from '../render/html';
-import type { Page } from '../render/page';
-import { t, tHtml } from '../i18n/ui';
+import { html, type Html } from '../render/html';
+import { t } from '../i18n/ui';
 
 interface ResourceBalance {
   maximumBase: number;
@@ -44,7 +41,8 @@ function statusUsage(game: GameIndex, text: GameText) {
   });
 }
 
-export function buildAbilityPages(game: GameIndex, text: GameText): Page[] {
+// The battle rules of the Mechanics page: roles, damage, statuses and class resources.
+export function combatRulePanels(game: GameIndex, text: GameText): Html {
   const d = game.data;
   const battle = (key: string) => balanceNumber(d, 'battle', key);
   const secondsPerAction = battle('actionThreshold') * battle('secondsPerTick') / 100;
@@ -57,7 +55,6 @@ export function buildAbilityPages(game: GameIndex, text: GameText): Page[] {
     magic: t('{damage} ({attribute} plus weapon), reduced by the target {reduction}', { damage: text.statName('magicalDamage'), attribute: text.statName('magic'), reduction: text.statName('resistance') }),
   };
 
-  const spells = (key: string) => balanceNumber(d, 'spells', key);
   const resourceRows = Object.keys(d.balance['resources'] ?? {}).map((resourceId) => ({ resourceId, rules: balanceValue<ResourceBalance>(d, 'resources', resourceId) })).map(({ resourceId, rules }) => [
     text.require(`resource.${resourceId}`),
     commaList(d.classes.filter((heroClass) => heroClass.resourceId === resourceId).map((heroClass) => siteLink(`heroes/${heroClass.id}.html`, heroClass.displayName))),
@@ -78,23 +75,8 @@ export function buildAbilityPages(game: GameIndex, text: GameText): Page[] {
   const attackKinds = [...new Set(d.classes.map((heroClass) => heroClass.attackKind))];
   const attackKindRows = attackKinds.map((kind) => [badge(t(kind), kind), attackStatByKind[kind] ?? kind]);
 
-  const classSpellPanels = d.classes.map((heroClass) => panel(
-    html`${pixelArt('heroes', heroClass.id, heroClass.displayName, 2)} ${siteLink(`heroes/${heroClass.id}.html`, heroClass.displayName)}`,
-    html`<p class="muted">${t('Resource: {resource}. A hero fights with {count} spells and 1 ultimate.', { resource: text.require(`resource.${heroClass.resourceId}`), count: spells('normalSlotCount') })}</p>${spellTable(game, text, heroClass)}`,
-    { anchor: `spells-${heroClass.id}` }));
-  const bossesWithSpells = d.monsters.filter((monster) => (monster.spellIds ?? []).length > 0);
   const statusRows = statusUsage(game, text);
-  const body = html`
-    ${pageHeading(t('Abilities and spells'), t('Heroes fight on their own. This page explains what they do on each turn, and lists the spells of every class.'))}
-    ${jumpLinks([
-      { anchor: 'roles', label: t('Combat roles') },
-      { anchor: 'damage', label: t('Damage and criticals') },
-      { anchor: 'statuses', label: t('Statuses') },
-      { anchor: 'spells', label: t('How spells work') },
-      { anchor: 'resources', label: t('Class resources') },
-      ...d.classes.map((heroClass) => ({ anchor: `spells-${heroClass.id}`, label: heroClass.displayName })),
-      ...(bossesWithSpells.length ? [{ anchor: 'monster-spells', label: t('Monster spells') }] : []),
-    ])}
+  return html`
     ${panel(t('Combat roles'), dataTable([t('Role'), t('What it does'), t('Classes')], behaviorRows), { anchor: 'roles' })}
     ${panel(t('Attack types'), dataTable([t('Type'), t('Damage')], attackKindRows))}
     ${panel(t('Turns and speed'), html`<p>${t('Every unit has a charge meter that fills at its {speed}. At {threshold} the unit acts. A unit with {speed} 100 acts once every {seconds} second.', { speed: text.statName('speed'), threshold: battle('actionThreshold'), seconds: secondsPerAction })}</p>`)}
@@ -107,21 +89,7 @@ export function buildAbilityPages(game: GameIndex, text: GameText): Page[] {
         <li>${t('A battle ends after {seconds} seconds at most.', { seconds: battle('maximumBattleSeconds') })}</li>
       </ul>`, { anchor: 'damage' })}
     ${panel(t('Statuses'), html`<p>${t('A status lasts a few seconds. A unit has one status of each kind at a time, and a new one replaces the old one.')}</p>${dataTable([t('Status'), t('Effect'), t('Cast by')], statusRows)}`, { anchor: 'statuses' })}
-    ${panel(t('How spells work'), html`
-      <p>${text.require('spells.hint')}</p>
-      <ul>
-        <li>${text.require('academy.intro')}</li>
-        <li>${t('Price at the Academy = {base} copper x spell level to the power {exponent}. An ultimate costs {factor}x more.', { base: spells('learnCostBaseCopper'), exponent: spells('learnCostLevelExponent'), factor: spells('ultimateCostFactor') })}</li>
-        <li>${t('An ultimate is first ready {seconds} seconds into a battle.', { seconds: spells('ultimateOpeningDelaySeconds') })}</li>
-        <li>${t('A heal spell is cast only when an ally is below {percent} health.', { percent: formatPercent(spells('healCastBelowHealthFraction')) })}</li>
-        <li>${t('Every spell has its own cooldown and costs the resource of the class.')}</li>
-      </ul>
-`, { anchor: 'spells' })}
     ${panel(t('Class resources'), html`
       <p>${t('Each class spends one resource on spells. The pool is: base + per level x level + per point x the attribute.')}</p>
-      ${dataTable([t('Resource'), t('Classes'), t('Pool'), t('Attribute'), t('At the start'), t('Regeneration per second'), t('Gain per hit dealt'), t('Gain per hit taken')], resourceRows)}`, { anchor: 'resources' })}
-    ${classSpellPanels}
-    ${bossesWithSpells.length ? panel(t('Monster spells'), html`<p>${t('A monster spell costs no resource. It waits only for its cooldown.')}</p>${bossesWithSpells.map((monster) => html`<h3 class="group-heading">${siteLink(`monsters/${monster.id}.html`, monster.name)}</h3>${monsterSpellTable(text, d.monsterSpells.filter((spell) => (monster.spellIds ?? []).includes(spell.id)))}`)}`, { anchor: 'monster-spells' }) : null}`;
-  const spellNames = d.spells.map((spell) => text.require(`spell.${spell.id}`)).join(' ');
-  return [{ path: 'abilities/index.html', title: t('Abilities and spells'), section: 'abilities', body, searchKind: t('Abilities'), searchKeywords: spellNames }];
+      ${dataTable([t('Resource'), t('Classes'), t('Pool'), t('Attribute'), t('At the start'), t('Regeneration per second'), t('Gain per hit dealt'), t('Gain per hit taken')], resourceRows)}`, { anchor: 'resources' })}`;
 }

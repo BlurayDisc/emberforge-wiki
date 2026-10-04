@@ -18,7 +18,8 @@ function indexPage(game: GameIndex): Page {
       return card(crafterPath(professionId), professionName, [t('Makes {items}', { items: makes.map((base) => base.name).join(t(', ')) || t('nothing yet') })]);
     }))}
     ${panel(t('Crafting levels'), craftingNumbers(game))}
-    ${panel(t('Item upgrades'), upgradeOdds(game))}`;
+    ${panel(t('Item upgrades'), upgradeOdds(game))}
+    ${panel(t('Crafting quality'), craftingQuality(game))}`;
   return { path: 'crafters/index.html', title: t('Crafters'), section: 'crafters', body };
 }
 
@@ -36,6 +37,25 @@ function upgradeOdds(game: GameIndex) {
   return html`
     <p>${t('A crafted item can roll an upgrade level. The roll stops at the first failed step, so +N needs N steps in a row. The odds grow with each crafter level above the recipe level, until the crafter is {levels} levels above it.', { levels: farAboveLevels })}</p>
     ${dataTable([t('Upgrade'), t('Crafter at recipe level'), t('Crafter {levels}+ levels above', { levels: farAboveLevels })], rows)}`;
+}
+
+function craftingQuality(game: GameIndex) {
+  const d = game.data;
+  const items = (key: string) => balanceValue<Record<string, number>>(d, 'items', key);
+  const qualityWeights = items('qualityWeights');
+  const sellFactors = items('sellQualityFactor');
+  const qualityIds = Object.keys(qualityWeights);
+  const qualityTotal = Object.values(qualityWeights).reduce((sum, weight) => sum + weight, 0);
+  return html`
+    ${dataTable(['', ...qualityIds.map((id) => t(id))], [
+      [t('Odds'), ...qualityIds.map((id) => formatPercent((qualityWeights[id] ?? 0) / qualityTotal))],
+      [t('Sell value factor'), ...qualityIds.map((id) => `${sellFactors[id] ?? '-'}x`)],
+    ])}
+    <ul>
+      <li>${t('A crafted item rolls its item level twice and keeps the higher one ({rolls} rolls).', { rolls: balanceNumber(d, 'items', 'itemLevelRollsKeepHighest') })}</li>
+      <li>${t('Base stats grow by {percent} for each item level. Speed does not grow.', { percent: formatPercent(balanceNumber(d, 'items', 'baseStatGrowthPerItemLevel')) })}</li>
+      <li>${t('Sell value grows by {percent} for each item level.', { percent: formatPercent(balanceNumber(d, 'items', 'sellGrowthPerItemLevel')) })}</li>
+    </ul>`;
 }
 
 function craftingNumbers(game: GameIndex) {

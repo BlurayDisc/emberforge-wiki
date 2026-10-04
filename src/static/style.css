@@ -257,21 +257,27 @@ h3 { font-size: 1.5rem; margin: 1.25rem 0 0.4rem; }
 :lang(zh-Hans) h1, :lang(zh-Hans) h2, :lang(zh-Hans) h3, :lang(zh-Hans) .site-title, :lang(zh-Hans) .card-title, :lang(zh-Hans) .highlight strong { font-weight: 700; }
 :lang(zh-Hans) .site-title { font-family: var(--title-font), "Jacquard 12"; }
 
-.tree-scroll { overflow-x: auto; padding-bottom: 0.5rem; }
-.promotion-tree, .promotion-tree ul { display: flex; justify-content: center; margin: 0; padding: 1rem 0 0; list-style: none; position: relative; }
-.promotion-tree { padding-top: 0; min-width: min-content; }
-.promotion-tree li { position: relative; padding: 1rem 0.5rem 0; text-align: center; }
-.promotion-tree > li { padding-top: 0; }
-.promotion-tree li::before, .promotion-tree li::after { content: ""; position: absolute; top: 0; right: 50%; width: 50%; height: 1rem; border-top: 2px solid var(--parchment-edge); }
-.promotion-tree li::after { right: auto; left: 50%; border-left: 2px solid var(--parchment-edge); }
-.promotion-tree > li::before, .promotion-tree > li::after { display: none; }
-.promotion-tree li:only-child::before, .promotion-tree li:only-child::after { display: none; }
-.promotion-tree li:first-child::before, .promotion-tree li:last-child::after { border: 0; }
-.promotion-tree li:last-child::before { border-right: 2px solid var(--parchment-edge); }
-.promotion-tree ul::before { content: ""; position: absolute; top: 0; left: 50%; height: 1rem; border-left: 2px solid var(--parchment-edge); }
-.promotion-tree li:only-child { padding-top: 1rem; }
-.promotion-tree > li, .promotion-tree > li:only-child { padding-top: 0; }
-.tree-node { display: inline-flex; flex-direction: column; gap: 0.15rem; width: 13rem; max-width: 100%; padding: 0.5rem 0.7rem; text-align: center; background: var(--parchment-dark); border: 2px solid var(--parchment-edge); box-shadow: 3px 3px 0 var(--wood-light); }
-.tree-node strong { font-family: var(--title-font); font-weight: 400; font-size: 1.35rem; line-height: 1.1; }
-.tree-level { font-size: 0.85rem; font-weight: 700; color: var(--ember); }
-.tree-role { font-size: 0.85rem; color: var(--ink-soft); }
+.tree-scroll { overflow-x: auto; padding: 0.5rem 0.25rem 0.75rem; }
+.advance-path { display: flex; align-items: center; width: max-content; }
+.advance-trunk { width: 1.5rem; border-top: 3px solid var(--parchment-edge); }
+.advance-fork { --branch-gap: 1rem; display: flex; flex-direction: column; gap: var(--branch-gap); margin: 0; padding: 0 0 0 2rem; list-style: none; position: relative; }
+.advance-fork::before { content: ""; position: absolute; left: 0; top: 50%; width: 2rem; border-top: 3px solid var(--parchment-edge); }
+.advance-row { display: flex; align-items: center; position: relative; }
+.advance-row::before { content: ""; position: absolute; left: -2rem; width: 2rem; top: 50%; border-top: 3px solid var(--parchment-edge); }
+.advance-row::after { content: ""; position: absolute; left: -2rem; top: calc(var(--branch-gap) / -2); bottom: calc(var(--branch-gap) / -2); border-left: 3px solid var(--parchment-edge); }
+.advance-row:first-child::after { top: 50%; }
+.advance-row:last-child::after { bottom: 50%; }
+.advance-row:only-child::after { display: none; }
+.advance-link { position: relative; width: 2.5rem; border-top: 3px solid var(--parchment-edge); }
+.advance-link::after { content: ""; position: absolute; right: -2px; top: -9px; border: 7.5px solid transparent; border-left: 10px solid var(--parchment-edge); border-right: 0; }
+.advance-masters { display: flex; flex-direction: column; gap: 0.5rem; }
+.advance-node { display: flex; align-items: center; gap: 0.6rem; width: 15rem; padding: 0.5rem 0.7rem; background: var(--parchment-dark); border: 3px solid var(--parchment-edge); box-shadow: 3px 3px 0 var(--wood-light); }
+.advance-branch { border-color: var(--rare); }
+.advance-master { border-color: var(--gold); background: linear-gradient(var(--parchment), #f0d99a); box-shadow: 3px 3px 0 var(--wood-light), 0 0 8px rgba(217,164,65,.6); }
+.advance-icon { flex: none; display: flex; align-items: center; justify-content: center; padding: 0.25rem; background: var(--parchment); border: 2px solid var(--parchment-edge); }
+.advance-branch .advance-icon { border-color: var(--rare); }
+.advance-master .advance-icon { border-color: var(--gold); }
+.advance-text { display: flex; flex-direction: column; gap: 0.1rem; min-width: 0; text-align: left; }
+.advance-text strong { font-family: var(--title-font); font-weight: 400; font-size: 1.35rem; line-height: 1.1; }
+.advance-level { font-size: 0.85rem; font-weight: 700; color: var(--ember); }
+.advance-role { font-size: 0.82rem; line-height: 1.3; color: var(--ink-soft); }
