@@ -2,7 +2,7 @@ import type { Html } from './html';
 
 export type SectionId =
   | 'home' | 'heroes' | 'abilities' | 'monsters' | 'dungeons' | 'towns'
-  | 'equipment' | 'materials' | 'crafters' | 'affixes' | 'mechanics';
+  | 'equipment' | 'materials' | 'crafters' | 'affixes' | 'mechanics' | 'changelog';
 
 export interface Page {
   // Output file, relative to the site root, for example "monsters/wolf.html".
@@ -33,4 +33,5 @@ export const SECTIONS: SectionDefinition[] = [
   { id: 'crafters', label: 'Crafters', indexPath: 'crafters/index.html', tagline: 'Professions, recipes and crafting levels.' },
   { id: 'affixes', label: 'Affixes', indexPath: 'affixes/index.html', tagline: 'Prefixes and suffixes found on magic and rare gear.' },
   { id: 'mechanics', label: 'Mechanics', indexPath: 'mechanics/index.html', tagline: 'Experience, money, quality odds and other game numbers.' },
+  { id: 'changelog', label: 'Changelog', indexPath: 'changelog/index.html', tagline: 'What changed in each version of the game.' },
 ];

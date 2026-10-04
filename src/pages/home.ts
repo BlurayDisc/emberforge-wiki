@@ -1,3 +1,4 @@
+import { loadChangelog } from '../data/changelog';
 import type { GameIndex } from '../data/gameIndex';
 import type { GameText } from '../data/text';
 import { card, cardGrid, panel } from '../render/components';
@@ -17,6 +18,7 @@ export function buildHomePage(game: GameIndex, _text: GameText): Page[] {
     crafters: `${Object.keys(d.professions).length} crafters`,
     affixes: `${d.affixes.length} affixes`,
     mechanics: 'Game numbers',
+    changelog: `Latest ${loadChangelog()[0]?.version ?? 'none'}`,
   };
   const body = html`
     <header class="hero-banner">

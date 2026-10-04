@@ -1,0 +1,726 @@
+{
+  "version": "v0.3",
+  "date": "2026-10-04",
+  "compare": {
+    "from": "c45207b",
+    "to": "bed1eae"
+  },
+  "summary": "The biggest update so far. Two new classes, spells for every hero, a castle to visit, a Mill, a Bank and a full combat rebalance. This list covers every change since the Fighter and the Barbarian joined the game.",
+  "highlights": [
+    {
+      "title": "Spells and resources",
+      "text": "20 spells for each class, paid with Mana, Stamina, Hatred or Rage.",
+      "art": {
+        "folder": "heroes",
+        "file": "mage"
+      }
+    },
+    {
+      "title": "Fighter and Barbarian",
+      "text": "Two new classes with their own weapons, resource and look.",
+      "art": {
+        "folder": "heroes",
+        "file": "barbarian"
+      }
+    },
+    {
+      "title": "Goblin Chief",
+      "text": "A real boss with 4,900 HP and three spells of its own.",
+      "art": {
+        "folder": "dungeons",
+        "file": "goblin-chief-lair"
+      }
+    },
+    {
+      "title": "The Castle",
+      "text": "Walk the Throne Hall and the Ramparts and hear the tale of the lost princess.",
+      "art": {
+        "folder": "dungeons",
+        "file": "old-wood-hollow"
+      }
+    },
+    {
+      "title": "Mill and Bank",
+      "text": "Free materials every 10 minutes, bigger backpacks and six new tools.",
+      "art": {
+        "folder": "materials",
+        "file": "pine-wood"
+      }
+    }
+  ],
+  "sections": [
+    {
+      "id": "gameplay",
+      "title": "Gameplay",
+      "kind": "gameplay",
+      "groups": [
+        {
+          "heading": "Spells",
+          "tag": "New",
+          "art": {
+            "folder": "items",
+            "file": "arcane-staff--pine-wood"
+          },
+          "items": [
+            {
+              "label": "Active spells",
+              "text": "Every hero can equip 3 spells and 1 Ultimate. The hero casts them by itself in battle. You choose which spells go in the slots."
+            },
+            {
+              "label": "20 spells per class",
+              "text": "16 normal spells (one every 3 levels, from level 2 to 47) and 4 Ultimates, for a total span of level 2 to 95."
+            },
+            {
+              "label": "Spell choice",
+              "text": "A hero tries the Ultimate first, then slot 1 to 3. It casts the first spell that is off cooldown, affordable and useful. Heals wait until an ally is below 60% HP. A status that is already active is not cast again. A cast takes the whole action."
+            },
+            {
+              "label": "Effects",
+              "text": "Damage (one enemy or all enemies, one hit or several), Drain (damage and heal the caster), Heal (weakest ally, the caster or all allies) and Status."
+            },
+            {
+              "label": "Ultimates",
+              "text": "An Ultimate starts on a 15 second cooldown, so it arrives in the middle of the fight."
+            },
+            "You cannot learn or equip spells while the hero is out on a run."
+          ]
+        },
+        {
+          "heading": "Class resources",
+          "tag": "New",
+          "items": [
+            {
+              "label": "Mana (Mage, Priest)",
+              "text": "Grows with Magic. Starts full. Comes back at 2% of the maximum each second."
+            },
+            {
+              "label": "Stamina (Warrior, Archer)",
+              "text": "Grows with Strength. Starts full. Comes back at 3% of the maximum each second."
+            },
+            {
+              "label": "Hatred (Thief)",
+              "text": "Grows with Skill. Starts half full. Comes back at 2% each second and grows 4% with each hit the Thief deals."
+            },
+            {
+              "label": "Rage (Barbarian, Fighter)",
+              "text": "Grows with Strength. Starts empty and never comes back by itself. It grows 8% with each hit dealt and 8% with each hit taken."
+            }
+          ]
+        },
+        {
+          "heading": "Battle rules",
+          "items": [
+            {
+              "label": "Statuses",
+              "text": "Five statuses: Guard (less damage taken), Haste (more Speed), Slow (less Speed), Weaken (less damage dealt) and Wound (less healing received). Only one of each kind is active at a time. A new one replaces the old one."
+            },
+            "A damage spell can now put a status on the enemy it hits.",
+            "Monsters can now cast spells. Monster spells cost no resource and wait only for their cooldown.",
+            "Boss spells show no cost in the combat log.",
+            {
+              "label": "One hero per run",
+              "text": "Every dungeon now takes exactly one hero. Boss dungeons no longer take two. A boss fight has adds only when the party is bigger than one, so a lone hero fights the boss alone."
+            },
+            {
+              "label": "Run away",
+              "text": "You can leave a run at any time. Running away gives no loot, no XP and no report. The hero keeps the wounds taken until that moment and heals from there."
+            },
+            {
+              "label": "Minimum hero level",
+              "text": "Each dungeon has a minimum hero level. A hero below it cannot enter."
+            }
+          ]
+        },
+        {
+          "heading": "Primary attribute",
+          "tag": "New",
+          "art": {
+            "folder": "heroes",
+            "file": "warrior"
+          },
+          "items": [
+            "Each class now has one primary attribute, like in Warcraft and Dota. One point of it gives 1 attack damage.",
+            {
+              "label": "Strength",
+              "text": "Warrior, Barbarian, Fighter."
+            },
+            {
+              "label": "Agility (Skill)",
+              "text": "Archer, Thief."
+            },
+            {
+              "label": "Intelligence (Magic)",
+              "text": "Mage, Priest."
+            },
+            "Skill still gives critical chance to every class (0.25% for each point, up to 50%)."
+          ]
+        },
+        {
+          "heading": "Experience and levelling",
+          "items": [
+            "The early experience bonus is gone.",
+            "A kill now gives (experience to the next level / kills per level) x the level gap factor. Kills per level = 2.8 + 0.3 x hero level (it was 10 + 0.15 x monster level).",
+            "A solo hero in the best dungeon it can enter now needs 4, 4, 4, 5, 5, 6, 5, 6 and 6 kills for levels 1 to 9, and 7 kills for level 10. It was 3 to 10 kills before, with a peak of 10 at level 2.",
+            "Each level now takes about twice as long in real time, because fights are longer. The number of kills is about the same."
+          ]
+        },
+        {
+          "heading": "Money",
+          "items": [
+            "Monsters no longer drop money. You earn money only by selling materials and items to the merchant.",
+            "You start with 50 copper, to pay the first crafter fees.",
+            "The first hero is free. After that, the price starts at 3 silver and triples with each hero.",
+            "A sale in progress can be cancelled. The goods return to your backpack if it has room."
+          ]
+        },
+        {
+          "heading": "Full backpack",
+          "items": [
+            "A run no longer stops when your backpack is full. Loot that finds no room waits at the dungeon. That dungeon stays closed until you make room and press Collect loot. No drop is lost.",
+            "A finished craft with no room waits at the crafter. Make room and press Collect in the workshop. The crafter gets its experience at that moment."
+          ]
+        },
+        {
+          "heading": "Mill",
+          "tag": "New",
+          "art": {
+            "folder": "materials",
+            "file": "linen"
+          },
+          "items": [
+            "The Mill makes one basic material every 10 minutes by the real clock, also while the game is closed.",
+            "It can make Copper Ore, Pine Wood, Rawhide and Linen.",
+            "It holds up to 6 materials. The town shows a countdown and a Collect button."
+          ]
+        },
+        {
+          "heading": "Bank",
+          "tag": "New",
+          "art": {
+            "folder": "materials",
+            "file": "copper-ore"
+          },
+          "items": [
+            {
+              "label": "Backpack space",
+              "text": "Each upgrade adds one row of 6 cells, up to 14 upgrades. The price is 100 copper x 1.5 for every upgrade already bought."
+            },
+            {
+              "label": "Merchant sale slots",
+              "text": "Four upgrades (200, 600, 1800 and 5400 copper) let the merchant sell more goods at once."
+            },
+            {
+              "label": "Backpack sorting (150 copper)",
+              "text": "Adds a Sort button to the backpack."
+            },
+            {
+              "label": "Drop rates (300 copper)",
+              "text": "Shows the loot table and chances in the dungeon window."
+            },
+            {
+              "label": "Monster statistics (500 copper)",
+              "text": "Shows health, attack, armour, magic resist and speed of each monster in the dungeon window."
+            },
+            {
+              "label": "Quick dispatch (250 copper)",
+              "text": "Adds a Stay on this screen box to the Dungeons panel. With one hero, that hero goes at once."
+            },
+            {
+              "label": "Main stat growth (200 copper)",
+              "text": "Shows the growth per level of Health, Armour, Magic resist and Attack speed in the Tavern."
+            },
+            {
+              "label": "Attribute growth (200 copper)",
+              "text": "Shows the growth per level of Strength, Agility and Intelligence in the Tavern. It also adds the gain (like 19 +1.9/lvl) to the Stats tab of the hero."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "classes",
+      "title": "Classes",
+      "kind": "classes",
+      "intro": "Warrior, Archer and Mage are open from the start. The other classes open when you clear a dungeon for the first time. The Tavern shows which dungeon to clear.",
+      "groups": [
+        {
+          "heading": "Barbarian",
+          "tag": "New",
+          "art": {
+            "folder": "heroes",
+            "file": "barbarian"
+          },
+          "items": [
+            "A two-handed brute. Uses the Greataxe and the Maul. Primary attribute: Strength. Resource: Rage.",
+            "Wears Medium armour only, so it takes more damage than the Warrior. A Barbarian that already wears Heavy armour keeps it.",
+            "Opens after you clear Goblin Chief's Lair.",
+            "Advancement classes in the data: Marauder or Totem Warrior at level 20, then Ravager or Spirit Chieftain at level 50. The promotion screen is not built yet.",
+            "More Strength and HP than at first."
+          ]
+        },
+        {
+          "heading": "Fighter",
+          "tag": "New",
+          "art": {
+            "folder": "heroes",
+            "file": "fighter"
+          },
+          "items": [
+            "A bare-handed brawler. Uses Knuckles, with a Cestus in the off hand. Primary attribute: Strength. Resource: Rage.",
+            "Wears Medium armour.",
+            "Opens after you clear Old Wood Hollow.",
+            "Advancement classes in the data: Brawler or Disciple at level 20, then Champion or Grandmaster at level 50. The promotion screen is not built yet.",
+            "More Strength and HP. Meditate power goes from 1.94 to 0.5."
+          ]
+        },
+        {
+          "heading": "Archer",
+          "art": {
+            "folder": "heroes",
+            "file": "archer"
+          },
+          "items": [
+            "Primary attribute is now Agility (Skill). Strength and Skill numbers are swapped. Skill points on the Bow, the Dagger and the Quiver are lower.",
+            "About 20% more damage in total (base Skill 7.26).",
+            "HP and class Defence are tuned again.",
+            "Arrows now fly to the target, and the hit shows when the arrow lands.",
+            "New look (see UI and UX)."
+          ]
+        },
+        {
+          "heading": "Thief",
+          "art": {
+            "folder": "heroes",
+            "file": "thief"
+          },
+          "items": [
+            "Primary attribute is now Agility (Skill). Strength and Skill numbers are swapped.",
+            "About 20% more damage in total.",
+            "HP and class Defence are tuned again.",
+            "Opens after you clear Goblin Chief's Lair."
+          ]
+        },
+        {
+          "heading": "Mage",
+          "art": {
+            "folder": "heroes",
+            "file": "mage"
+          },
+          "items": [
+            "Magic is now 12, and grows by 2.7 for each level. HP is higher.",
+            {
+              "label": "Frost Shard",
+              "text": "Also slows the target by 20% for 6 seconds."
+            },
+            "Bolts now fly to the target, and the hit shows when the bolt lands."
+          ]
+        },
+        {
+          "heading": "Priest",
+          "art": {
+            "folder": "heroes",
+            "file": "priest"
+          },
+          "items": [
+            "Magic is now 9, and grows by 1.0 for each level. A slower and safer class. Kill time against the boss is about 146 seconds.",
+            "Opens after you clear Goblin Camp."
+          ]
+        },
+        {
+          "heading": "Warrior",
+          "art": {
+            "folder": "heroes",
+            "file": "warrior"
+          },
+          "items": [
+            "HP and class Defence are tuned again. Class Defence is a small part of the total, so HP was the real lever."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "items",
+      "title": "Items and crafting",
+      "kind": "items",
+      "groups": [
+        {
+          "heading": "Weapon steps",
+          "tag": "New",
+          "art": {
+            "folder": "items",
+            "file": "greataxe--copper-ore"
+          },
+          "items": [
+            "16 new weapons. Every class now gets a new weapon at least every 3 crafter levels. Each new weapon has more damage than every weapon before it. The weapon line of each class, from first to last:",
+            {
+              "label": "Warrior",
+              "text": "Sword, Axe, Longsword, Battle Axe, Broadsword."
+            },
+            {
+              "label": "Archer",
+              "text": "Bow, Longbow, Composite Bow, Warbow."
+            },
+            {
+              "label": "Mage",
+              "text": "Wand, Runed Wand, Scepter, Staff, Arcane Staff."
+            },
+            {
+              "label": "Priest",
+              "text": "Wand, Runed Wand, Mace, Scepter, Flanged Mace."
+            },
+            {
+              "label": "Thief",
+              "text": "Dagger, Stiletto, Dirk, Kris."
+            },
+            {
+              "label": "Barbarian",
+              "text": "Maul, Sledgehammer, Bearded Axe, Greataxe."
+            },
+            {
+              "label": "Fighter",
+              "text": "Knuckles, Brass Knuckles, Spiked Knuckles, Steel Claws."
+            },
+            "A weapon alone must not beat a boss. A hero with only its best weapon loses to the boss. The boss still needs a hero with every slot filled."
+          ]
+        },
+        {
+          "heading": "Armour sets",
+          "tag": "New",
+          "art": {
+            "folder": "items",
+            "file": "helm-heavy--copper-ore"
+          },
+          "items": [
+            "Armour sets unlock one piece every 2 crafter levels. The body armour comes last.",
+            "A set recipe needs the main material of the base plus one set material (two for items of 6 cells or more). The item is named after the set material.",
+            "Every piece of one set gets the same fixed bonus:",
+            {
+              "label": "Sharp Fang",
+              "text": "+2 Agility"
+            },
+            {
+              "label": "Toadskin",
+              "text": "+8 Health"
+            },
+            {
+              "label": "Bone Shard",
+              "text": "+2 Armour"
+            },
+            {
+              "label": "Spider Silk",
+              "text": "+2 Attack speed"
+            },
+            {
+              "label": "Coarse Sinew",
+              "text": "+2 Strength"
+            }
+          ]
+        },
+        {
+          "heading": "Crafting",
+          "items": [
+            {
+              "label": "Upgrade level +1 to +7",
+              "text": "A crafted item can come out with an upgrade level, like Iron Sword +3. Each level has its own colour: green, cyan, blue, purple, pink, orange and red. +5 and higher glow."
+            },
+            {
+              "label": "Crafting reveal",
+              "text": "While the crafter works, you see only the base name. The full name with the affixes shows when the craft is done."
+            },
+            "The ingredient count is now half the item cells (rounded up) of the main material, and nothing else. A beast part is no longer needed for a basic recipe.",
+            "A recipe never needs a material that first drops in a dungeon above its craft level. Every class can craft a weapon and an armour piece at crafter level 1 from the materials of the two level 1 dungeons.",
+            "A recipe title shows the item level range that the crafter can roll, for example Lv 1-5.",
+            "A recipe shows which classes can use the item."
+          ]
+        },
+        {
+          "heading": "Item rules",
+          "items": [
+            {
+              "label": "Attack speed is flat",
+              "text": "It does not grow with item level and does not roll a range. Light weapons give +1. Two-handed weapons (Greataxe, Maul) give -1."
+            },
+            {
+              "label": "Affix names",
+              "text": "Each affix has a short name for the stat table, for example Bear: +9 Health. The name order follows the language: Arcane Copper Sword of the Bear in English."
+            },
+            "New item sizes: Knuckles and Cestus are 1 by 2. Greataxe and Maul are 2 by 3."
+          ]
+        },
+        {
+          "heading": "Backpack",
+          "items": [
+            {
+              "label": "Smaller grid",
+              "text": "The backpack is now 6 columns by 5 rows (30 cells). Space is a real limit. Buy more at the Bank."
+            },
+            {
+              "label": "Nothing stacks",
+              "text": "Every item and every material takes its own place. Bulky materials (Pine Wood, Rawhide, Linen) take 2 cells."
+            },
+            "Old saves are migrated. Stacks split into single units, and the backpack grows by whole upgrades until everything fits."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dungeons",
+      "title": "Dungeons and monsters",
+      "kind": "dungeons",
+      "groups": [
+        {
+          "heading": "Goblin Chief",
+          "tag": "Reworked",
+          "art": {
+            "folder": "dungeons",
+            "file": "goblin-chief-lair"
+          },
+          "items": [
+            {
+              "label": "Stats",
+              "text": "4,900 HP, 2.05 attack, 18 Defence, 12 Resistance, 95 Speed. They are fixed numbers, with no level curve."
+            },
+            {
+              "label": "Cowing Roar",
+              "text": "Weakens the hero by 20% for 8 seconds. Every 20 seconds."
+            },
+            {
+              "label": "War Cry",
+              "text": "+25% Speed for 8 seconds. Every 24 seconds."
+            },
+            {
+              "label": "Crushing Cleaver",
+              "text": "A hit of 4 times its attack, and Wound (85%) for 9 seconds. Every 9 seconds."
+            },
+            "The dungeon window lists the boss spells.",
+            "A level 10 hero with full gear and the best spells wins 87% to 93% of the time, and kills the boss in 68 to 146 seconds. A level 9 hero wins 54% to 69% of the time."
+          ]
+        },
+        {
+          "heading": "Scarecrow Field",
+          "tag": "New",
+          "art": {
+            "folder": "dungeons",
+            "file": "scarecrow-field"
+          },
+          "items": [
+            "A second level 1 dungeon. It drops Linen, Coarse Sinew and Pine Wood.",
+            "Hollowbrook now has 7 dungeons, at levels 1, 1, 3, 5, 7, 9 and 10."
+          ]
+        },
+        {
+          "heading": "Fights",
+          "items": [
+            "Monster HP and attack curves are fitted again. HP lost per fight is the same as before.",
+            "A normal fight with crafted gear now takes about 6.6, 10.5, 14.4, 19.0 and 21.5 seconds at levels 1, 3, 5, 7 and 9. It was 3.7 to 8.8 seconds. The target is 7 to 25 seconds.",
+            "A fight with no gear at level 1 now takes about 17 seconds. It was 9 seconds.",
+            "A boss fight takes about 5 times as long as a normal fight of its level."
+          ]
+        },
+        {
+          "heading": "Loot",
+          "items": [
+            "Every dungeon has its own monsters and its own drop table. A monster appears in one dungeon only.",
+            "A normal monster drops 3 crafting materials in the first dungeons of a bracket, and 2 in later dungeons.",
+            "Base materials (ore, wood, hide, cloth) drop only in the first dungeons of a bracket.",
+            "The guaranteed drop does not roll a second time, so no drop gives more than its maximum quantity."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "world",
+      "title": "Town and castle",
+      "kind": "world",
+      "groups": [
+        {
+          "heading": "The Castle",
+          "tag": "New",
+          "art": {
+            "folder": "dungeons",
+            "file": "old-wood-hollow"
+          },
+          "items": [
+            "Click the Castle in Castle Square to go in. Inside are two screens: the Throne Hall and the Ramparts. Use the arrows or the left and right keys. Leave with the Leave button or Escape.",
+            "Click a person or a place to hear a story. A gold mark floats over a spot you have not heard yet in this session.",
+            {
+              "label": "Throne Hall",
+              "text": "King Aldric, Queen Isolde, a knight commander, a young knight, a bishop, a steward, a jester and a chronicler. Also the little throne and the portrait of the princess, the Forge window and the founding tapestry."
+            },
+            {
+              "label": "Ramparts",
+              "text": "A captain, an archer, a falconer and a lamplighter. Also the north tower, the Old Wood and the far spire."
+            },
+            "Four pets rest in the castle.",
+            {
+              "label": "The tale",
+              "text": "Nine nights ago, at midsummer, Princess Elowen was taken from the north tower by a winged creature. It left cold black feathers and flew east."
+            }
+          ]
+        },
+        {
+          "heading": "Buildings",
+          "items": [
+            {
+              "label": "Academy",
+              "text": "New. In Lord's Square. Each class has its own trainer. Pick a hero and pay the trainer to teach a spell. The price is 10 copper x level to the power 1.8, and an Ultimate costs double."
+            },
+            {
+              "label": "Bank",
+              "text": "New. In Lord's Square."
+            },
+            {
+              "label": "Mill",
+              "text": "Now opens a panel."
+            },
+            {
+              "label": "Barracks",
+              "text": "Opens the Heroes screen."
+            },
+            {
+              "label": "Stables",
+              "text": "Opens the World map."
+            }
+          ]
+        },
+        {
+          "heading": "Life in town",
+          "items": [
+            "Cats, dogs and hens walk the roads with the villagers. A cat is slow and sits often, a dog trots and a hen pecks.",
+            "Trees are now sprites with a depth, so walkers pass behind them.",
+            "Dungeon scenes have their own backdrops."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui",
+      "title": "UI and UX",
+      "kind": "ui",
+      "groups": [
+        {
+          "heading": "Inventory and merchant",
+          "items": [
+            "The selection bar has a fixed height and the grid has a fixed width, so the grid does not jump when you select an item.",
+            "Item details moved to the right of the grid on a wide screen, and below it on a phone. On a phone, the selection bar replaces the descriptions.",
+            "The merchant popup is gone. The merchant uses the same selection bar as the Inventory (View, Sell, price and sale time).",
+            "A new line shows Merchant selling: used / slots. It turns red when every sale slot is busy.",
+            "Moving a tall or wide entry works with a tap on any cell of the free area.",
+            "The Equip button is at the top on every screen size. The two item cards stay side by side on a phone.",
+            "The Equip button asks which hero should wear the item when you have more than one hero."
+          ]
+        },
+        {
+          "heading": "Heroes and Tavern",
+          "items": [
+            "The Tavern shows one coloured bar per stat for each class, in two groups: attributes and main stats. The numbers show after you buy the matching Bank feature.",
+            "The Stats tab and the paper doll now show a full-body figure. Each class has its own figure with its own gear and weapon, and the figure shows the gear the hero wears.",
+            "Heroes look the same in the portrait, the full-body figure and the battle sprite. There are 4 skin tones. The Warrior is always male. The Archer and the Mage are always female, and the Mage always has red hair.",
+            "The Mage looks confident now."
+          ]
+        },
+        {
+          "heading": "Archer redesign",
+          "art": {
+            "folder": "heroes",
+            "file": "archer"
+          },
+          "items": [
+            "Slim tunic and legs, long hair with a fringe, brown hair, an upright bow with a straight string, and a small laugh."
+          ]
+        },
+        {
+          "heading": "Girl faces",
+          "items": [
+            "Girl heroes have a slimmer, tapered face, with a gap between brows and hair."
+          ]
+        },
+        {
+          "heading": "Battle screen",
+          "items": [
+            "A hero health bar has a thin resource strip below it: blue Mana, gold Stamina, violet Hatred and orange Rage.",
+            "A spell line in the combat log shows the spell name and its cost, for example (-6 Stamina).",
+            "After a victory, the combat log shows one line for each hero with the experience that hero gained.",
+            "The run report shows the experience and the level-ups of each hero.",
+            "The dungeon window shows the level range: Hero level 5 or higher. Best at levels 5-6.",
+            "Loot that waits at a dungeon shows in the dungeon row and in the run report."
+          ]
+        },
+        {
+          "heading": "Controls",
+          "items": [
+            "Workshop and Merchant buttons in the bottom bar, with new anvil and coin icons.",
+            "Swipe left or right to move between town screens and castle screens on a touch device.",
+            "Narrower town edge arrows, so they no longer cover the Mill.",
+            "The stage scales to fill the window. It no longer uses whole-number scaling only."
+          ]
+        },
+        {
+          "heading": "Version notice",
+          "tag": "New",
+          "items": [
+            "After an update, a pulsing button next to the version label says that a new version is here. One tap opens this changelog and hides the button for good.",
+            "The seen version is saved apart from the game save."
+          ]
+        },
+        {
+          "heading": "Text and fonts",
+          "items": [
+            "English and Chinese body text use the Fusion Pixel 12px font, which has clear digits and Latin letters."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fixes",
+      "title": "Bug fixes",
+      "kind": "fixes",
+      "groups": [
+        {
+          "heading": "Saves",
+          "items": [
+            "A save always loads now. If a save cannot be read as a whole, the game reads it part by part: heroes, dungeon progress, town, jobs and backpack. Broken parts are dropped and the rest is kept.",
+            "The raw save is kept under emberforge.save.unreadable.",
+            "Many older saves are migrated: backpack grid, experience bars, upgrade levels, waiting loot, spells, the Mill and renamed items."
+          ]
+        },
+        {
+          "heading": "Interface",
+          "items": [
+            "The Inventory grid no longer shifts when you select an item.",
+            "A tall or wide backpack entry can move to any free area. A tap on any cell of the area works.",
+            "The scrollbar of a panel no longer moves the content. It keeps a stable gutter.",
+            "The town edge arrows no longer cover the Mill.",
+            "Walkers in town now pass behind the trees."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "known-issues",
+      "title": "Known issues",
+      "kind": "issues",
+      "intro": "These problems are known and are not fixed in this version.",
+      "groups": [
+        {
+          "heading": "Balance",
+          "items": [
+            "The boss win rate is very sensitive. At attack 2.00 it is 92% to 95%. At attack 2.10 it is 81% to 90%.",
+            "With gear but no spells, the boss win rate is low for the Mage and the Priest.",
+            "The monster curves fit levels 1 to 10 only. They need a new fit for the second town.",
+            "Creeps still use per-monster factors on the level curve.",
+            "Archer and Thief with no gear lose about 75% of their HP in a level 1 fight."
+          ]
+        },
+        {
+          "heading": "Game",
+          "items": [
+            "A Barbarian with Heavy armour already equipped keeps it.",
+            "The swipe, the version notice and the new layouts are not tested on a real phone yet.",
+            "The promotion command and screen are not built yet."
+          ]
+        }
+      ]
+    }
+  ]
+}

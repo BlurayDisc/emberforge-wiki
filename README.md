@@ -18,6 +18,10 @@ The push starts the GitHub Action, which checks the build and publishes to GitHu
 | `npm run check` | Type check, build and internal link check. |
 | `npm run preview` | Serves `dist/` locally. |
 
+## Changelog
+
+The Changelog page (`/changelog/`, the link the game opens) shows one block for each version, newest first. The notes are written by hand in `changelog/v<number>.json`, because they group changes by kind (gameplay, classes, items, UI, fixes). To release a version, add a new file, for example `changelog/v0.4.json`, then push. Use `git log <old>..<new>` in the game repository as the source. Copy `changelog/v0.3.json` as a template.
+
 ## How it works
 
 - `src/data/` loads the JSON and answers questions (which dungeons hold a monster, which recipes use a material).

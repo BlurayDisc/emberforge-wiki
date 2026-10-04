@@ -206,3 +206,43 @@ h3 { font-size: 1.5rem; margin: 1.25rem 0 0.4rem; }
   .site-title { font-size: 2.2rem; }
 }
 @media (prefers-reduced-motion: reduce) { .card { transition: none; } }
+
+.release { margin-bottom: 3rem; }
+.release-banner {
+  margin: 0 0 1.25rem; padding: 2rem 1.25rem 1.5rem; text-align: center; color: var(--parchment);
+  background: radial-gradient(ellipse at 50% 0%, rgba(217,164,65,.35), transparent 65%), linear-gradient(var(--wood), var(--wood-dark));
+  border: 3px solid var(--gold); box-shadow: inset 0 0 0 3px var(--wood-dark), 4px 4px 0 var(--wood-light);
+}
+.release-banner h1 { margin: 0; font-size: clamp(3.2rem, 11vw, 5.5rem); color: var(--gold); text-shadow: 3px 3px 0 #000; }
+.release-kicker { margin: 0; letter-spacing: 0.2em; text-transform: uppercase; font-size: 0.85rem; color: var(--parchment-edge); }
+.release-date { margin: 0.2rem 0 0.8rem; color: var(--parchment-edge); }
+.release-summary { max-width: 40rem; margin: 0 auto 0.8rem; font-size: 1.15rem; }
+.release-banner a { color: var(--gold); }
+
+.highlight-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: 0.8rem; margin: 0 0 1rem; padding: 0; list-style: none; }
+.highlight { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; padding: 0.8rem; text-align: center; font-size: 0.95rem; background: var(--parchment-dark); border: 2px solid var(--parchment-edge); box-shadow: 3px 3px 0 var(--wood-light); }
+.highlight strong { font-family: var(--title-font); font-weight: 400; font-size: 1.4rem; line-height: 1.1; color: var(--link); }
+.highlight-art { display: flex; align-items: center; justify-content: center; min-height: 4rem; }
+
+.change-section { --accent: var(--ember); margin: 1.5rem 0; background: rgba(255,255,255,.4); border: 2px solid var(--parchment-edge); box-shadow: 3px 3px 0 var(--parchment-dark); scroll-margin-top: 1rem; }
+.change-section[data-kind="classes"] { --accent: var(--rare); }
+.change-section[data-kind="items"] { --accent: #7a5a1e; }
+.change-section[data-kind="dungeons"] { --accent: var(--boss); }
+.change-section[data-kind="world"] { --accent: var(--good); }
+.change-section[data-kind="ui"] { --accent: #5b3a8f; }
+.change-section[data-kind="fixes"] { --accent: #1f6f6a; }
+.change-section[data-kind="issues"] { --accent: var(--ink-soft); }
+.change-section > h2 { margin: 0; padding: 0.4rem 1.1rem; font-size: 2.1rem; color: #fff; background: var(--accent); border-bottom: 3px solid var(--ink); text-shadow: 2px 2px 0 rgba(0,0,0,.4); }
+.change-intro { margin: 0; padding: 0.7rem 1.1rem 0; color: var(--ink-soft); }
+.change-group { padding: 0.9rem 1.1rem 1rem; border-bottom: 1px dotted var(--parchment-edge); }
+.change-group:last-child { border-bottom: 0; }
+.change-group-head { display: flex; align-items: center; flex-wrap: wrap; gap: 0.6rem; }
+.change-group-head h3 { margin: 0; color: var(--accent); }
+.change-art { display: flex; align-items: center; padding: 0.2rem; background: var(--parchment-dark); border: 2px solid var(--parchment-edge); }
+.change-tag { padding: 0 0.5rem; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #fff; background: var(--ink-soft); border: 2px solid var(--ink); }
+.change-tag-new { background: var(--good); }
+.change-tag-reworked { background: var(--rare); }
+.change-list { margin: 0.5rem 0 0; padding-left: 1.3rem; }
+.change-list li { margin: 0.35rem 0; }
+.change-list li::marker { color: var(--accent); }
+.change-label { color: var(--accent); }
