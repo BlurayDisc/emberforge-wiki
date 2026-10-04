@@ -2,6 +2,7 @@ import { balanceNumber } from '../data/balance';
 import type { HeroClass, MonsterSpell, Spell, SpellEffect } from '../data/gameData';
 import type { GameIndex } from '../data/gameIndex';
 import type { GameText } from '../data/text';
+import { pixelArt } from '../render/art';
 import { badge, dataTable } from '../render/components';
 import { formatDuration, formatMoney } from '../render/format';
 import { html, type Html } from '../render/html';
@@ -60,6 +61,8 @@ export function monsterSpellTable(text: GameText, spells: MonsterSpell[]): Html 
 
 export const spellName = (text: GameText, spell: Spell): string => text.require(`spell.${spell.id}`);
 
+export const spellIcon = (text: GameText, spell: Spell, scale = 2): Html => pixelArt('spells/icons', spell.id, spellName(text, spell), scale);
+
 // Same formula as learnCostCopper in the game.
 function learnCostCopper(game: GameIndex, spell: Spell): number {
   const baseCost = balanceNumber(game.data, 'spells', 'learnCostBaseCopper');
@@ -74,7 +77,7 @@ export function spellTable(game: GameIndex, text: GameText, heroClass: HeroClass
   const silverPerGold = balanceNumber(game.data, 'economy', 'silverPerGold');
   const rows = game.spellsOfClass(heroClass.id).map((spell) => [
     spell.unlockLevel,
-    spell.isUltimate ? html`${spellName(text, spell)} ${badge(text.require('spell.ultimate'), 'boss')}` : spellName(text, spell),
+    html`${spellIcon(text, spell)} ${spellName(text, spell)}${spell.isUltimate ? html` ${badge(text.require('spell.ultimate'), 'boss')}` : null}`,
     describeEffect(text, spell.effect),
     spell.resourceCost,
     formatDuration(spell.cooldownSeconds),

@@ -20,6 +20,9 @@ export function buildBuildingPages(game: GameIndex, text: GameText): Page[] {
   const merchantSlotCosts = balanceValue<number[]>(d, 'economy', 'merchantExtraSlotCostsCopper');
   const bankUnlockCosts = balanceValue<Record<string, number>>(d, 'economy', 'bankUnlockCostsCopper');
   const millMaterialIds = balanceValue<string[]>(d, 'mill', 'producedMaterialIds');
+  const millSpeedIntervals = balanceValue<number[]>(d, 'mill', 'productionIntervalSecondsBySpeedUpgrade');
+  const millSpeedCosts = balanceValue<number[]>(d, 'mill', 'speedUpgradeCostsCopper');
+  const millStorageCosts = balanceValue<number[]>(d, 'mill', 'storageCapacityUpgradeCostsCopper');
   const backpackCosts = Array.from({ length: balanceNumber(d, 'backpack', 'maximumExpansions') }, (_, expansionsBought) =>
     // Same formula as the backpack expansion cost in the game.
     Math.round(balanceNumber(d, 'backpack', 'expansionBaseCostCopper') * balanceNumber(d, 'backpack', 'expansionCostGrowth') ** expansionsBought));
@@ -64,10 +67,16 @@ export function buildBuildingPages(game: GameIndex, text: GameText): Page[] {
       <p>${t('One purchase each. The game text of each tool is shown below.')}</p>
       ${dataTable([t('Tool'), t('What it does'), t('Cost')], Object.entries(bankUnlockCosts).map(([unlockId, cost]) => [text.require(`bank.unlock.${unlockId}.title`), text.require(`bank.unlock.${unlockId}.description`), money(cost)]))}`, { anchor: 'bank' })}
     ${panel(text.require('building.mill'), html`<p>${text.require('mill.hint')}</p>${definitionList([
-      [t('Production time'), formatDuration(mill('productionIntervalSeconds'))],
-      [t('Storage'), t('{count} places', { count: mill('storageCapacity') })],
+      [t('Production time'), t('{time} at the start', { time: formatDuration(millSpeedIntervals[0] ?? 0) })],
+      [t('Storage'), t('{count} places at the start', { count: mill('baseStorageCapacity') })],
       [t('Materials it makes'), commaList(millMaterialIds.map((materialId) => siteLink(`materials/${materialId}.html`, game.material(materialId).name)))],
-    ])}`, { anchor: 'mill' })}
+    ])}
+      <h3>${text.require('bank.millCapacity.title')}</h3>
+      <p>${tHtml('Bought at the {bank}. Each upgrade adds room for 1 more material.', { bank: siteLink('buildings/index.html#bank', t('Bank')) })}</p>
+      ${dataTable([t('Upgrade'), t('Storage'), t('Cost')], millStorageCosts.map((cost, index) => [index + 1, t('{count} places', { count: mill('baseStorageCapacity') + index + 1 }), money(cost)]))}
+      <h3>${text.require('bank.millSpeed.title')}</h3>
+      <p>${tHtml('Bought at the {bank}. Each upgrade makes the mill faster.', { bank: siteLink('buildings/index.html#bank', t('Bank')) })}</p>
+      ${dataTable([t('Upgrade'), t('Production time'), t('Cost')], millSpeedCosts.map((cost, index) => [index + 1, formatDuration(millSpeedIntervals[index + 1] ?? 0), money(cost)]))}`, { anchor: 'mill' })}
     ${panel(text.require('building.academy'), html`
       <p>${text.require('academy.intro')}</p>
       ${definitionList([

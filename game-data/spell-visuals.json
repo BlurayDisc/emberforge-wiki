@@ -1,0 +1,25 @@
+{
+  "spells": {
+    "warrior.power-strike": {"theme": "steel", "cast": "power-flash", "impact": "slash-cross", "icon": "slash"},
+    "warrior.shield-bash": {"theme": "steel", "cast": "dust-ring", "impact": "shock-ring", "icon": "shield"},
+    "warrior.guard-stance": {"theme": "guard", "cast": "rune-circle", "buff": "guard-shield", "icon": "shield"},
+    "archer.aimed-shot": {"theme": "nature", "cast": "power-flash", "projectile": "arrow-glow", "impact": "pierce-spark", "icon": "arrow"},
+    "archer.quick-shot": {"theme": "nature", "cast": "power-flash", "projectile": "arrow-glow", "impact": "pierce-spark", "icon": "arrow"},
+    "archer.hamstring-shot": {"theme": "nature", "cast": "power-flash", "projectile": "arrow-glow", "impact": "pierce-spark", "debuff": "weaken-mark", "icon": "weaken"},
+    "mage.fire-bolt": {"theme": "fire", "cast": "rune-circle", "projectile": "fireball", "impact": "flame-burst", "icon": "flame"},
+    "mage.frost-shard": {"theme": "ice", "cast": "rune-circle", "projectile": "ice-shard", "impact": "ice-burst", "debuff": "frost-chill", "icon": "shard"},
+    "mage.arcane-missiles": {"theme": "arcane", "cast": "rune-circle", "projectile": "arcane-missile", "impact": "arcane-pop", "icon": "orb"},
+    "priest.minor-heal": {"theme": "holy", "cast": "rune-circle", "impact": "heal-sparkles", "icon": "heal"},
+    "priest.smite": {"theme": "holy", "cast": "rune-circle", "impact": "holy-pillar", "icon": "holy"},
+    "priest.divine-shield": {"theme": "holy", "cast": "rune-circle", "buff": "guard-shield", "icon": "shield"},
+    "thief.backstab": {"theme": "shadow", "cast": "shadow-puff", "impact": "dagger-slash", "icon": "dagger"},
+    "thief.quick-stab": {"theme": "shadow", "cast": "shadow-puff", "impact": "dagger-slash", "icon": "dagger"},
+    "thief.dodge-roll": {"theme": "shadow", "cast": "shadow-puff", "buff": "wind-lines", "icon": "wind"},
+    "barbarian.savage-swing": {"theme": "rage", "cast": "power-flash", "impact": "slash-cross", "icon": "slash"},
+    "barbarian.rage": {"theme": "rage", "cast": "roar-ring", "buff": "rage-flames", "icon": "flame"},
+    "barbarian.skull-splitter": {"theme": "rage", "cast": "dust-ring", "impact": "crush-burst", "icon": "skull"},
+    "fighter.jab": {"theme": "ki", "cast": "power-flash", "impact": "fist-star", "icon": "fist"},
+    "fighter.palm-strike": {"theme": "ki", "cast": "power-flash", "impact": "shock-ring", "icon": "fist"},
+    "fighter.meditate": {"theme": "ki", "cast": "rune-circle", "impact": "heal-sparkles", "icon": "heal"}
+  }
+}

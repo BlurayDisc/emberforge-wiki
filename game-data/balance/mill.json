@@ -1,5 +1,7 @@
 {
-  "productionIntervalSeconds": 600,
-  "storageCapacity": 6,
+  "baseStorageCapacity": 1,
+  "storageCapacityUpgradeCostsCopper": [300, 900, 2700, 8100, 24300],
+  "productionIntervalSecondsBySpeedUpgrade": [600, 480, 360, 270, 200, 150],
+  "speedUpgradeCostsCopper": [250, 750, 2250, 6750, 20250],
   "producedMaterialIds": ["copper-ore", "pine-wood", "rawhide", "linen"]
 }

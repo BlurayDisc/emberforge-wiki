@@ -156,6 +156,7 @@ export const CHINESE: Record<string, string> = {
   'Monster ({rank})': '怪物（{rank}）',
   'New': '新增',
   'Reworked': '重做',
+  'Changed': '调整',
 
   // Heroes
   'Your company is made of heroes. Each class fights in its own way.': '你的小队由英雄组成。每个职业都有自己的战斗方式。',
@@ -328,9 +329,7 @@ export const CHINESE: Record<string, string> = {
   'Affix values grow by {percent}% for each item level.': '词缀数值每个物品等级成长 {percent}%。',
 
   // Mechanics
-  'Experience to the next level = {base} x level to the power {exponent}.': '升级所需经验 = {base} x 等级的 {exponent} 次方。',
   'Level cap: {level}.': '等级上限：{level}。',
-  'A monster far above the hero gives more experience, and one far below gives less. The factor changes by {percent} for each level of difference, between {minimum}x and {maximum}x.': '比英雄高很多级的怪物给更多经验，低很多级的给更少。每相差一级，系数变化 {percent}，范围在 {minimum} 倍到 {maximum} 倍之间。',
   'Monster rank': '怪物阶级',
   '{copper} copper = 1 silver, {silver} silver = 1 gold': '{copper} 铜 = 1 银，{silver} 银 = 1 金',
   'Starting money': '初始金钱',
@@ -352,7 +351,6 @@ export const CHINESE: Record<string, string> = {
   'Materials it makes': '生产的材料',
   'Crafting quality': '制作品质',
   'Sell value factor': '出售价值系数',
-  'A crafted item rolls its item level twice and keeps the higher one ({rolls} rolls).': '制作出的物品会判定两次物品等级，取较高的一次（{rolls} 次判定）。',
   'Base stats grow by {percent} for each item level. Speed does not grow.': '基础属性每个物品等级成长 {percent}。速度不成长。',
   'Sell value grows by {percent} for each item level.': '出售价值每个物品等级成长 {percent}。',
   'Time to full health': '恢复满血所需时间',
@@ -403,8 +401,6 @@ export const CHINESE: Record<string, string> = {
   'Cuts magical damage taken in the same way.': '以同样的方式减少受到的魔法伤害。',
   'How fast the charge meter fills, so how often the hero acts.': '蓄力条填充的快慢，也就是英雄行动的频率。',
   'Gear adds to every attribute and stat. Weapons also add damage of their own.': '装备可以增加每一项属性。武器还会带来自身的伤害。',
-  'Kills per level = {base} + {growth} x hero level.': '每级击杀数 = {base} + {growth} x 英雄等级。',
-  'A kill gives (experience to the next level / kills per level) x the level gap factor x the rank multiplier below.': '每次击杀获得的经验 =（升级所需经验 / 每级击杀数）x 等级差系数 x 下表的阶级倍率。',
 
   // Buildings, spells and mechanics pages
   '{count} spells': '{count} 个法术',
@@ -434,4 +430,27 @@ export const CHINESE: Record<string, string> = {
   'Version {number}': '版本 {number}',
   'See every commit on GitHub': '在 GitHub 查看全部提交',
   'Versions': '版本',
+
+  // Version 4.0
+  '{time} at the start': '初始 {time}',
+  '{count} places at the start': '初始 {count} 个位置',
+  'Bought at the {bank}. Each upgrade adds room for 1 more material.': '在{bank}购买。每次升级多容纳 1 份材料。',
+  'Bought at the {bank}. Each upgrade makes the mill faster.': '在{bank}购买。每次升级让磨坊更快。',
+  'The first {count} levels use the tables below. After that, experience to the next level = the last number in the first table x (level / {count}) to the power {exponent}.': '前 {count} 级使用下面的表格。之后，升级所需经验 = 第一张表最后一个数字 x（等级 / {count}）的 {exponent} 次方。',
+  'A normal monster gives the number in the second table. A monster above the hero level pays like a monster of the hero level. There is no level gap factor.': '普通怪物给出第二张表中的数字。等级高于英雄的怪物按英雄等级计算。没有等级差系数。',
+  'A rare monster or a boss gives the number of a normal monster x the rank multiplier below.': '稀有怪物或首领给出的经验 = 普通怪物的数字 x 下表的阶级倍率。',
+  'Hero level': '英雄等级',
+  'Experience to the next level': '升级所需经验',
+  'Experience of a normal kill': '击杀普通怪物的经验',
+  'Monster level {level}': '怪物等级 {level}',
+  'Rank multiplier': '阶级倍率',
+  'Every recipe has one fixed item level: the recipe level, never above the end of its tier. A hero needs that level to equip the item.': '每个配方只有一个固定的物品等级：即配方等级，不会超过所在阶层的末尾。英雄需要达到该等级才能装备。',
+  'Cast': '施放',
+  'Flight': '飞行',
+  'Impact': '命中',
+  'Buff': '增益',
+  'Debuff': '减益',
+  'Play sound': '播放声音',
+  'Animations and sounds': '动画与声音',
+  'Spells with a look show their effects here. A spell shows a cast on the caster, a flight to the target and an impact. A buff or a debuff stays on its unit while the status lasts. Press the button to hear the spell.': '有特效的法术会在这里展示效果。法术会在施法者身上显示施放效果，向目标飞行，并在目标身上显示命中效果。增益或减益会在状态持续期间留在单位身上。点击按钮可以听到法术的声音。',
 };

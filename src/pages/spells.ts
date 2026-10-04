@@ -7,6 +7,7 @@ import { formatPercent } from '../render/format';
 import { html } from '../render/html';
 import type { Page } from '../render/page';
 import { t, tHtml } from '../i18n/ui';
+import { spellLooks } from './spellLooks';
 import { monsterSpellTable, spellTable } from './spellTable';
 
 export function buildSpellPages(game: GameIndex, text: GameText): Page[] {
@@ -14,7 +15,7 @@ export function buildSpellPages(game: GameIndex, text: GameText): Page[] {
   const spells = (key: string) => balanceNumber(d, 'spells', key);
   const classSpellPanels = d.classes.map((heroClass) => panel(
     html`${pixelArt('heroes', heroClass.id, heroClass.displayName, 2)} ${siteLink(`heroes/${heroClass.id}.html`, heroClass.displayName)}`,
-    html`<p class="muted">${t('Resource: {resource}. A hero fights with {count} spells and 1 ultimate.', { resource: text.require(`resource.${heroClass.resourceId}`), count: spells('normalSlotCount') })}</p>${spellTable(game, text, heroClass)}`,
+    html`<p class="muted">${t('Resource: {resource}. A hero fights with {count} spells and 1 ultimate.', { resource: text.require(`resource.${heroClass.resourceId}`), count: spells('normalSlotCount') })}</p>${spellTable(game, text, heroClass)}${spellLooks(game, text, heroClass)}`,
     { anchor: `spells-${heroClass.id}` }));
   const bossesWithSpells = d.monsters.filter((monster) => (monster.spellIds ?? []).length > 0);
   const body = html`

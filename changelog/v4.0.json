@@ -1,0 +1,284 @@
+{
+  "version": "v4.0",
+  "date": "2026-10-04",
+  "compare": {
+    "from": "bed1eae",
+    "to": "7f124cf"
+  },
+  "summary": "Spells come alive and the Goblin Chief needs two heroes. Every spell has an icon. The first 21 spells have animations and sounds. This list covers v0.3.1, v0.3.2 and v4.0.",
+  "highlights": [
+    {
+      "title": "Spell effects",
+      "text": "Cast, flight, impact and status animations, with a sound for every part.",
+      "art": {
+        "folder": "spells/icons",
+        "file": "mage.fire-bolt"
+      }
+    },
+    {
+      "title": "Two heroes for the boss",
+      "text": "The Goblin Chief's Lair needs a party of 2. One hero must reach level 10.",
+      "art": {
+        "folder": "dungeons",
+        "file": "goblin-chief-lair"
+      }
+    },
+    {
+      "title": "Legs slot",
+      "text": "Legplates, Breeches and Leggings. The game now has 11 equipment slots.",
+      "art": {
+        "folder": "items",
+        "file": "legs-heavy--copper-ore"
+      }
+    },
+    {
+      "title": "Bigger mill",
+      "text": "Buy more storage and a faster mill at the Bank.",
+      "art": {
+        "folder": "materials",
+        "file": "pine-wood"
+      }
+    },
+    {
+      "title": "New affixes",
+      "text": "Critical chance, Critical damage and Life steal, plus 8 more affixes.",
+      "art": {
+        "folder": "items",
+        "file": "amulet--quartz"
+      }
+    }
+  ],
+  "sections": [
+    {
+      "id": "gameplay",
+      "title": "Gameplay",
+      "kind": "gameplay",
+      "groups": [
+        {
+          "heading": "Spell effects",
+          "tag": "New",
+          "art": {
+            "folder": "spells/icons",
+            "file": "mage.fire-bolt"
+          },
+          "items": [
+            "The first 21 spells (up to level 10 of each class) have a look: a cast on the caster, a projectile that flies to the target, an impact on the target, and a buff or debuff that stays on its unit while the status lasts.",
+            "Every look has a colour theme: Steel, Nature, Fire, Ice, Arcane, Holy, Shadow, Rage, Ki and Guard.",
+            {
+              "label": "Sounds",
+              "text": "29 new synthesised sounds, one for each part of a look. Hits of one spell come 0.16 seconds apart."
+            },
+            "The Spells page of this wiki now shows the animations and plays the sounds."
+          ]
+        },
+        {
+          "heading": "Spell icons",
+          "tag": "New",
+          "art": {
+            "folder": "spells/icons",
+            "file": "priest.smite"
+          },
+          "items": [
+            "All 140 spells have an icon. A spell up to level 10 has its own picture. Higher spells use a picture from their class and effect. An Ultimate has a gold ring."
+          ]
+        },
+        {
+          "heading": "Critical hits and life steal",
+          "tag": "New",
+          "items": [
+            {
+              "label": "Critical damage",
+              "text": "A critical hit now uses the critical damage of the attacker. The base is 1.5x."
+            },
+            {
+              "label": "Life steal",
+              "text": "A unit with life steal heals for a share of the damage it deals."
+            },
+            "New gear affixes add Critical chance, Critical damage and Life steal."
+          ]
+        },
+        {
+          "heading": "Experience",
+          "items": [
+            "Experience is now a table of fixed numbers in the game data. There is no level gap factor and no formula in the first 10 levels.",
+            {
+              "label": "To the next level",
+              "text": "400, 480, 570, 680, 820, 980, 1170, 1400, 1680 and 2000 for levels 1 to 10."
+            },
+            "A kill pays a number from the table for the hero level and the monster level. A monster above the hero level pays like a monster of the hero level.",
+            {
+              "label": "Rank multipliers",
+              "text": "A rare monster pays 3x (it was 5x). A boss pays 5x (it was 20x)."
+            },
+            "A level 10 hero needs about 19 kills of level 1 monsters. Each lower dungeon adds about 3 kills."
+          ]
+        },
+        {
+          "heading": "Mill",
+          "tag": "Changed",
+          "art": {
+            "folder": "materials",
+            "file": "linen"
+          },
+          "items": [
+            "The Mill starts with room for 1 material and a material every 10 minutes.",
+            {
+              "label": "Storage",
+              "text": "5 upgrades at the Bank add room for 1 material each. They cost 300, 900, 2700, 8100 and 24300 copper."
+            },
+            {
+              "label": "Speed",
+              "text": "5 upgrades at the Bank cut the time to 8, 6, 4.5, 3.3 and 2.5 minutes. They cost 250, 750, 2250, 6750 and 20250 copper."
+            },
+            "The Mill settings are kept in the save with a migration, so old saves keep working."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "classes",
+      "title": "Classes",
+      "kind": "classes",
+      "groups": [
+        {
+          "heading": "Priest",
+          "art": {
+            "folder": "heroes",
+            "file": "priest"
+          },
+          "items": [
+            "The Priest now opens after the Goblin Chief's Lair (it was Goblin Camp).",
+            "Minor Heal heals 200% (it was 183%) and costs 5 Mana. Smite costs 6 Mana and Divine Shield costs 8 Mana."
+          ]
+        },
+        {
+          "heading": "Archer, Thief, Fighter",
+          "art": {
+            "folder": "heroes",
+            "file": "archer"
+          },
+          "items": [
+            "Archer Skill growth is 2.48 for each level (it was 2.18). Thief Skill growth is 2.21 (it was 2.06). Fighter Strength growth is 2.3 (it was 2.15)."
+          ]
+        },
+        {
+          "heading": "Resources",
+          "items": [
+            "Mana and Stamina start lower and grow more with levels, and each Magic or Strength point adds less. Both come back faster: Mana 2.6% and Stamina 3.4% of the maximum each second."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "items",
+      "title": "Items",
+      "kind": "items",
+      "groups": [
+        {
+          "heading": "Legs slot",
+          "tag": "New",
+          "art": {
+            "folder": "items",
+            "file": "legs-heavy--copper-ore"
+          },
+          "items": [
+            "A new slot with Legplates (Heavy), Breeches (Medium) and Leggings (Light). Each has set recipes from every monster set material.",
+            "Crafter levels changed so no two armour slots of one profession share a level. Set pieces open one after another, on odd levels. Shield opens at level 8, Belt at 6 and Tome at 8."
+          ]
+        },
+        {
+          "heading": "Item level",
+          "tag": "Changed",
+          "items": [
+            "A recipe now has one fixed item level: the recipe level, never above the end of its tier. The random roll is gone.",
+            "A hero needs the item level to equip the item. The item card shows Requires level N in gold, and the classes that can use it."
+          ]
+        },
+        {
+          "heading": "Affixes",
+          "tag": "New",
+          "items": [
+            "11 new affixes: of Insight, of the Sage (Magic), of the Tortoise (Defence), of the Veil (Resistance), of the Whale (Health), of the Titan (Strength), of the Hawk (Skill), of the Fox (Speed), of the Leech (Life steal), of the Viper (Critical chance) and of Carnage (Critical damage)."
+          ]
+        },
+        {
+          "heading": "Workshop",
+          "items": [
+            "The recipe list has a filter by class and by slot, and a sort by level. The Workshop shows the item level before you craft."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dungeons",
+      "title": "Dungeons",
+      "kind": "dungeons",
+      "groups": [
+        {
+          "heading": "Goblin Chief",
+          "tag": "Reworked",
+          "art": {
+            "folder": "dungeons",
+            "file": "goblin-chief-lair"
+          },
+          "items": [
+            {
+              "label": "Two heroes",
+              "text": "The Goblin Chief's Lair needs exactly 2 heroes. One hero must reach level 10. The partner can be weaker. A new window lets you choose the party."
+            },
+            {
+              "label": "Attack",
+              "text": "The attack is 2.8 (it was 2.05)."
+            },
+            "A level 9 or 10 hero with a level 4 or 5 partner wins about 90% of the time, for every class.",
+            "Defeating the Goblin Chief shows a Victory screen. It has a link to this wiki and a Keep playing button."
+          ]
+        },
+        {
+          "heading": "Monsters",
+          "items": [
+            "Monsters from level 7 on and the monsters of Goblin Camp and Old Wood Hollow are harder: about 7% more HP and Defence, and more attack.",
+            "Goblin Captain and Hollow Broodmother have 1.6x attack."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui",
+      "title": "Interface",
+      "kind": "ui",
+      "groups": [
+        {
+          "heading": "Dungeons",
+          "items": [
+            "The dungeon details window has a Fight! button.",
+            "A run report has a Repeat button that starts the same dungeon again."
+          ]
+        },
+        {
+          "heading": "Menus",
+          "items": [
+            "Dropdown lists now use the game style.",
+            "Links in the game open the matching wiki pages."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "known-issues",
+      "title": "Known issues",
+      "kind": "issues",
+      "intro": "These problems are known and are not fixed in this version.",
+      "groups": [
+        {
+          "heading": "Game",
+          "items": [
+            "Spells above level 10 and monster spells have no animations or sounds yet.",
+            "Two level 10 heroes with only their best weapons win about 51% against the Goblin Chief.",
+            "A solo hero holds 277 copper at level 10. The second hero costs 300 copper."
+          ]
+        }
+      ]
+    }
+  ]
+}

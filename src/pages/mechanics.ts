@@ -66,6 +66,8 @@ export function buildMechanicsPages(game: GameIndex, text: GameText): Page[] {
   const progression = (key: string) => balanceNumber(d, 'progression', key);
   const recovery = (key: string) => balanceNumber(d, 'recovery', key);
   const rankMultiplier = (key: string, fileName: string) => balanceValue<Record<string, number>>(d, fileName, key);
+  const experienceToNextLevel = balanceValue<number[]>(d, 'progression', 'experienceToNextLevelByLevel');
+  const killExperience = balanceValue<number[][]>(d, 'progression', 'normalKillExperienceByHeroLevelThenMonsterLevel');
   const ranks = Object.keys(rankMultiplier('experienceRankMultiplier', 'progression'));
 
   const body = html`
@@ -84,12 +86,16 @@ export function buildMechanicsPages(game: GameIndex, text: GameText): Page[] {
     ${combatRulePanels(game, text)}
     ${panel(t('Experience'), html`
       <ul>
-        <li>${t('Experience to the next level = {base} x level to the power {exponent}.', { base: progression('experienceToNextLevelBase'), exponent: progression('experienceToNextLevelExponent') })}</li>
         <li>${t('Level cap: {level}.', { level: progression('levelCap') })}</li>
-        <li>${t('Kills per level = {base} + {growth} x hero level.', { base: progression('killsPerLevelBase'), growth: progression('killsPerLevelGrowth') })}</li>
-        <li>${t('A kill gives (experience to the next level / kills per level) x the level gap factor x the rank multiplier below.')}</li>
-        <li>${t('A monster far above the hero gives more experience, and one far below gives less. The factor changes by {percent} for each level of difference, between {minimum}x and {maximum}x.', { percent: formatPercent(progression('levelGapStep')), minimum: progression('levelGapFactorMinimum'), maximum: progression('levelGapFactorMaximum') })}</li>
+        <li>${t('The first {count} levels use the tables below. After that, experience to the next level = the last number in the first table x (level / {count}) to the power {exponent}.', { count: experienceToNextLevel.length, exponent: progression('experienceToNextLevelExponentAfterTable') })}</li>
+        <li>${t('A normal monster gives the number in the second table. A monster above the hero level pays like a monster of the hero level. There is no level gap factor.')}</li>
+        <li>${t('A rare monster or a boss gives the number of a normal monster x the rank multiplier below.')}</li>
       </ul>
+      <h3>${t('Experience to the next level')}</h3>
+      ${dataTable([t('Hero level'), t('Experience')], experienceToNextLevel.map((experience, index) => [index + 1, experience]))}
+      <h3>${t('Experience of a normal kill')}</h3>
+      ${dataTable([t('Hero level'), ...experienceToNextLevel.map((_, index) => t('Monster level {level}', { level: index + 1 }))], killExperience.map((row, index) => [index + 1, ...experienceToNextLevel.map((_, monsterIndex) => row[monsterIndex] ?? '')]))}
+      <h3>${t('Rank multiplier')}</h3>
       ${dataTable([t('Monster rank'), t('Experience')], ranks.map((rank) => [t(rank), `${rankMultiplier('experienceRankMultiplier', 'progression')[rank]}x`]))}`, { anchor: 'experience' })}
     ${panel(t('Money'), html`
       ${definitionList([

@@ -102,9 +102,106 @@
     }
   }
 
+  // The game makes its sounds with Web Audio from the recipes in data/audio/sound-effects.json.
+  // This is a copy of playLayer in src/audio/synth.ts and of the timing in src/app/spellSounds.ts of the game.
+  const hitSpacingSeconds = 0.16;
+  const projectileFlightSeconds = 0.3;
+  const attackSeconds = 0.004;
+
+  function setupSpellSounds() {
+    const buttons = document.querySelectorAll('[data-spell-sound]');
+    if (!buttons.length) return;
+    let soundData = null;
+    let context = null;
+    let noiseBuffer = null;
+    const loadSoundData = () => soundData
+      ? Promise.resolve(soundData)
+      : fetch(siteRoot + 'assets/sound-effects.json').then((r) => r.json()).then((data) => (soundData = data));
+
+    function noiseBufferOf() {
+      if (noiseBuffer) return noiseBuffer;
+      noiseBuffer = context.createBuffer(1, context.sampleRate, context.sampleRate);
+      const samples = noiseBuffer.getChannelData(0);
+      for (let index = 0; index < samples.length; index++) samples[index] = Math.random() * 2 - 1;
+      return noiseBuffer;
+    }
+
+    function playLayer(layer, startTime) {
+      const gain = context.createGain();
+      gain.gain.setValueAtTime(0.0001, startTime);
+      gain.gain.linearRampToValueAtTime(layer.volume, startTime + attackSeconds);
+      gain.gain.linearRampToValueAtTime(0.0001, startTime + layer.durationSeconds);
+      let lastNode = gain;
+      if (layer.filter) {
+        const filter = context.createBiquadFilter();
+        filter.type = layer.filter.type;
+        filter.frequency.value = layer.filter.frequency;
+        gain.connect(filter);
+        lastNode = filter;
+      }
+      lastNode.connect(context.destination);
+      if (layer.wave === 'noise') {
+        const source = context.createBufferSource();
+        source.buffer = noiseBufferOf();
+        source.connect(gain);
+        source.start(startTime);
+        source.stop(startTime + layer.durationSeconds);
+        return;
+      }
+      const oscillator = context.createOscillator();
+      oscillator.type = layer.wave;
+      oscillator.frequency.setValueAtTime(layer.startFrequency ?? 440, startTime);
+      if (layer.endFrequency !== undefined) {
+        oscillator.frequency.exponentialRampToValueAtTime(Math.max(20, layer.endFrequency), startTime + layer.durationSeconds);
+      }
+      oscillator.connect(gain);
+      oscillator.start(startTime);
+      oscillator.stop(startTime + layer.durationSeconds + 0.02);
+    }
+
+    function playSound(effectId, delaySeconds) {
+      const layers = soundData.effects[effectId];
+      if (!layers) return;
+      for (const layer of layers) playLayer(layer, context.currentTime + delaySeconds + (layer.delaySeconds ?? 0));
+    }
+
+    function playSpell(button) {
+      const sounds = soundData.spellSounds[button.dataset.spellSound];
+      if (!sounds) return;
+      const role = button.dataset.spellRole;
+      const hasProjectile = button.dataset.spellProjectile !== undefined;
+      if (sounds.cast) playSound(sounds.cast, 0);
+      if (role === 'damage') {
+        const hits = Number(button.dataset.spellHits);
+        for (let hit = 0; hit < hits; hit++) {
+          const hitDelay = hit * hitSpacingSeconds;
+          if (sounds.projectile) playSound(sounds.projectile, hitDelay);
+          if (sounds.impact) playSound(sounds.impact, hitDelay + (hasProjectile ? projectileFlightSeconds : 0));
+        }
+        if (sounds.debuff && button.dataset.spellStatus !== undefined) playSound(sounds.debuff, projectileFlightSeconds);
+      } else if (role === 'heal') {
+        if (sounds.impact) playSound(sounds.impact, 0.1);
+      } else {
+        const statusSound = role === 'buff' ? sounds.buff : sounds.debuff;
+        if (statusSound) playSound(statusSound, 0.1 + (role === 'debuff' && hasProjectile ? projectileFlightSeconds : 0));
+      }
+    }
+
+    for (const button of buttons) {
+      button.addEventListener('click', async () => {
+        // The browser keeps audio locked until a click, so the context starts here.
+        context ??= new (window.AudioContext || window.webkitAudioContext)();
+        await context.resume();
+        await loadSoundData();
+        playSpell(button);
+      });
+    }
+  }
+
   rememberLanguageChoice();
   setupSearch();
   setupFilterBoxes();
   setupSortableTables();
   setupLevelCalculators();
+  setupSpellSounds();
 })();

@@ -62,5 +62,96 @@
     "stat": "strength",
     "minimumValue": 1,
     "maximumValue": 2
+  },
+  {
+    "id": "of-insight",
+    "kind": "suffix",
+    "displayName": "of Insight",
+    "stat": "magic",
+    "minimumValue": 1,
+    "maximumValue": 3
+  },
+  {
+    "id": "of-the-tortoise",
+    "kind": "suffix",
+    "displayName": "of the Tortoise",
+    "stat": "defence",
+    "minimumValue": 1,
+    "maximumValue": 3
+  },
+  {
+    "id": "of-the-veil",
+    "kind": "suffix",
+    "displayName": "of the Veil",
+    "stat": "resistance",
+    "minimumValue": 1,
+    "maximumValue": 3
+  },
+  {
+    "id": "of-the-whale",
+    "kind": "suffix",
+    "displayName": "of the Whale",
+    "stat": "hp",
+    "minimumValue": 6,
+    "maximumValue": 14
+  },
+  {
+    "id": "of-the-titan",
+    "kind": "suffix",
+    "displayName": "of the Titan",
+    "stat": "strength",
+    "minimumValue": 2,
+    "maximumValue": 4
+  },
+  {
+    "id": "of-the-hawk",
+    "kind": "suffix",
+    "displayName": "of the Hawk",
+    "stat": "skill",
+    "minimumValue": 1,
+    "maximumValue": 2
+  },
+  {
+    "id": "of-the-fox",
+    "kind": "suffix",
+    "displayName": "of the Fox",
+    "stat": "speed",
+    "minimumValue": 1,
+    "maximumValue": 2
+  },
+  {
+    "id": "of-the-sage",
+    "kind": "suffix",
+    "displayName": "of the Sage",
+    "stat": "magic",
+    "minimumValue": 2,
+    "maximumValue": 4
+  },
+  {
+    "id": "of-the-leech",
+    "kind": "suffix",
+    "displayName": "of the Leech",
+    "stat": "lifeSteal",
+    "minimumValue": 2,
+    "maximumValue": 5,
+    "scalesWithItemLevel": false
+  },
+  {
+    "id": "of-the-viper",
+    "kind": "suffix",
+    "displayName": "of the Viper",
+    "stat": "criticalChance",
+    "minimumValue": 1,
+    "maximumValue": 3,
+    "scalesWithItemLevel": false
+  },
+  {
+    "id": "of-carnage",
+    "kind": "suffix",
+    "displayName": "of Carnage",
+    "stat": "criticalDamage",
+    "minimumValue": 5,
+    "maximumValue": 15,
+    "scalesWithItemLevel": false
   }
 ]

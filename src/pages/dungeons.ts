@@ -15,6 +15,8 @@ const monsterLink = (game: GameIndex, monsterId: string) => {
 
 const dungeonLink = (dungeon: Dungeon): Html => iconLink(dungeonPath(dungeon), dungeon.name, pixelArt('dungeons', dungeon.id, dungeon.name, 2));
 
+const partySizeText = (dungeon: Dungeon): string => (dungeon.minimumPartySize === dungeon.maxPartySize ? String(dungeon.maxPartySize) : `${dungeon.minimumPartySize}-${dungeon.maxPartySize}`);
+
 function indexPage(game: GameIndex): Page {
   const townsWithDungeons = game.data.towns.filter((town) => game.dungeonsOfTown(town.id).length > 0);
   const townPanels = townsWithDungeons.map((town) => {
@@ -24,7 +26,7 @@ function indexPage(game: GameIndex): Page {
       dungeon.minimumHeroLevel,
       dungeon.recommendedMaxLevel,
       dungeon.bossMonsterId ? badge(t('boss'), 'boss') : t('Normal'),
-      dungeon.maxPartySize,
+      partySizeText(dungeon),
     ]);
     return panel(html`${siteLink(`towns/${town.id}.html`, town.name)} <span class="muted">${t('levels {first}-{last}', { first: town.firstLevel, last: town.lastLevel })}</span>`,
       dataTable([t('Dungeon'), t('Level'), t('Hero level needed'), t('Recommended up to'), t('Type'), t('Heroes allowed')], rows), { anchor: `town-${town.id}` });
@@ -49,7 +51,7 @@ function dungeonPage(game: GameIndex, text: GameText, dungeon: Dungeon): Page {
       [t('Dungeon level'), dungeon.level],
       [t('Hero level needed'), dungeon.minimumHeroLevel],
       [t('Recommended up to hero level'), dungeon.recommendedMaxLevel],
-      [t('Heroes allowed'), dungeon.maxPartySize],
+      [t('Heroes allowed'), partySizeText(dungeon)],
       [t('Opens after'), unlockedBy],
       [t('Opens next'), commaList(unlocks.map((next) => siteLink(dungeonPath(next), next.name)))],
       [t('Hero classes it opens'), commaList(game.data.classes.filter((heroClass) => heroClass.unlockAfterDungeonId === dungeon.id).map((heroClass) => siteLink(`heroes/${heroClass.id}.html`, heroClass.displayName)))],

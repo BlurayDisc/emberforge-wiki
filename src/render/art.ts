@@ -3,7 +3,7 @@ import { join } from 'node:path';
 import { GAME_ART_FOLDER } from '../config';
 import { html, type Html } from './html';
 
-export type ArtFolder = 'heroes' | 'monsters' | 'items' | 'materials' | 'dungeons';
+export type ArtFolder = 'heroes' | 'monsters' | 'items' | 'materials' | 'dungeons' | 'spells/icons' | 'spells/effects';
 
 // The PNG header stores the width at byte 16 and the height at byte 20.
 function readPngSize(filePath: string): { width: number; height: number } {

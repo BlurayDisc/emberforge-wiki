@@ -54,6 +54,7 @@ export interface Dungeon {
   monsterIds: string[];
   rareMonsterId: string | null;
   bossMonsterId: string | null;
+  minimumPartySize: number;
   maxPartySize: number;
   minimumHeroLevel: number;
   recommendedMaxLevel: number;
@@ -137,6 +138,19 @@ export interface Spell {
   effect: SpellEffect;
 }
 
+// What a spell looks like and sounds like (data/spell-visuals.json and data/audio/sound-effects.json).
+export interface SpellLook {
+  theme: string;
+  icon?: string;
+  cast?: string;
+  projectile?: string;
+  impact?: string;
+  buff?: string;
+  debuff?: string;
+}
+
+export type SpellSoundSet = Partial<Record<'cast' | 'projectile' | 'impact' | 'buff' | 'debuff', string>>;
+
 export interface MonsterSpell {
   id: string;
   isUltimate: boolean;
@@ -177,6 +191,8 @@ export interface GameData {
   affixes: Affix[];
   spells: Spell[];
   monsterSpells: MonsterSpell[];
+  spellLooks: Record<string, SpellLook>;
+  spellSounds: Record<string, SpellSoundSet>;
   professions: Record<string, string>;
   heroNames: string[];
   balance: Record<string, BalanceFile>;
@@ -213,6 +229,8 @@ export function loadGameData(language: Language): GameData {
     affixes: readJson('affixes.json'),
     spells: readJson('spells.json'),
     monsterSpells: readJson('monster-spells.json'),
+    spellLooks: readJson<{ spells: Record<string, SpellLook> }>('spell-visuals.json').spells,
+    spellSounds: readJson<{ spellSounds: Record<string, SpellSoundSet> }>('audio/sound-effects.json').spellSounds,
     professions: readJson('professions.json'),
     heroNames: readJson('hero-names.json'),
     balance: readBalanceFiles(),

@@ -124,7 +124,7 @@
       "resistance": 1
     },
     "armourWeight": null,
-    "craftLevelOffset": 7
+    "craftLevelOffset": 8
   },
   {
     "id": "quiver",
@@ -156,7 +156,7 @@
       "resistance": 2
     },
     "armourWeight": null,
-    "craftLevelOffset": 7
+    "craftLevelOffset": 8
   },
   {
     "id": "parrying-dagger",
@@ -189,7 +189,7 @@
       "defence": 1
     },
     "armourWeight": null,
-    "craftLevelOffset": 7
+    "craftLevelOffset": 6
   },
   {
     "id": "ring",
@@ -375,6 +375,57 @@
       "skill": 1
     },
     "craftLevelOffset": 3
+  },
+  {
+    "id": "legs-heavy",
+    "name": "Legplates",
+    "slot": "legs",
+    "gearType": "armour",
+    "armourWeight": "heavy",
+    "width": 2,
+    "height": 3,
+    "profession": "armoursmithing",
+    "mainCategory": "ore",
+    "baseStats": {
+      "defence": 4,
+      "resistance": 1,
+      "hp": 6
+    },
+    "craftLevelOffset": 7
+  },
+  {
+    "id": "legs-medium",
+    "name": "Breeches",
+    "slot": "legs",
+    "gearType": "armour",
+    "armourWeight": "medium",
+    "width": 2,
+    "height": 3,
+    "profession": "tailoring",
+    "mainCategory": "hide",
+    "baseStats": {
+      "defence": 3,
+      "resistance": 2,
+      "hp": 6
+    },
+    "craftLevelOffset": 7
+  },
+  {
+    "id": "legs-light",
+    "name": "Leggings",
+    "slot": "legs",
+    "gearType": "armour",
+    "armourWeight": "light",
+    "width": 2,
+    "height": 3,
+    "profession": "tailoring",
+    "mainCategory": "cloth",
+    "baseStats": {
+      "defence": 1,
+      "resistance": 4,
+      "hp": 6
+    },
+    "craftLevelOffset": 7
   },
   {
     "id": "boots-heavy",

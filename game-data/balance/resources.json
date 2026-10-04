@@ -1,21 +1,21 @@
 {
   "mana": {
-    "maximumBase": 10,
-    "maximumPerLevel": 3,
+    "maximumBase": 8,
+    "maximumPerLevel": 3.4,
     "attribute": "magic",
-    "maximumPerAttributePoint": 4,
+    "maximumPerAttributePoint": 0.6,
     "startFraction": 1,
-    "regenFractionPerSecond": 0.02,
+    "regenFractionPerSecond": 0.026,
     "gainFractionPerHitDealt": 0,
     "gainFractionPerHitTaken": 0
   },
   "stamina": {
-    "maximumBase": 10,
+    "maximumBase": 8,
     "maximumPerLevel": 3,
     "attribute": "strength",
-    "maximumPerAttributePoint": 1,
+    "maximumPerAttributePoint": 0.5,
     "startFraction": 1,
-    "regenFractionPerSecond": 0.03,
+    "regenFractionPerSecond": 0.034,
     "gainFractionPerHitDealt": 0,
     "gainFractionPerHitTaken": 0
   },

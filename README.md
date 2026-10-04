@@ -13,7 +13,7 @@ The push starts the GitHub Action, which checks the build and publishes to GitHu
 
 | Command | What it does |
 |---|---|
-| `npm run sync` | Copies `../emberforge/data` to `game-data/`, records the game commit, and draws the game pixel art to PNG files in `game-art/`. Set `EMBERFORGE_REPO` if the game is somewhere else. |
+| `npm run sync` | Copies `../emberforge/data` to `game-data/`, records the game commit, and draws the game pixel art to PNG files in `game-art/`: heroes, monsters, items, spell icons and the animated spell effects (APNG). Set `EMBERFORGE_REPO` if the game is somewhere else. |
 | `npm run build` | Builds the site from `game-data/` into `dist/`. |
 | `npm run check` | Type check, build and internal link check. |
 | `npm run preview` | Serves `dist/` locally. |
@@ -49,6 +49,10 @@ New monsters, items, dungeons and so on show up by themselves: pages are made by
 1. Add a module in `src/pages/` that returns `Page[]`.
 2. List it in `src/pages/pageBuilders.ts`.
 3. Add an entry to `SECTIONS` in `src/render/page.ts` (this adds it to the menu and the home page).
+
+## Spell animations and sounds
+
+The Spells page shows the icon of every spell. A spell with a look in `game-data/spell-visuals.json` also shows its cast, projectile, impact and status animations, and a Play sound button. The animations are drawn by `tools/render-game-art.ts` from the game code. The sounds are made in the browser from `game-data/audio/sound-effects.json` (copied to `assets/sound-effects.json`). The game's internal spell gallery is not part of the wiki.
 
 ## Known gaps
 

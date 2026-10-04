@@ -2,8 +2,6 @@
   "qualityWeights": { "common": 55, "magic": 35, "rare": 10 },
   "catalystMaterialId": "tarnished-catalyst",
   "levelsPerBracket": 10,
-  "itemLevelAboveHighestHero": 0,
-  "itemLevelRollsKeepHighest": 2,
   "baseStatGrowthPerItemLevel": 0.12,
   "baseStatSpreadFraction": 0.15,
   "unscaledBaseStats": ["speed"],
@@ -19,7 +17,7 @@
   "setMaterialSmallItem": 1,
   "setMaterialLargeItem": 2,
   "setRecipeLevelStep": 1,
-  "setRecipeSlots": ["helm", "gloves", "boots", "armour"],
+  "setRecipeSlots": ["helm", "gloves", "boots", "legs", "armour"],
   "rareNameFirstParts": ["Grim", "Doom", "Storm", "Ash", "Dread", "Iron", "Night", "Blood", "Wrath", "Gloom"],
   "rareNameSecondParts": ["Bite", "Song", "Edge", "Ward", "Grip", "Mark", "Veil", "Spire", "Thorn", "Coil"]
 }

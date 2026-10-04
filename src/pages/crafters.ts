@@ -52,7 +52,7 @@ function craftingQuality(game: GameIndex) {
       [t('Sell value factor'), ...qualityIds.map((id) => `${sellFactors[id] ?? '-'}x`)],
     ])}
     <ul>
-      <li>${t('A crafted item rolls its item level twice and keeps the higher one ({rolls} rolls).', { rolls: balanceNumber(d, 'items', 'itemLevelRollsKeepHighest') })}</li>
+      <li>${t('Every recipe has one fixed item level: the recipe level, never above the end of its tier. A hero needs that level to equip the item.')}</li>
       <li>${t('Base stats grow by {percent} for each item level. Speed does not grow.', { percent: formatPercent(balanceNumber(d, 'items', 'baseStatGrowthPerItemLevel')) })}</li>
       <li>${t('Sell value grows by {percent} for each item level.', { percent: formatPercent(balanceNumber(d, 'items', 'sellGrowthPerItemLevel')) })}</li>
     </ul>`;

@@ -1,7 +1,7 @@
-import { deflateSync, crc32 } from 'node:zlib';
 import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { encodeAnimatedPng, encodePng, type AnimationFrame } from './png';
 
 // The game draws all its pixel art with canvas code. This tool runs that code against a tiny canvas
 // that keeps raw pixels, then saves PNG files. The wiki build only copies the PNG files.
@@ -10,33 +10,6 @@ const artFolder = resolve('game-art');
 const gameDataFolder = resolve('game-data');
 
 const readGameData = <T>(fileName: string): T => JSON.parse(readFileSync(join(gameDataFolder, fileName), 'utf8')) as T;
-
-function encodePng(width: number, height: number, rgba: Uint8ClampedArray): Buffer {
-  const rowLength = width * 4;
-  const filteredRows = Buffer.alloc((rowLength + 1) * height);
-  for (let row = 0; row < height; row++) {
-    filteredRows[row * (rowLength + 1)] = 0;
-    filteredRows.set(rgba.subarray(row * rowLength, (row + 1) * rowLength), row * (rowLength + 1) + 1);
-  }
-  const chunk = (type: string, content: Buffer): Buffer => {
-    const typeAndContent = Buffer.concat([Buffer.from(type, 'ascii'), content]);
-    const length = Buffer.alloc(4);
-    length.writeUInt32BE(content.length);
-    const checksum = Buffer.alloc(4);
-    checksum.writeUInt32BE(crc32(typeAndContent));
-    return Buffer.concat([length, typeAndContent, checksum]);
-  };
-  const header = Buffer.alloc(13);
-  header.writeUInt32BE(width, 0);
-  header.writeUInt32BE(height, 4);
-  header.set([8, 6, 0, 0, 0], 8);
-  return Buffer.concat([
-    Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]),
-    chunk('IHDR', header),
-    chunk('IDAT', deflateSync(filteredRows)),
-    chunk('IEND', Buffer.alloc(0)),
-  ]);
-}
 
 function parseHexColor(color: string): [number, number, number] {
   const digits = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(color)?.[1];
@@ -73,6 +46,10 @@ class PixelCanvas {
         return { data: canvas.allocatedPixels().slice() };
       },
     };
+  }
+
+  toRgba(): Uint8ClampedArray {
+    return this.allocatedPixels();
   }
 
   toPng(): Buffer {
@@ -157,5 +134,56 @@ for (const base of baseItems) {
 }
 
 for (const dungeon of dungeons) saveDataUrlImage(`dungeons/${dungeon.id}.png`, createDungeonIcon(dungeon.id, 1));
+
+// Every spell has an icon. Spells with a look in spell-visuals.json also have animated effects.
+interface SpellEntry { id: string }
+interface SpellLook { theme: string; cast?: string; projectile?: string; impact?: string; buff?: string; debuff?: string }
+interface EffectArtFrames { frames: PixelCanvas[]; framesPerSecond: number; looping: boolean }
+type EffectArtBuilder = (colors: unknown) => EffectArtFrames;
+
+const { createSpellIcon } = await importGameModule<{ createSpellIcon: (spellId: string, scale: number) => unknown }>('src/ui/spellIconArt.ts');
+const { SPELL_THEMES } = await importGameModule<{ SPELL_THEMES: Record<string, unknown> }>('src/render/spellEffects/spellThemes.ts');
+const { CAST_ART } = await importGameModule<{ CAST_ART: Record<string, EffectArtBuilder> }>('src/render/spellEffects/castArt.ts');
+const { PROJECTILE_ART } = await importGameModule<{ PROJECTILE_ART: Record<string, EffectArtBuilder> }>('src/render/spellEffects/projectileArt.ts');
+const { IMPACT_ART } = await importGameModule<{ IMPACT_ART: Record<string, EffectArtBuilder> }>('src/render/spellEffects/impactArt.ts');
+const { BUFF_ART, DEBUFF_ART } = await importGameModule<{ BUFF_ART: Record<string, EffectArtBuilder>; DEBUFF_ART: Record<string, EffectArtBuilder> }>('src/render/spellEffects/statusArt.ts');
+
+const EFFECT_PHASES = [
+  { phase: 'cast', builders: CAST_ART },
+  { phase: 'projectile', builders: PROJECTILE_ART },
+  { phase: 'impact', builders: IMPACT_ART },
+  { phase: 'buff', builders: BUFF_ART },
+  { phase: 'debuff', builders: DEBUFF_ART },
+] as const;
+const MILLISECONDS_PER_SECOND = 1000;
+// A one-shot effect is over in under half a second. The last frame stays a little, so the loop is easy to watch.
+const ONE_SHOT_PAUSE_MILLISECONDS = 700;
+
+for (const spell of readGameData<SpellEntry[]>('spells.json')) saveDataUrlImage(`spells/icons/${spell.id}.png`, createSpellIcon(spell.id, 1));
+
+const spellLooks = readGameData<{ spells: Record<string, SpellLook> }>('spell-visuals.json').spells;
+const drawnEffects = new Set<string>();
+for (const [spellId, look] of Object.entries(spellLooks)) {
+  for (const { phase, builders } of EFFECT_PHASES) {
+    const artId = look[phase];
+    if (artId === undefined) continue;
+    const fileName = `${phase}-${artId}--${look.theme}`;
+    if (drawnEffects.has(fileName)) continue;
+    drawnEffects.add(fileName);
+    const build = builders[artId];
+    const colors = SPELL_THEMES[look.theme];
+    if (!build || !colors) throw new Error(`Spell ${spellId} uses an unknown ${phase} effect "${artId}" or theme "${look.theme}".`);
+    const art = build(colors);
+    const [firstFrame] = art.frames;
+    if (!firstFrame) throw new Error(`The ${phase} effect "${artId}" has no frames.`);
+    const frameMilliseconds = Math.round(MILLISECONDS_PER_SECOND / art.framesPerSecond);
+    const animation: AnimationFrame[] = art.frames.map((frame, index) => {
+      if (frame.width !== firstFrame.width || frame.height !== firstFrame.height) throw new Error(`The frames of the ${phase} effect "${artId}" have different sizes.`);
+      const isLastFrame = index === art.frames.length - 1;
+      return { rgba: frame.toRgba(), durationMilliseconds: frameMilliseconds + (isLastFrame && !art.looping ? ONE_SHOT_PAUSE_MILLISECONDS : 0) };
+    });
+    savePng(`spells/effects/${fileName}.png`, encodeAnimatedPng(firstFrame.width, firstFrame.height, animation));
+  }
+}
 
 console.log(`Rendered game art to ${artFolder}`);

@@ -1,7 +1,7 @@
 import { cpSync, mkdirSync, rmSync, writeFileSync, copyFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { createRequire } from 'node:module';
-import { FONT_FILES, GAME_ART_FOLDER, OUTPUT_FOLDER, STATIC_FOLDER } from './config';
+import { FONT_FILES, GAME_ART_FOLDER, GAME_DATA_FOLDER, OUTPUT_FOLDER, STATIC_FOLDER } from './config';
 import { loadGameData } from './data/gameData';
 import { LANGUAGES, languageFolder, type Language } from './i18n/language';
 import { buildInLanguage } from './i18n/ui';
@@ -57,6 +57,8 @@ rmSync(OUTPUT_FOLDER, { recursive: true, force: true });
 mkdirSync(OUTPUT_FOLDER, { recursive: true });
 cpSync(STATIC_FOLDER, join(OUTPUT_FOLDER, 'assets'), { recursive: true });
 cpSync(GAME_ART_FOLDER, join(OUTPUT_FOLDER, 'assets/art'), { recursive: true });
+// The spell sound buttons synthesise the sounds in the browser from these recipes.
+copyFileSync(join(GAME_DATA_FOLDER, 'audio/sound-effects.json'), join(OUTPUT_FOLDER, 'assets/sound-effects.json'));
 copyFonts();
 const pageCounts = LANGUAGES.map((language) => `${buildLanguage(language)} ${language} pages`);
 writeSiteFile('.nojekyll', '');

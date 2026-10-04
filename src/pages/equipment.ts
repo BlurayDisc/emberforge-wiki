@@ -12,7 +12,7 @@ import { t } from '../i18n/ui';
 const itemPath = (base: BaseItem) => `equipment/${base.id}.html`;
 
 // Slots in the order a hero is dressed. A slot the game adds later is listed after these.
-const SLOT_ORDER = ['mainHand', 'offHand', 'helm', 'armour', 'gloves', 'boots', 'belt', 'ring', 'amulet'];
+const SLOT_ORDER = ['mainHand', 'offHand', 'helm', 'armour', 'gloves', 'legs', 'boots', 'belt', 'ring', 'amulet'];
 const slotRank = (slot: string) => (SLOT_ORDER.includes(slot) ? SLOT_ORDER.indexOf(slot) : SLOT_ORDER.length);
 
 export function sortedForDisplay(items: BaseItem[]): BaseItem[] {
