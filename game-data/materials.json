@@ -5,10 +5,10 @@
   {"id": "linen", "name": "Linen", "tier": 1, "category": "cloth", "sellValueCopper": 2, "craftedItemPrefix": "Linen", "width": 1, "height": 2},
   {"id": "quartz", "name": "Quartz", "tier": 1, "category": "gem", "sellValueCopper": 12, "craftedItemPrefix": "Quartz", "width": 1, "height": 1},
   {"id": "sharp-fang", "name": "Sharp Fang", "tier": 1, "category": "fang", "sellValueCopper": 3, "craftedItemPrefix": "Fang", "setBonus": {"stat": "skill", "value": 2}, "setCraftLevelOffset": 3, "setBodyArmourCraftLevelOffset": 10, "width": 1, "height": 1},
-  {"id": "bone-shard", "name": "Bone Shard", "tier": 1, "category": "bone", "sellValueCopper": 2, "craftedItemPrefix": "Bone", "setBonus": {"stat": "defence", "value": 2}, "setCraftLevelOffset": 7, "setBodyArmourCraftLevelOffset": 12, "width": 1, "height": 1},
-  {"id": "coarse-sinew", "name": "Coarse Sinew", "tier": 1, "category": "sinew", "sellValueCopper": 3, "craftedItemPrefix": "Sinew", "setBonus": {"stat": "strength", "value": 2}, "setCraftLevelOffset": 10, "setBodyArmourCraftLevelOffset": 14, "width": 1, "height": 1},
-  {"id": "toadskin", "name": "Toadskin", "tier": 1, "category": "skin", "sellValueCopper": 3, "craftedItemPrefix": "Toadskin", "setBonus": {"stat": "hp", "value": 8}, "setCraftLevelOffset": 5, "setBodyArmourCraftLevelOffset": 11, "width": 1, "height": 1},
-  {"id": "spider-silk", "name": "Spider Silk", "tier": 1, "category": "silk", "sellValueCopper": 3, "craftedItemPrefix": "Silk", "setBonus": {"stat": "speed", "value": 2}, "setCraftLevelOffset": 9, "setBodyArmourCraftLevelOffset": 13, "width": 1, "height": 1},
+  {"id": "bone-shard", "name": "Bone Shard", "tier": 1, "category": "bone", "sellValueCopper": 2, "craftedItemPrefix": "Bone", "setBonus": {"stat": "defence", "value": 2}, "setCraftLevelOffset": 7, "setBodyArmourCraftLevelOffset": 10, "width": 1, "height": 1},
+  {"id": "coarse-sinew", "name": "Coarse Sinew", "tier": 1, "category": "sinew", "sellValueCopper": 3, "craftedItemPrefix": "Sinew", "setBonus": {"stat": "strength", "value": 2}, "setCraftLevelOffset": 10, "setBodyArmourCraftLevelOffset": 10, "width": 1, "height": 1},
+  {"id": "toadskin", "name": "Toadskin", "tier": 1, "category": "skin", "sellValueCopper": 3, "craftedItemPrefix": "Toadskin", "setBonus": {"stat": "hp", "value": 8}, "setCraftLevelOffset": 5, "setBodyArmourCraftLevelOffset": 10, "width": 1, "height": 1},
+  {"id": "spider-silk", "name": "Spider Silk", "tier": 1, "category": "silk", "sellValueCopper": 3, "craftedItemPrefix": "Silk", "setBonus": {"stat": "speed", "value": 2}, "setCraftLevelOffset": 9, "setBodyArmourCraftLevelOffset": 10, "width": 1, "height": 1},
   {"id": "faint-essence", "name": "Faint Essence", "tier": 1, "category": "essence", "sellValueCopper": 8, "width": 1, "height": 1},
   {"id": "tarnished-catalyst", "name": "Tarnished Catalyst", "tier": 1, "category": "catalyst", "sellValueCopper": 60, "width": 1, "height": 1}
 ]

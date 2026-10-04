@@ -94,6 +94,7 @@ function recipeRows(game: GameIndex, text: GameText, base: BaseItem) {
     recipe.setMaterial ? html`${recipe.itemName} <span class="muted">(${setBonusText(text, recipe.setMaterial)})</span>` : recipe.itemName,
     t('Tier {tier}', { tier: recipe.tier }),
     recipe.requiredCraftLevel,
+    recipe.itemLevel,
     recipeIngredientLinks(recipe),
     formatMoney(recipe.craftFeeCopper),
     formatDuration(recipe.craftSeconds),
@@ -135,7 +136,7 @@ function itemPage(game: GameIndex, text: GameText, base: BaseItem): Page {
       [t('Crafter level offset'), `+${base.craftLevelOffset}`],
     ]))}
     ${panel(t('Recipes'), recipeRows(game, text, base).length
-      ? dataTable([t('Result'), t('Tier'), t('Crafter level'), t('Ingredients'), t('Crafter fee'), t('Craft time')], recipeRows(game, text, base))
+      ? dataTable([t('Result'), t('Tier'), t('Crafter level'), t('Item level'), t('Ingredients'), t('Crafter fee'), t('Craft time')], recipeRows(game, text, base))
       : html`<p class="muted">${t('No recipe yet: the needed materials are not in the game data.')}</p>`)}`;
   return { path: itemPath(base), title: base.name, section: 'equipment', body, searchKind: t('Equipment'), searchKeywords: `${base.slot} ${base.gearType} ${wearers.map((heroClass) => heroClass.displayName).join(' ')}` };
 }

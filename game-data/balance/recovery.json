@@ -1,6 +1,6 @@
 {
   "regenSecondsToFullAtLevelOne": 60,
-  "regenSecondsToFullAtMaxLevel": 300,
+  "regenSecondsToFullAtMaxLevel": 82,
   "reviveBaseSeconds": 60,
   "reviveSecondsPerLevel": 5,
   "reviveHealthFraction": 0.3

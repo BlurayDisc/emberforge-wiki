@@ -1,5 +1,5 @@
 {
-  "levelCap": 100,
+  "levelCap": 10,
   "victoryDungeonId": "goblin-chief-lair",
   "experienceToNextLevelByLevel": [400, 480, 570, 680, 820, 980, 1170, 1400, 1680, 2000],
   "normalKillExperienceByHeroLevelThenMonsterLevel": [

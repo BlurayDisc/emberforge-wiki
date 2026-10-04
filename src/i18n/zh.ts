@@ -453,4 +453,5 @@ export const CHINESE: Record<string, string> = {
   'Play sound': '播放声音',
   'Animations and sounds': '动画与声音',
   'Spells with a look show their effects here. A spell shows a cast on the caster, a flight to the target and an impact. A buff or a debuff stays on its unit while the status lasts. Press the button to hear the spell.': '有特效的法术会在这里展示效果。法术会在施法者身上显示施放效果，向目标飞行，并在目标身上显示命中效果。增益或减益会在状态持续期间留在单位身上。点击按钮可以听到法术的声音。',
+  'Item level': '物品等级',
 };

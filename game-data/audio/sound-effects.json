@@ -953,6 +953,80 @@
           "frequency": 3500
         }
       }
+    ],
+    "victory-fanfare": [
+      {
+        "wave": "square",
+        "startFrequency": 523,
+        "endFrequency": 523,
+        "durationSeconds": 0.22,
+        "volume": 0.14,
+        "delaySeconds": 0
+      },
+      {
+        "wave": "square",
+        "startFrequency": 659,
+        "endFrequency": 659,
+        "durationSeconds": 0.22,
+        "volume": 0.14,
+        "delaySeconds": 0.2
+      },
+      {
+        "wave": "square",
+        "startFrequency": 784,
+        "endFrequency": 784,
+        "durationSeconds": 0.22,
+        "volume": 0.14,
+        "delaySeconds": 0.4
+      },
+      {
+        "wave": "square",
+        "startFrequency": 1047,
+        "endFrequency": 1047,
+        "durationSeconds": 0.5,
+        "volume": 0.16,
+        "delaySeconds": 0.6
+      },
+      {
+        "wave": "triangle",
+        "startFrequency": 523,
+        "endFrequency": 523,
+        "durationSeconds": 1.4,
+        "volume": 0.14,
+        "delaySeconds": 1.0
+      },
+      {
+        "wave": "triangle",
+        "startFrequency": 659,
+        "endFrequency": 659,
+        "durationSeconds": 1.4,
+        "volume": 0.12,
+        "delaySeconds": 1.0
+      },
+      {
+        "wave": "triangle",
+        "startFrequency": 784,
+        "endFrequency": 784,
+        "durationSeconds": 1.4,
+        "volume": 0.12,
+        "delaySeconds": 1.0
+      },
+      {
+        "wave": "square",
+        "startFrequency": 1047,
+        "endFrequency": 1047,
+        "durationSeconds": 1.4,
+        "volume": 0.08,
+        "delaySeconds": 1.0
+      },
+      {
+        "wave": "triangle",
+        "startFrequency": 262,
+        "endFrequency": 262,
+        "durationSeconds": 1.4,
+        "volume": 0.1,
+        "delaySeconds": 1.0
+      }
     ]
   },
   "classAttack": {

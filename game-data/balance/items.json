@@ -10,7 +10,7 @@
   "rareAffixCounts": [3, 4],
   "maximumAffixesPerKindMagic": 1,
   "maximumAffixesPerKindRare": 2,
-  "sellQualityFactor": { "common": 1, "magic": 2, "rare": 4, "unique": 10 },
+  "sellQualityFactor": { "common": 2, "magic": 4, "rare": 8, "unique": 20 },
   "sellGrowthPerItemLevel": 0.1,
   "mainIngredientCellsPerUnit": 2,
   "largeItemCellThreshold": 6,

@@ -75,6 +75,7 @@ function crafterPage(game: GameIndex, text: GameText, professionId: string, prof
     itemLink(game, recipe.base),
     text.slotName(recipe.base.slot),
     recipe.requiredCraftLevel,
+    recipe.itemLevel,
     recipeIngredientLinks(recipe),
     formatMoney(recipe.craftFeeCopper),
     formatDuration(recipe.craftSeconds),
@@ -86,7 +87,7 @@ function crafterPage(game: GameIndex, text: GameText, professionId: string, prof
   const body = html`
     ${pageHeading(professionName)}
     ${panel(t('Makes'), makes.length ? definitionList(makesBySlot) : html`<p class="muted">${t('Nothing yet.')}</p>`)}
-    ${panel(t('Recipes'), rows.length ? dataTable([t('Result'), t('Slot'), t('Crafter level'), t('Ingredients'), t('Crafter fee'), t('Craft time')], rows, { sortable: true }) : html`<p class="muted">${t('No recipes yet.')}</p>`)}
+    ${panel(t('Recipes'), rows.length ? dataTable([t('Result'), t('Slot'), t('Crafter level'), t('Item level'), t('Ingredients'), t('Crafter fee'), t('Craft time')], rows, { sortable: true }) : html`<p class="muted">${t('No recipes yet.')}</p>`)}
     ${panel(t('Crafting levels'), craftingNumbers(game))}`;
   return { path: crafterPath(professionId), title: professionName, section: 'crafters', body, searchKind: t('Crafter') };
 }

@@ -12,6 +12,8 @@ export interface Recipe {
   setMaterial: Material | null;
   itemName: string;
   requiredCraftLevel: number;
+  // The hero level that equips the item.
+  itemLevel: number;
   craftFeeCopper: number;
   craftSeconds: number;
   ingredients: RecipeIngredient[];
@@ -150,6 +152,22 @@ export class GameIndex {
     const craftFeeBase = balanceNumber(d, 'crafting', 'craftFeeBaseCopper');
     const craftFeePerLevel = balanceNumber(d, 'crafting', 'craftFeePerRequiredLevelCopper');
     const setMaterials = this.setMaterialsOfTier(tier);
+    // Same rule as setPieceCraftLevelOffset in the game. The pieces of one set open in the order of their basic recipes,
+    // each at least 1 level after the piece before it, and never above the last crafter level of the tier.
+    const setPieceCraftLevelOffset = (base: BaseItem, setMaterial: Material): number => {
+      const setPieces = d.baseItems
+        .filter((piece) => setRecipeSlots.includes(piece.slot) && piece.armourWeight === base.armourWeight)
+        .sort((first, second) => first.craftLevelOffset - second.craftLevelOffset);
+      let previousPieceOffset = 0;
+      for (const piece of setPieces) {
+        const setLevelFloor = (piece.slot === 'armour' ? setMaterial.setBodyArmourCraftLevelOffset : setMaterial.setCraftLevelOffset) ?? 0;
+        const ownOffset = Math.max(piece.craftLevelOffset + setRecipeLevelStep, setLevelFloor);
+        const pieceOffset = Math.min(levelsPerBracket, Math.max(ownOffset, previousPieceOffset + 1));
+        if (piece.id === base.id) return pieceOffset;
+        previousPieceOffset = pieceOffset;
+      }
+      return base.craftLevelOffset;
+    };
 
     return d.baseItems.flatMap((base): Recipe[] => {
       const main = d.materials.find((material) => material.tier === tier && material.category === base.mainCategory);
@@ -157,8 +175,7 @@ export class GameIndex {
       const cells = base.width * base.height;
       const variants = [null, ...(setRecipeSlots.includes(base.slot) ? setMaterials : [])];
       return variants.map((setMaterial): Recipe => {
-        const setLevelFloor = base.slot === 'armour' ? setMaterial?.setBodyArmourCraftLevelOffset : setMaterial?.setCraftLevelOffset;
-        const craftLevelOffset = setMaterial ? Math.max(base.craftLevelOffset + setRecipeLevelStep, setLevelFloor ?? 0) : base.craftLevelOffset;
+        const craftLevelOffset = setMaterial ? setPieceCraftLevelOffset(base, setMaterial) : base.craftLevelOffset;
         const requiredCraftLevel = (tier - 1) * levelsPerBracket + craftLevelOffset;
         const namingMaterial = setMaterial ?? main;
         return {
@@ -167,6 +184,7 @@ export class GameIndex {
           setMaterial,
           itemName: `${namingMaterial.craftedItemPrefix ?? namingMaterial.name}${d.text['format.nameJoiner'] ?? ' '}${base.name}`,
           requiredCraftLevel,
+          itemLevel: Math.min(requiredCraftLevel, tier * levelsPerBracket),
           // Same formula as craftFeeCopper in the game.
           craftFeeCopper: Math.round(craftFeeBase + craftFeePerLevel * requiredCraftLevel),
           craftSeconds: Math.round(craftSecondsBase + craftSecondsPerLevel * requiredCraftLevel),

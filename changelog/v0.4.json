@@ -1,11 +1,11 @@
 {
-  "version": "v4.0",
+  "version": "v0.4",
   "date": "2026-10-04",
   "compare": {
     "from": "bed1eae",
-    "to": "7f124cf"
+    "to": "35410fc"
   },
-  "summary": "Spells come alive and the Goblin Chief needs two heroes. Every spell has an icon. The first 21 spells have animations and sounds. This list covers v0.3.1, v0.3.2 and v4.0.",
+  "summary": "Spells come alive, the Goblin Chief needs two heroes and the game ends in a victory screen at level 10. Every spell has an icon. The first 21 spells have animations and sounds. This list covers v0.3.1, v0.3.2 and v0.4.",
   "highlights": [
     {
       "title": "Spell effects",
@@ -132,6 +132,30 @@
             },
             "The Mill settings are kept in the save with a migration, so old saves keep working."
           ]
+        },
+        {
+          "heading": "Level cap",
+          "tag": "New",
+          "items": [
+            "Heroes stop at level 10. The hero screen shows a MAX LEVEL bar.",
+            "The Academy hides spells above level 10, because no hero can learn them.",
+            "Hero recovery at the cap takes 82 seconds (it was 300 seconds at level 100)."
+          ]
+        },
+        {
+          "heading": "Victory screen",
+          "tag": "New",
+          "art": {
+            "folder": "dungeons",
+            "file": "goblin-chief-lair"
+          },
+          "items": [
+            "The first clear of the Goblin Chief's Lair opens a full-page victory screen with rays, confetti, a trophy, your heroes and a fanfare. You can watch it again in Settings.",
+            {
+              "label": "Hall of Fame",
+              "text": "A card for each winning hero with stat bars, power and battle record, and totals for your adventure: dungeons cleared, items crafted, fights fought, monsters defeated, spells learned and heroes in your company."
+            }
+          ]
         }
       ]
     },
@@ -183,7 +207,8 @@
           },
           "items": [
             "A new slot with Legplates (Heavy), Breeches (Medium) and Leggings (Light). Each has set recipes from every monster set material.",
-            "Crafter levels changed so no two armour slots of one profession share a level. Set pieces open one after another, on odd levels. Shield opens at level 8, Belt at 6 and Tome at 8."
+            "Crafter levels changed so no two armour slots of one profession share a level. Shield opens at level 8, Belt at 6 and Tome at 8.",
+            "Set pieces open one after another. No set recipe goes above crafter level 10, so a level 10 crafter can make every item. Late pieces of late sets share level 10."
           ]
         },
         {
@@ -205,6 +230,21 @@
           "heading": "Workshop",
           "items": [
             "The recipe list has a filter by class and by slot, and a sort by level. The Workshop shows the item level before you craft."
+          ]
+        },
+        {
+          "heading": "Cost and value",
+          "tag": "Changed",
+          "items": [
+            {
+              "label": "Crafter fee",
+              "text": "1 copper plus 0.25 copper for each required level (it was 3 plus 0.5)."
+            },
+            {
+              "label": "Sell value",
+              "text": "The quality factors doubled: Common 2x, Magic 4x, Rare 8x and Unique 20x. Crafting now pays for the spells of a hero."
+            },
+            "The recipe tables of the wiki show the item level of each recipe."
           ]
         }
       ]
@@ -274,8 +314,7 @@
           "heading": "Game",
           "items": [
             "Spells above level 10 and monster spells have no animations or sounds yet.",
-            "Two level 10 heroes with only their best weapons win about 51% against the Goblin Chief.",
-            "A solo hero holds 277 copper at level 10. The second hero costs 300 copper."
+            "Two level 10 heroes with only their best weapons win about 51% against the Goblin Chief."
           ]
         }
       ]
