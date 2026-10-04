@@ -3,6 +3,8 @@ import { dirname, join } from 'node:path';
 import { createRequire } from 'node:module';
 import { FONT_FILES, GAME_ART_FOLDER, OUTPUT_FOLDER, STATIC_FOLDER } from './config';
 import { loadGameData } from './data/gameData';
+import { LANGUAGES, languageFolder, type Language } from './i18n/language';
+import { buildInLanguage } from './i18n/ui';
 import { GameIndex } from './data/gameIndex';
 import { GameText } from './data/text';
 import { renderPage } from './render/layout';
@@ -39,18 +41,23 @@ function assertNoDuplicatePaths(pages: Page[]): void {
   }
 }
 
-const data = loadGameData();
-const game = new GameIndex(data);
-const text = GameText.from(data);
-const pages = PAGE_BUILDERS.flatMap((buildPages) => buildPages(game, text));
-assertNoDuplicatePaths(pages);
+function buildLanguage(language: Language): number {
+  const data = loadGameData(language);
+  const game = new GameIndex(data);
+  const text = GameText.from(data);
+  const pages = buildInLanguage(language, () => PAGE_BUILDERS.flatMap((buildPages) => buildPages(game, text)));
+  assertNoDuplicatePaths(pages);
+  const folder = languageFolder(language);
+  for (const page of pages) writeSiteFile(`${folder}${page.path}`, buildInLanguage(language, () => renderPage(page, data.source, language)));
+  writeSiteFile(`assets/${language === 'en' ? 'search-index.json' : `search-index.${language}.json`}`, buildSearchIndex(pages));
+  return pages.length;
+}
 
 rmSync(OUTPUT_FOLDER, { recursive: true, force: true });
 mkdirSync(OUTPUT_FOLDER, { recursive: true });
 cpSync(STATIC_FOLDER, join(OUTPUT_FOLDER, 'assets'), { recursive: true });
 cpSync(GAME_ART_FOLDER, join(OUTPUT_FOLDER, 'assets/art'), { recursive: true });
 copyFonts();
-for (const page of pages) writeSiteFile(page.path, renderPage(page, data.source));
-writeSiteFile('assets/search-index.json', buildSearchIndex(pages));
+const pageCounts = LANGUAGES.map((language) => `${buildLanguage(language)} ${language} pages`);
 writeSiteFile('.nojekyll', '');
-console.log(`Wrote ${pages.length} pages to ${OUTPUT_FOLDER}`);
+console.log(`Wrote ${pageCounts.join(', ')} to ${OUTPUT_FOLDER}`);

@@ -8,8 +8,9 @@ import { formatMoney, formatPercent, formatQuantityRange } from '../render/forma
 import { html, type Html } from '../render/html';
 import type { Page } from '../render/page';
 import { itemLink, setBonusText } from './equipment';
+import { t } from '../i18n/ui';
 
-const commaListText = (names: string[]): string => names.join(', ');
+const commaListText = (names: string[]): string => names.join(t(', '));
 const materialPath = (material: Material) => `materials/${material.id}.html`;
 const materialLink = (material: Material): Html => iconLink(materialPath(material), material.name, pixelArt('materials', material.id, material.name, 2));
 
@@ -22,7 +23,7 @@ function materialTable(game: GameIndex, text: GameText, materials: Material[]): 
       formatMoney(material.sellValueCopper),
       `${material.width}x${material.height}`,
     ]);
-  return dataTable(['Material', 'Category', 'Sells for', 'Backpack size'], rows, { sortable: true });
+  return dataTable([t('Material'), t('Category'), t('Sells for'), t('Backpack size')], rows, { sortable: true });
 }
 
 // Each tier belongs to one town. Inside a tier, crafting materials come before the ones no recipe uses.
@@ -32,18 +33,18 @@ function indexPage(game: GameIndex, text: GameText): Page {
     const ofTier = game.data.materials.filter((material) => material.tier === tier);
     const crafting = ofTier.filter((material) => game.isCraftingMaterial(material));
     const other = ofTier.filter((material) => !game.isCraftingMaterial(material));
-    const title = html`Tier ${tier}${town ? html` <span class="muted">${siteLink(`towns/${town.id}.html`, town.name)}</span>` : null}`;
+    const title = html`${t('Tier {tier}', { tier })}${town ? html` <span class="muted">${siteLink(`towns/${town.id}.html`, town.name)}</span>` : null}`;
     return panel(title, html`
-      ${subheading('Crafting materials')}${materialTable(game, text, crafting)}
-      ${other.length ? html`${subheading('Other materials')}<p class="muted">No recipe uses these. They sell for coin.</p>${materialTable(game, text, other)}` : null}`,
+      ${subheading(t('Crafting materials'))}${materialTable(game, text, crafting)}
+      ${other.length ? html`${subheading(t('Other materials'))}<p class="muted">${t('No recipe uses these. They sell for coin.')}</p>${materialTable(game, text, other)}` : null}`,
     { anchor: `tier-${tier}`, isFilterGroup: true });
   });
   const body = html`
-    ${pageHeading('Materials', 'Monsters drop materials. Crafters turn them into gear. A recipe uses one tier only.')}
-    ${filterBox('Filter materials...')}
-    ${jumpLinks(game.tiers().map((tier) => ({ anchor: `tier-${tier}`, label: `Tier ${tier}` })))}
+    ${pageHeading(t('Materials'), t('Monsters drop materials. Crafters turn them into gear. A recipe uses one tier only.'))}
+    ${filterBox(t('Filter materials...'))}
+    ${jumpLinks(game.tiers().map((tier) => ({ anchor: `tier-${tier}`, label: t('Tier {tier}', { tier }) })))}
     ${tierPanels}`;
-  return { path: 'materials/index.html', title: 'Materials', section: 'materials', body };
+  return { path: 'materials/index.html', title: t('Materials'), section: 'materials', body };
 }
 
 function materialPage(game: GameIndex, text: GameText, material: Material): Page {
@@ -53,25 +54,25 @@ function materialPage(game: GameIndex, text: GameText, material: Material): Page
   const usedIn = [...new Map(usingRecipes.map((recipe) => [recipe.base.id, recipe])).values()];
   const dropRows = droppedBy.map((monster) => {
     const drop = monster.drops.find((candidate) => candidate.materialId === material.id)!;
-    return [siteLink(`monsters/${monster.id}.html`, monster.name), monster.rank, formatPercent(drop.chance), formatQuantityRange(drop.minQuantity, drop.maxQuantity)];
+    return [siteLink(`monsters/${monster.id}.html`, monster.name), t(monster.rank), formatPercent(drop.chance), formatQuantityRange(drop.minQuantity, drop.maxQuantity)];
   });
   const body = html`
-    ${pageHeading(material.name, `Tier ${material.tier} ${text.categoryName(material.category).toLowerCase()}`)}
+    ${pageHeading(material.name, t('Tier {tier} {category}', { tier: material.tier, category: text.categoryName(material.category).toLowerCase() }))}
     <div class="portrait">${pixelArt('materials', material.id, material.name, 6)}</div>
     ${loreText(text.find(`material.${material.id}.lore`))}
-    ${panel('Overview', definitionList([
-      ['Tier', material.tier],
-      ['Category', text.categoryName(material.category)],
-      ['Sell value', formatMoney(material.sellValueCopper)],
-      ['Backpack size', `${material.width} x ${material.height}`],
-      ['Item name prefix', material.craftedItemPrefix ?? html`<span class="muted">none</span>`],
-      ...(material.setBonus ? [['Set bonus', `${setBonusText(text, material)} on every ${commaListText(setSlotNames)} piece made with it`] as [string, string]] : []),
+    ${panel(t('Overview'), definitionList([
+      [t('Tier'), material.tier],
+      [t('Category'), text.categoryName(material.category)],
+      [t('Sell value'), formatMoney(material.sellValueCopper)],
+      [t('Backpack size'), `${material.width} x ${material.height}`],
+      [t('Item name prefix'), material.craftedItemPrefix ?? html`<span class="muted">${t('none')}</span>`],
+      ...(material.setBonus ? [[t('Set bonus'), t('{bonus} on every {slots} piece made with it', { bonus: setBonusText(text, material), slots: commaListText(setSlotNames) })] as [string, string]] : []),
     ]))}
-    ${panel('Dropped by', droppedBy.length ? dataTable(['Monster', 'Rank', 'Chance', 'Amount'], dropRows) : html`<p class="muted">No monster drops this yet.</p>`)}
-    ${panel('Used in recipes', usedIn.length
+    ${panel(t('Dropped by'), droppedBy.length ? dataTable([t('Monster'), t('Rank'), t('Chance'), t('Amount')], dropRows) : html`<p class="muted">${t('No monster drops this yet.')}</p>`)}
+    ${panel(t('Used in recipes'), usedIn.length
       ? html`<ul class="item-list">${usedIn.map((recipe) => html`<li>${itemLink(game, recipe.base)}</li>`)}</ul>`
-      : html`<p class="muted">No recipe uses this material.</p>`)}`;
-  return { path: materialPath(material), title: material.name, section: 'materials', body, searchKind: 'Material', searchKeywords: material.category };
+      : html`<p class="muted">${t('No recipe uses this material.')}</p>`)}`;
+  return { path: materialPath(material), title: material.name, section: 'materials', body, searchKind: t('Material'), searchKeywords: material.category };
 }
 
 export function buildMaterialPages(game: GameIndex, text: GameText): Page[] {

@@ -1,5 +1,15 @@
 (function () {
   const siteRoot = document.body.dataset.root || './';
+  const searchIndexUrl = document.body.dataset.searchIndex || siteRoot + 'assets/search-index.json';
+  const languageStorageKey = 'emberforgeWikiLanguage';
+
+  function rememberLanguageChoice() {
+    for (const choice of document.querySelectorAll('[data-language-choice]')) {
+      choice.addEventListener('click', () => {
+        try { localStorage.setItem(languageStorageKey, choice.dataset.languageChoice); } catch (error) { /* storage can be blocked */ }
+      });
+    }
+  }
 
   function setupSearch() {
     const box = document.getElementById('search-box');
@@ -8,7 +18,7 @@
     let entries = null;
     const loadEntries = () => entries
       ? Promise.resolve(entries)
-      : fetch(siteRoot + 'assets/search-index.json').then((r) => r.json()).then((list) => (entries = list));
+      : fetch(searchIndexUrl).then((r) => r.json()).then((list) => (entries = list));
 
     box.addEventListener('focus', loadEntries);
     box.addEventListener('input', async () => {
@@ -34,7 +44,7 @@
       if (!matches.length) {
         const empty = document.createElement('li');
         empty.className = 'empty';
-        empty.textContent = 'Nothing found';
+        empty.textContent = box.dataset.emptyText || 'Nothing found';
         results.append(empty);
       }
       results.hidden = false;
@@ -92,6 +102,7 @@
     }
   }
 
+  rememberLanguageChoice();
   setupSearch();
   setupFilterBoxes();
   setupSortableTables();

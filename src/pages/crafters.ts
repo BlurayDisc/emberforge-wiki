@@ -6,19 +6,20 @@ import { formatDuration, formatMoney, formatPercent } from '../render/format';
 import { html, type Html } from '../render/html';
 import type { Page } from '../render/page';
 import { itemLink, recipeIngredientLinks, sortedForDisplay } from './equipment';
+import { t } from '../i18n/ui';
 
 const crafterPath = (professionId: string) => `crafters/${professionId}.html`;
 
 function indexPage(game: GameIndex): Page {
   const body = html`
-    ${pageHeading('Crafters', 'Each profession is a crafter with a level from 1 to 100. Every craft earns experience.')}
+    ${pageHeading(t('Crafters'), t('Each profession is a crafter with a level from 1 to 100. Every craft earns experience.'))}
     ${cardGrid(Object.entries(game.data.professions).map(([professionId, professionName]) => {
       const makes = game.data.baseItems.filter((base) => base.profession === professionId);
-      return card(crafterPath(professionId), professionName, [`Makes ${makes.map((base) => base.name).join(', ') || 'nothing yet'}`]);
+      return card(crafterPath(professionId), professionName, [t('Makes {items}', { items: makes.map((base) => base.name).join(t(', ')) || t('nothing yet') })]);
     }))}
-    ${panel('Crafting levels', craftingNumbers(game))}
-    ${panel('Item upgrades', upgradeOdds(game))}`;
-  return { path: 'crafters/index.html', title: 'Crafters', section: 'crafters', body };
+    ${panel(t('Crafting levels'), craftingNumbers(game))}
+    ${panel(t('Item upgrades'), upgradeOdds(game))}`;
+  return { path: 'crafters/index.html', title: t('Crafters'), section: 'crafters', body };
 }
 
 // Same rule as upgradeReachChance in the game: a straight line between the two odds lists.
@@ -28,23 +29,23 @@ function upgradeOdds(game: GameIndex) {
   const farAbove = balanceValue<number[]>(d, 'crafting', 'upgradeChanceFarAboveRecipe');
   const farAboveLevels = balanceNumber(d, 'crafting', 'upgradeFarAboveLevels');
   const rows = Array.from({ length: balanceNumber(d, 'crafting', 'upgradeMaximumLevel') }, (_, index) => [
-    `+${index + 1} or better`,
+    t('+{level} or better', { level: index + 1 }),
     formatPercent(atRecipeLevel[index] ?? 0),
     formatPercent(farAbove[index] ?? 0),
   ]);
   return html`
-    <p>A crafted item can roll an upgrade level. The roll stops at the first failed step, so +N needs N steps in a row. The odds grow with each crafter level above the recipe level, until the crafter is ${farAboveLevels} levels above it.</p>
-    ${dataTable(['Upgrade', 'Crafter at recipe level', `Crafter ${farAboveLevels}+ levels above`], rows)}`;
+    <p>${t('A crafted item can roll an upgrade level. The roll stops at the first failed step, so +N needs N steps in a row. The odds grow with each crafter level above the recipe level, until the crafter is {levels} levels above it.', { levels: farAboveLevels })}</p>
+    ${dataTable([t('Upgrade'), t('Crafter at recipe level'), t('Crafter {levels}+ levels above', { levels: farAboveLevels })], rows)}`;
 }
 
 function craftingNumbers(game: GameIndex) {
   const d = game.data;
   return definitionList([
-    ['Level cap', balanceNumber(d, 'crafting', 'maximumLevel')],
-    ['Craft time', `${balanceNumber(d, 'crafting', 'craftSecondsBase')}s plus ${balanceNumber(d, 'crafting', 'craftSecondsPerRequiredLevel')}s per required level`],
-    ['Recipe level', `(tier - 1) x ${balanceNumber(d, 'items', 'levelsPerBracket')} plus the item offset`],
-    ['Crafter fee', `${formatMoney(balanceNumber(d, 'crafting', 'craftFeeBaseCopper'))} plus ${balanceNumber(d, 'crafting', 'craftFeePerRequiredLevelCopper')} copper per required level, paid for every item`],
-    ['Experience per craft', `${balanceNumber(d, 'crafting', 'experienceBase')} plus ${balanceNumber(d, 'crafting', 'experiencePerRequiredLevel')} per required level`],
+    [t('Level cap'), balanceNumber(d, 'crafting', 'maximumLevel')],
+    [t('Craft time'), t('{base}s plus {perLevel}s per required level', { base: balanceNumber(d, 'crafting', 'craftSecondsBase'), perLevel: balanceNumber(d, 'crafting', 'craftSecondsPerRequiredLevel') })],
+    [t('Recipe level'), t('(tier - 1) x {levels} plus the item offset', { levels: balanceNumber(d, 'items', 'levelsPerBracket') })],
+    [t('Crafter fee'), t('{base} plus {perLevel} copper per required level, paid for every item', { base: formatMoney(balanceNumber(d, 'crafting', 'craftFeeBaseCopper')), perLevel: balanceNumber(d, 'crafting', 'craftFeePerRequiredLevelCopper') })],
+    [t('Experience per craft'), t('{base} plus {perLevel} per required level', { base: balanceNumber(d, 'crafting', 'experienceBase'), perLevel: balanceNumber(d, 'crafting', 'experiencePerRequiredLevel') })],
   ]);
 }
 
@@ -64,10 +65,10 @@ function crafterPage(game: GameIndex, text: GameText, professionId: string, prof
     [text.slotName(slotId), html`<ul class="item-list">${makes.filter((base) => base.slot === slotId).map((base) => html`<li>${itemLink(game, base)}</li>`)}</ul>`]);
   const body = html`
     ${pageHeading(professionName)}
-    ${panel('Makes', makes.length ? definitionList(makesBySlot) : html`<p class="muted">Nothing yet.</p>`)}
-    ${panel('Recipes', rows.length ? dataTable(['Result', 'Slot', 'Crafter level', 'Ingredients', 'Crafter fee', 'Craft time'], rows, { sortable: true }) : html`<p class="muted">No recipes yet.</p>`)}
-    ${panel('Crafting levels', craftingNumbers(game))}`;
-  return { path: crafterPath(professionId), title: professionName, section: 'crafters', body, searchKind: 'Crafter' };
+    ${panel(t('Makes'), makes.length ? definitionList(makesBySlot) : html`<p class="muted">${t('Nothing yet.')}</p>`)}
+    ${panel(t('Recipes'), rows.length ? dataTable([t('Result'), t('Slot'), t('Crafter level'), t('Ingredients'), t('Crafter fee'), t('Craft time')], rows, { sortable: true }) : html`<p class="muted">${t('No recipes yet.')}</p>`)}
+    ${panel(t('Crafting levels'), craftingNumbers(game))}`;
+  return { path: crafterPath(professionId), title: professionName, section: 'crafters', body, searchKind: t('Crafter') };
 }
 
 export function buildCrafterPages(game: GameIndex, text: GameText): Page[] {

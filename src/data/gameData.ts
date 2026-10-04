@@ -1,6 +1,8 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { GAME_DATA_FOLDER } from '../config';
+import type { Language } from '../i18n/language';
+import { localiseGameData } from './localiseGameData';
 
 export type Stats = Record<string, number>;
 export type MonsterRank = string;
@@ -178,13 +180,13 @@ function readBalanceFiles(): Record<string, BalanceFile> {
   return Object.fromEntries(balanceFileNames.map((name) => [name, readJson<BalanceFile>(`balance/${name}.json`)]));
 }
 
-export function loadGameData(): GameData {
+export function loadGameData(language: Language): GameData {
   if (!existsSync(GAME_DATA_FOLDER)) {
     throw new Error(`No game data in ${GAME_DATA_FOLDER}. Run "npm run sync" first.`);
   }
   const townFile = readJson<{ startingTownId: string; towns: Town[] }>('towns.json');
   const hasSource = existsSync(join(GAME_DATA_FOLDER, 'source.json'));
-  return {
+  const englishData: GameData = {
     classes: readJson('classes.json'),
     monsters: readJson('monsters.json'),
     dungeons: readJson('dungeons.json'),
@@ -203,4 +205,5 @@ export function loadGameData(): GameData {
     text: readJson('i18n/en.json'),
     source: hasSource ? readJson('source.json') : null,
   };
+  return language === 'en' ? englishData : localiseGameData(englishData, readJson<Record<string, string>>(`i18n/${language}.json`));
 }

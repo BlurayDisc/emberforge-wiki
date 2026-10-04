@@ -246,3 +246,13 @@ h3 { font-size: 1.5rem; margin: 1.25rem 0 0.4rem; }
 .change-list li { margin: 0.35rem 0; }
 .change-list li::marker { color: var(--accent); }
 .change-label { color: var(--accent); }
+
+.language-switch { display: flex; gap: 0.25rem; }
+.language-switch a { padding: 0.3rem 0.8rem; color: var(--parchment); text-decoration: none; border: 2px solid var(--parchment-edge); }
+.language-switch a:hover, .language-switch a:focus-visible { border-color: var(--gold); color: #fff; }
+.language-switch a[aria-current="true"] { background: var(--parchment); color: var(--ink); font-weight: 700; }
+
+/* Chinese uses the system fonts: the English web fonts have no Chinese letters. */
+:lang(zh-Hans) { --body-font: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", "Noto Sans SC", sans-serif; --title-font: "Songti SC", "STSong", "Noto Serif CJK SC", "Noto Serif SC", "SimSun", serif; }
+:lang(zh-Hans) h1, :lang(zh-Hans) h2, :lang(zh-Hans) h3, :lang(zh-Hans) .site-title, :lang(zh-Hans) .card-title, :lang(zh-Hans) .highlight strong { font-weight: 700; }
+:lang(zh-Hans) .site-title { font-family: var(--title-font), "Jacquard 12"; }

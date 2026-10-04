@@ -4,6 +4,7 @@ import type { GameText } from '../data/text';
 import { commaList, dataTable, definitionList, pageHeading, panel, siteLink } from '../render/components';
 import { formatDuration, formatMoney, formatPercent } from '../render/format';
 import { html } from '../render/html';
+import { t, tHtml } from '../i18n/ui';
 import type { Page } from '../render/page';
 
 export function buildMechanicsPages(game: GameIndex, text: GameText): Page[] {
@@ -29,69 +30,70 @@ export function buildMechanicsPages(game: GameIndex, text: GameText): Page[] {
   const rankMultiplier = (key: string, fileName: string) => balanceValue<Record<string, number>>(d, fileName, key);
   const ranks = Object.keys(rankMultiplier('experienceRankMultiplier', 'progression'));
 
+  const money = (copper: number) => formatMoney(copper, economy('copperPerSilver'), economy('silverPerGold'));
   const body = html`
-    ${pageHeading('Mechanics', 'The numbers behind the game. They are read from the game data, so they stay current.')}
-    ${panel('Experience', html`
+    ${pageHeading(t('Mechanics'), t('The numbers behind the game. They are read from the game data, so they stay current.'))}
+    ${panel(t('Experience'), html`
       <ul>
-        <li>Experience to the next level = ${progression('experienceToNextLevelBase')} x level to the power ${progression('experienceToNextLevelExponent')}.</li>
-        <li>Level cap: ${progression('levelCap')}.</li>
-        <li>A monster far above the hero gives more experience, and one far below gives less. The factor changes by ${formatPercent(progression('levelGapStep'))} for each level of difference, between ${progression('levelGapFactorMinimum')}x and ${progression('levelGapFactorMaximum')}x.</li>
+        <li>${t('Experience to the next level = {base} x level to the power {exponent}.', { base: progression('experienceToNextLevelBase'), exponent: progression('experienceToNextLevelExponent') })}</li>
+        <li>${t('Level cap: {level}.', { level: progression('levelCap') })}</li>
+        <li>${t('A monster far above the hero gives more experience, and one far below gives less. The factor changes by {percent} for each level of difference, between {minimum}x and {maximum}x.', { percent: formatPercent(progression('levelGapStep')), minimum: progression('levelGapFactorMinimum'), maximum: progression('levelGapFactorMaximum') })}</li>
       </ul>
-      <p>A hero below level ${progression('earlyExperienceFadeLevels') + 1} gets a bonus. It is +${formatPercent(progression('earlyExperienceBonus'))} at level 1 and fades in a straight line to nothing.</p>
-      ${dataTable(['Monster rank', 'Experience'], ranks.map((rank) => [rank, `${rankMultiplier('experienceRankMultiplier', 'progression')[rank]}x`]))}`)}
-    ${panel('Money', html`
+      <p>${t('A hero below level {level} gets a bonus. It is +{percent} at level 1 and fades in a straight line to nothing.', { level: progression('earlyExperienceFadeLevels') + 1, percent: formatPercent(progression('earlyExperienceBonus')) })}</p>
+      ${dataTable([t('Monster rank'), t('Experience')], ranks.map((rank) => [t(rank), `${rankMultiplier('experienceRankMultiplier', 'progression')[rank]}x`]))}`)}
+    ${panel(t('Money'), html`
       ${definitionList([
-        ['Exchange', `${economy('copperPerSilver')} copper = 1 silver, ${economy('silverPerGold')} silver = 1 gold`],
-        ['Starting money', formatMoney(economy('startingCopper'))],
-        ['Income', 'Monsters drop materials, not coin. Sell materials and gear to the merchant.'],
-        ['Crafter fee', `${formatMoney(crafting('craftFeeBaseCopper'))} plus ${crafting('craftFeePerRequiredLevelCopper')} copper per required level, paid for every crafted item`],
-        ['Merchant sale slots', economy('merchantSaleSlots')],
-        ['Sale time', `${economy('saleSecondsMinimum')}s plus ${economy('saleSecondsPerCopper')}s per copper, up to ${economy('saleSecondsMaximum')}s`],
+        [t('Exchange'), t('{copper} copper = 1 silver, {silver} silver = 1 gold', { copper: economy('copperPerSilver'), silver: economy('silverPerGold') })],
+        [t('Starting money'), formatMoney(economy('startingCopper'))],
+        [t('Income'), t('Monsters drop materials, not coin. Sell materials and gear to the merchant.')],
+        [t('Crafter fee'), t('{base} plus {perLevel} copper per required level, paid for every crafted item', { base: formatMoney(crafting('craftFeeBaseCopper')), perLevel: crafting('craftFeePerRequiredLevelCopper') })],
+        [t('Merchant sale slots'), economy('merchantSaleSlots')],
+        [t('Sale time'), t('{minimum}s plus {perCopper}s per copper, up to {maximum}s', { minimum: economy('saleSecondsMinimum'), perCopper: economy('saleSecondsPerCopper'), maximum: economy('saleSecondsMaximum') })],
       ])}
-      <h3>Hiring heroes</h3>
-      ${dataTable(['Heroes already in company', 'Cost of the next hero'], hireCosts.map((cost, index) => [index, cost === 0 ? 'Free' : formatMoney(cost, economy('copperPerSilver'), economy('silverPerGold'))]))}
-      <p>The company holds up to ${economy('maximumCompanySize')} heroes.</p>`)}
-    ${panel('Bank', html`
-      <p>The Bank sells storage upgrades and tools. Each storage upgrade costs more than the one before.</p>
-      <h3>Backpack space</h3>
-      <p>Each upgrade adds ${balanceNumber(d, 'backpack', 'rowsPerExpansion')} row of ${balanceNumber(d, 'backpack', 'columns')} cells. Cost = ${balanceNumber(d, 'backpack', 'expansionBaseCostCopper')} copper x ${balanceNumber(d, 'backpack', 'expansionCostGrowth')} to the power of the upgrades already bought.</p>
-      ${dataTable(['Upgrade', 'Cost'], mergeCosts(backpackCosts))}
-      <h3>Merchant sale slots</h3>
-      <p>Each upgrade lets the merchant sell one more good at once.</p>
-      ${dataTable(['Upgrade', 'Cost'], mergeCosts(merchantSlotCosts))}
-      <h3>Tools</h3>
-      <p>One purchase each. The game text of each tool is shown below.</p>
-      ${dataTable(['Tool', 'What it does', 'Cost'], Object.entries(bankUnlockCosts).map(([unlockId, cost]) => [text.require(`bank.unlock.${unlockId}.title`), text.require(`bank.unlock.${unlockId}.description`), formatMoney(cost, economy('copperPerSilver'), economy('silverPerGold'))]))}`)}
-    ${panel('Mill', html`<p>${text.require('mill.hint')}</p>${definitionList([
-      ['Production time', formatDuration(mill('productionIntervalSeconds'))],
-      ['Storage', `${mill('storageCapacity')} places`],
-      ['Materials it makes', commaList(millMaterialIds.map((materialId) => siteLink(`materials/${materialId}.html`, game.material(materialId).name)))],
+      <h3>${t('Hiring heroes')}</h3>
+      ${dataTable([t('Heroes already in company'), t('Cost of the next hero')], hireCosts.map((cost, index) => [index, cost === 0 ? t('Free') : money(cost)]))}
+      <p>${t('The company holds up to {count} heroes.', { count: economy('maximumCompanySize') })}</p>`)}
+    ${panel(t('Bank'), html`
+      <p>${t('The Bank sells storage upgrades and tools. Each storage upgrade costs more than the one before.')}</p>
+      <h3>${t('Backpack space')}</h3>
+      <p>${t('Each upgrade adds {rows} row of {columns} cells. Cost = {base} copper x {growth} to the power of the upgrades already bought.', { rows: balanceNumber(d, 'backpack', 'rowsPerExpansion'), columns: balanceNumber(d, 'backpack', 'columns'), base: balanceNumber(d, 'backpack', 'expansionBaseCostCopper'), growth: balanceNumber(d, 'backpack', 'expansionCostGrowth') })}</p>
+      ${dataTable([t('Upgrade'), t('Cost')], mergeCosts(backpackCosts))}
+      <h3>${t('Merchant sale slots')}</h3>
+      <p>${t('Each upgrade lets the merchant sell one more good at once.')}</p>
+      ${dataTable([t('Upgrade'), t('Cost')], mergeCosts(merchantSlotCosts))}
+      <h3>${t('Tools')}</h3>
+      <p>${t('One purchase each. The game text of each tool is shown below.')}</p>
+      ${dataTable([t('Tool'), t('What it does'), t('Cost')], Object.entries(bankUnlockCosts).map(([unlockId, cost]) => [text.require(`bank.unlock.${unlockId}.title`), text.require(`bank.unlock.${unlockId}.description`), money(cost)]))}`)}
+    ${panel(t('Mill'), html`<p>${text.require('mill.hint')}</p>${definitionList([
+      [t('Production time'), formatDuration(mill('productionIntervalSeconds'))],
+      [t('Storage'), t('{count} places', { count: mill('storageCapacity') })],
+      [t('Materials it makes'), commaList(millMaterialIds.map((materialId) => siteLink(`materials/${materialId}.html`, game.material(materialId).name)))],
     ])}`)}
-    ${panel('Crafting quality', html`
-      ${dataTable(['', ...qualityIds], [
-        ['Odds', ...qualityIds.map((id) => formatPercent((qualityWeights[id] ?? 0) / qualityTotal))],
-        ['Sell value factor', ...qualityIds.map((id) => `${sellFactors[id] ?? '-'}x`)],
+    ${panel(t('Crafting quality'), html`
+      ${dataTable(['', ...qualityIds.map((id) => t(id))], [
+        [t('Odds'), ...qualityIds.map((id) => formatPercent((qualityWeights[id] ?? 0) / qualityTotal))],
+        [t('Sell value factor'), ...qualityIds.map((id) => `${sellFactors[id] ?? '-'}x`)],
       ])}
       <ul>
-        <li>A crafted item rolls its item level twice and keeps the higher one (${balanceNumber(d, 'items', 'itemLevelRollsKeepHighest')} rolls).</li>
-        <li>Base stats grow by ${formatPercent(balanceNumber(d, 'items', 'baseStatGrowthPerItemLevel'))} for each item level. Speed does not grow.</li>
-        <li>Sell value grows by ${formatPercent(balanceNumber(d, 'items', 'sellGrowthPerItemLevel'))} for each item level.</li>
+        <li>${t('A crafted item rolls its item level twice and keeps the higher one ({rolls} rolls).', { rolls: balanceNumber(d, 'items', 'itemLevelRollsKeepHighest') })}</li>
+        <li>${t('Base stats grow by {percent} for each item level. Speed does not grow.', { percent: formatPercent(balanceNumber(d, 'items', 'baseStatGrowthPerItemLevel')) })}</li>
+        <li>${t('Sell value grows by {percent} for each item level.', { percent: formatPercent(balanceNumber(d, 'items', 'sellGrowthPerItemLevel')) })}</li>
       </ul>`)}
-    ${panel('Recovery', definitionList([
-      ['Time to full health', `${formatDuration(recovery('regenSecondsToFullAtLevelOne'))} at level 1, growing in a straight line to ${formatDuration(recovery('regenSecondsToFullAtMaxLevel'))} at the level cap. Divided by the class recovery rate.`],
-      ['Knocked-out hero returns after', `${recovery('reviveBaseSeconds')}s plus ${recovery('reviveSecondsPerLevel')}s per level, divided by the class recovery rate`],
-      ['Health on return', formatPercent(recovery('reviveHealthFraction'))],
+    ${panel(t('Recovery'), definitionList([
+      [t('Time to full health'), t('{start} at level 1, growing in a straight line to {end} at the level cap. Divided by the class recovery rate.', { start: formatDuration(recovery('regenSecondsToFullAtLevelOne')), end: formatDuration(recovery('regenSecondsToFullAtMaxLevel')) })],
+      [t('Knocked-out hero returns after'), t('{base}s plus {perLevel}s per level, divided by the class recovery rate', { base: recovery('reviveBaseSeconds'), perLevel: recovery('reviveSecondsPerLevel') })],
+      [t('Health on return'), formatPercent(recovery('reviveHealthFraction'))],
     ]))}
-    ${panel('Hero sheet', html`
+    ${panel(t('Hero sheet'), html`
       <ul>
-        <li>Class resources (mana, stamina, hatred, rage) are on the ${siteLink('abilities/index.html#resources', 'Abilities')} page.</li>
-        <li>${text.statName('physicalDamage')} = ${text.statName('strength')} + the physical damage of worn gear.</li>
-        <li>${text.statName('magicalDamage')} = ${text.statName('magic')} + the magical damage of worn gear.</li>
+        <li>${tHtml('Class resources (mana, stamina, hatred, rage) are on the {link} page.', { link: siteLink('abilities/index.html#resources', t('Abilities')) })}</li>
+        <li>${t('{damage} = {attribute} + the physical damage of worn gear.', { damage: text.statName('physicalDamage'), attribute: text.statName('strength') })}</li>
+        <li>${t('{damage} = {attribute} + the magical damage of worn gear.', { damage: text.statName('magicalDamage'), attribute: text.statName('magic') })}</li>
       </ul>`)}
-    ${panel('Backpack', definitionList([
-      ['Grid at the start', `${balanceNumber(d, 'backpack', 'columns')} x ${balanceNumber(d, 'backpack', 'rows')}`],
-      ['Rows added by each upgrade', balanceNumber(d, 'backpack', 'rowsPerExpansion')],
-      ['Upgrades for sale', backpackCosts.length],
+    ${panel(t('Backpack'), definitionList([
+      [t('Grid at the start'), `${balanceNumber(d, 'backpack', 'columns')} x ${balanceNumber(d, 'backpack', 'rows')}`],
+      [t('Rows added by each upgrade'), balanceNumber(d, 'backpack', 'rowsPerExpansion')],
+      [t('Upgrades for sale'), backpackCosts.length],
     ]))}`;
-  return [{ path: 'mechanics/index.html', title: 'Mechanics', section: 'mechanics', body }];
+  return [{ path: 'mechanics/index.html', title: t('Mechanics'), section: 'mechanics', body }];
 }

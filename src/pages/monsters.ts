@@ -7,6 +7,7 @@ import { badge, cardGrid, card, dataTable, definitionList, filterBox, jumpLinks,
 import { formatPercent, formatQuantityRange } from '../render/format';
 import { html, type Html } from '../render/html';
 import type { Page } from '../render/page';
+import { t } from '../i18n/ui';
 
 const RANK_ORDER = ['normal', 'rare', 'boss'];
 
@@ -29,7 +30,7 @@ function monsterStatsAtLevel(game: GameIndex, monster: Monster, level: number) {
 }
 
 function monsterCard(game: GameIndex, monster: Monster): Html {
-  return card(monsterPath(monster), monster.name, [`Speed ${monster.speed}`], badge(monster.rank, monster.rank), pixelArt('monsters', monster.spriteKey, monster.name, 2));
+  return card(monsterPath(monster), monster.name, [t('Speed {speed}', { speed: monster.speed })], badge(t(monster.rank), monster.rank), pixelArt('monsters', monster.spriteKey, monster.name, 2));
 }
 
 // Monsters are grouped by the town and the dungeon they fight in. Rare monsters and bosses follow the common ones.
@@ -40,26 +41,26 @@ function indexPage(game: GameIndex): Page {
     const dungeons = game.dungeonsOfTown(town.id);
     if (dungeons.length === 0) return [];
     return [panel(town.name, html`${dungeons.map((dungeon) => html`
-      ${subheading(html`${siteLink(`dungeons/${dungeon.id}.html`, dungeon.name)} <span class="muted">level ${dungeon.level}</span>`)}
+      ${subheading(html`${siteLink(`dungeons/${dungeon.id}.html`, dungeon.name)} <span class="muted">${t('level {level}', { level: dungeon.level })}</span>`)}
       ${cardGrid(monstersOfDungeon(dungeon).map((monster) => monsterCard(game, monster)))}`)}`, { anchor: `town-${town.id}`, isFilterGroup: true })];
   });
   const monstersInNoDungeon = game.data.monsters.filter((monster) => game.appearancesOfMonster(monster.id).length === 0);
   const jumpEntries = game.data.towns.filter((town) => game.dungeonsOfTown(town.id).length > 0).map((town) => ({ anchor: `town-${town.id}`, label: town.name }));
   const body = html`
-    ${pageHeading('Monsters', `${game.data.monsters.length} foes lurk in the dungeons, grouped here by town and dungeon. Rare monsters and bosses drop more.`)}
-    ${filterBox('Filter monsters...')}
+    ${pageHeading(t('Monsters'), t('{count} foes lurk in the dungeons, grouped here by town and dungeon. Rare monsters and bosses drop more.', { count: game.data.monsters.length }))}
+    ${filterBox(t('Filter monsters...'))}
     ${jumpLinks(jumpEntries)}
     <div data-filter-list>
       ${townPanels}
-      ${monstersInNoDungeon.length ? panel('Not in any dungeon yet', cardGrid(monstersInNoDungeon.map((monster) => monsterCard(game, monster))), { isFilterGroup: true }) : null}
+      ${monstersInNoDungeon.length ? panel(t('Not in any dungeon yet'), cardGrid(monstersInNoDungeon.map((monster) => monsterCard(game, monster))), { isFilterGroup: true }) : null}
     </div>`;
-  return { path: 'monsters/index.html', title: 'Monsters', section: 'monsters', body };
+  return { path: 'monsters/index.html', title: t('Monsters'), section: 'monsters', body };
 }
 
 function appearanceRows(game: GameIndex, monster: Monster, appearances: MonsterAppearance[]) {
   return appearances.map(({ dungeon, role }) => {
     const stats = monsterStatsAtLevel(game, monster, dungeon.level);
-    return [siteLink(`dungeons/${dungeon.id}.html`, dungeon.name), role, dungeon.level, stats.hp, stats.attack, stats.defence, stats.resistance];
+    return [siteLink(`dungeons/${dungeon.id}.html`, dungeon.name), t(role), dungeon.level, stats.hp, stats.attack, stats.defence, stats.resistance];
   });
 }
 
@@ -74,8 +75,8 @@ function dropRows(game: GameIndex, monster: Monster) {
 function rewardNotes(game: GameIndex, monster: Monster) {
   const rankMultiplier = (fileName: string, key: string) => balanceValue<Record<string, number>>(game.data, fileName, key)[monster.rank];
   return definitionList([
-    ['Experience multiplier', `${rankMultiplier('progression', 'experienceRankMultiplier') ?? '?'}x`],
-    ['Guaranteed material drops', balanceNumber(game.data, 'dungeon-run', 'guaranteedMaterialDrops')],
+    [t('Experience multiplier'), `${rankMultiplier('progression', 'experienceRankMultiplier') ?? '?'}x`],
+    [t('Guaranteed material drops'), balanceNumber(game.data, 'dungeon-run', 'guaranteedMaterialDrops')],
   ]);
 }
 
@@ -84,20 +85,20 @@ function monsterPage(game: GameIndex, text: GameText, monster: Monster): Page {
   const body = html`
     ${pageHeading(monster.name)}
     <div class="portrait">${pixelArt('monsters', monster.spriteKey, monster.name, 5)}</div>
-    <p>${badge(monster.rank, monster.rank)}</p>
+    <p>${badge(t(monster.rank), monster.rank)}</p>
     ${loreText(text.find(`monster.${monster.id}.lore`))}
-    ${panel('Battle traits', definitionList([
-      ['Speed', monster.speed],
-      ['Health factor', `${monster.hpFactor}x`],
-      ['Attack factor', `${monster.attackFactor}x`],
-      ['Defence factor', `${monster.defenceFactor}x`],
+    ${panel(t('Battle traits'), definitionList([
+      [t('Speed'), monster.speed],
+      [t('Health factor'), `${monster.hpFactor}x`],
+      [t('Attack factor'), `${monster.attackFactor}x`],
+      [t('Defence factor'), `${monster.defenceFactor}x`],
     ]))}
-    ${panel('Stats by dungeon', appearances.length
-      ? dataTable(['Dungeon', 'Role', 'Level', 'Health', 'Attack', 'Defence', 'Resistance'], appearanceRows(game, monster, appearances))
-      : html`<p class="muted">This monster is not placed in a dungeon yet.</p>`)}
-    ${panel('Loot', dataTable(['Material', 'Chance', 'Amount'], dropRows(game, monster)))}
-    ${panel('Rewards', rewardNotes(game, monster))}`;
-  return { path: monsterPath(monster), title: monster.name, section: 'monsters', body, searchKind: `Monster (${monster.rank})` };
+    ${panel(t('Stats by dungeon'), appearances.length
+      ? dataTable([t('Dungeon'), t('Role'), t('Level'), t('Health'), t('Attack'), t('Defence'), t('Resistance')], appearanceRows(game, monster, appearances))
+      : html`<p class="muted">${t('This monster is not placed in a dungeon yet.')}</p>`)}
+    ${panel(t('Loot'), dataTable([t('Material'), t('Chance'), t('Amount')], dropRows(game, monster)))}
+    ${panel(t('Rewards'), rewardNotes(game, monster))}`;
+  return { path: monsterPath(monster), title: monster.name, section: 'monsters', body, searchKind: t('Monster ({rank})', { rank: t(monster.rank) }) };
 }
 
 export function buildMonsterPages(game: GameIndex, text: GameText): Page[] {

@@ -4,6 +4,7 @@ import type { GameIndex } from '../data/gameIndex';
 import type { GameText } from '../data/text';
 import { jumpLinks } from '../render/components';
 import { pixelArt } from '../render/art';
+import { activeLanguage, t } from '../i18n/ui';
 import { html, type Html } from '../render/html';
 import type { Page } from '../render/page';
 
@@ -13,7 +14,7 @@ const renderItem = (item: ChangelogItem): Html =>
   typeof item === 'string' ? html`<li>${item}</li>` : html`<li><strong class="change-label">${item.label}</strong> ${item.text}</li>`;
 
 function renderGroup(group: ChangelogGroup): Html {
-  const tag = group.tag && html`<span class="change-tag change-tag-${group.tag.toLowerCase()}">${group.tag}</span>`;
+  const tag = group.tag && html`<span class="change-tag change-tag-${group.tag.toLowerCase()}">${t(group.tag)}</span>`;
   const picture = group.art && html`<span class="change-art">${pixelArt(group.art.folder, group.art.file, group.heading, 3)}</span>`;
   return html`<div class="change-group">
     <div class="change-group-head">${picture}<h3>${group.heading}</h3>${tag}</div>
@@ -36,11 +37,11 @@ function renderVersion(version: ChangelogVersion): Html {
   </li>`);
   return html`<article class="release" id="${version.version}">
     <header class="release-banner">
-      <p class="release-kicker">Version notes</p>
-      <h1>Version ${version.version.replace(/^v/, '')}</h1>
+      <p class="release-kicker">${t('Version notes')}</p>
+      <h1>${t('Version {number}', { number: version.version.replace(/^v/, '') })}</h1>
       <p class="release-date">${version.date}</p>
       <p class="release-summary">${version.summary}</p>
-      <p><a href="${compareUrl}">See every commit on GitHub</a></p>
+      <p><a href="${compareUrl}">${t('See every commit on GitHub')}</a></p>
     </header>
     <ul class="highlight-grid">${highlights}</ul>
     ${jumpLinks(version.sections.map((section) => ({ anchor: sectionAnchor(version, section), label: section.title })))}
@@ -49,8 +50,8 @@ function renderVersion(version: ChangelogVersion): Html {
 }
 
 export function buildChangelogPages(_game: GameIndex, _text: GameText): Page[] {
-  const versions = loadChangelog();
-  const versionLinks = versions.length > 1 && html`<nav class="jump-links" aria-label="Versions">${versions.map((version) => html`<a href="#${version.version}">${version.version}</a>`)}</nav>`;
+  const versions = loadChangelog(activeLanguage());
+  const versionLinks = versions.length > 1 && html`<nav class="jump-links" aria-label="${t('Versions')}">${versions.map((version) => html`<a href="#${version.version}">${version.version}</a>`)}</nav>`;
   const body = html`${versionLinks}${versions.map(renderVersion)}`;
-  return [{ path: 'changelog/index.html', title: 'Changelog', section: 'changelog', body }];
+  return [{ path: 'changelog/index.html', title: t('Changelog'), section: 'changelog', body }];
 }

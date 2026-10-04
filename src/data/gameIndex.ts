@@ -165,7 +165,7 @@ export class GameIndex {
           base,
           tier,
           setMaterial,
-          itemName: `${namingMaterial.craftedItemPrefix ?? namingMaterial.name} ${base.name}`,
+          itemName: `${namingMaterial.craftedItemPrefix ?? namingMaterial.name}${d.text['format.nameJoiner'] ?? ' '}${base.name}`,
           requiredCraftLevel,
           // Same formula as craftFeeCopper in the game.
           craftFeeCopper: Math.round(craftFeeBase + craftFeePerLevel * requiredCraftLevel),

@@ -1,6 +1,7 @@
-import { readdirSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { CHANGELOG_FOLDER } from '../config';
+import { DEFAULT_LANGUAGE, type Language } from '../i18n/language';
 import type { ArtFolder } from '../render/art';
 
 export interface ChangelogArt {
@@ -50,10 +51,16 @@ function compareVersionsNewestFirst(left: ChangelogVersion, right: ChangelogVers
   return 0;
 }
 
-// To add a version, add changelog/v<number>.json. The newest version shows first.
-export function loadChangelog(): ChangelogVersion[] {
-  return readdirSync(CHANGELOG_FOLDER)
-    .filter((fileName) => /^v\d+(\.\d+)*\.json$/.test(fileName))
-    .map((fileName) => JSON.parse(readFileSync(join(CHANGELOG_FOLDER, fileName), 'utf8')) as ChangelogVersion)
+// To add a version, add changelog/v<number>.json (English) and changelog/v<number>.zh.json (Chinese).
+// Both files have the same shape. A version without its Chinese file fails the build.
+export function loadChangelog(language: Language): ChangelogVersion[] {
+  const englishFileNames = readdirSync(CHANGELOG_FOLDER).filter((fileName) => /^v\d+(\.\d+)*\.json$/.test(fileName));
+  const fileNameInLanguage = (englishFileName: string) => (language === DEFAULT_LANGUAGE ? englishFileName : englishFileName.replace(/\.json$/, `.${language}.json`));
+  return englishFileNames
+    .map((englishFileName) => {
+      const path = join(CHANGELOG_FOLDER, fileNameInLanguage(englishFileName));
+      if (!existsSync(path)) throw new Error(`Missing ${language} changelog file: ${path}`);
+      return JSON.parse(readFileSync(path, 'utf8')) as ChangelogVersion;
+    })
     .sort(compareVersionsNewestFirst);
 }

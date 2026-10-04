@@ -5,6 +5,7 @@ import { pixelArt } from '../render/art';
 import { badge, commaList, dataTable, definitionList, iconLink, jumpLinks, loreText, pageHeading, panel, siteLink } from '../render/components';
 import { html, type Html } from '../render/html';
 import type { Page } from '../render/page';
+import { t } from '../i18n/ui';
 
 const dungeonPath = (dungeon: Dungeon) => `dungeons/${dungeon.id}.html`;
 const monsterLink = (game: GameIndex, monsterId: string) => {
@@ -22,43 +23,43 @@ function indexPage(game: GameIndex): Page {
       dungeon.level,
       dungeon.minimumHeroLevel,
       dungeon.recommendedMaxLevel,
-      dungeon.bossMonsterId ? badge('boss', 'boss') : 'Normal',
+      dungeon.bossMonsterId ? badge(t('boss'), 'boss') : t('Normal'),
       dungeon.maxPartySize,
     ]);
-    return panel(html`${siteLink(`towns/${town.id}.html`, town.name)} <span class="muted">levels ${town.firstLevel}-${town.lastLevel}</span>`,
-      dataTable(['Dungeon', 'Level', 'Hero level needed', 'Recommended up to', 'Type', 'Heroes allowed'], rows), { anchor: `town-${town.id}` });
+    return panel(html`${siteLink(`towns/${town.id}.html`, town.name)} <span class="muted">${t('levels {first}-{last}', { first: town.firstLevel, last: town.lastLevel })}</span>`,
+      dataTable([t('Dungeon'), t('Level'), t('Hero level needed'), t('Recommended up to'), t('Type'), t('Heroes allowed')], rows), { anchor: `town-${town.id}` });
   });
   const body = html`
-    ${pageHeading('Dungeons', 'Each dungeon is one fight, run again and again. Clear one to open the next. Dungeons are grouped by town.')}
+    ${pageHeading(t('Dungeons'), t('Each dungeon is one fight, run again and again. Clear one to open the next. Dungeons are grouped by town.'))}
     ${jumpLinks(townsWithDungeons.map((town) => ({ anchor: `town-${town.id}`, label: town.name })))}
     ${townPanels}`;
-  return { path: 'dungeons/index.html', title: 'Dungeons', section: 'dungeons', body };
+  return { path: 'dungeons/index.html', title: t('Dungeons'), section: 'dungeons', body };
 }
 
 function dungeonPage(game: GameIndex, text: GameText, dungeon: Dungeon): Page {
   const town = game.town(dungeon.townId);
-  const unlockedBy = dungeon.unlockAfter ? siteLink(`dungeons/${dungeon.unlockAfter}.html`, game.dungeon(dungeon.unlockAfter).name) : 'Open from the start';
+  const unlockedBy = dungeon.unlockAfter ? siteLink(`dungeons/${dungeon.unlockAfter}.html`, game.dungeon(dungeon.unlockAfter).name) : t('Open from the start');
   const unlocks = game.data.dungeons.filter((other) => other.unlockAfter === dungeon.id);
   const body = html`
-    ${pageHeading(dungeon.name, `${town.name}, level ${dungeon.level}`)}
+    ${pageHeading(dungeon.name, t('{town}, level {level}', { town: town.name, level: dungeon.level }))}
     <div class="portrait">${pixelArt('dungeons', dungeon.id, dungeon.name, 6)}</div>
     ${loreText(text.find(`dungeon.${dungeon.id}.description`))}
-    ${panel('Overview', definitionList([
-      ['Town', siteLink(`towns/${town.id}.html`, town.name)],
-      ['Dungeon level', dungeon.level],
-      ['Hero level needed', dungeon.minimumHeroLevel],
-      ['Recommended up to hero level', dungeon.recommendedMaxLevel],
-      ['Heroes allowed', dungeon.maxPartySize],
-      ['Opens after', unlockedBy],
-      ['Opens next', commaList(unlocks.map((next) => siteLink(dungeonPath(next), next.name)))],
-      ['Hero classes it opens', commaList(game.data.classes.filter((heroClass) => heroClass.unlockAfterDungeonId === dungeon.id).map((heroClass) => siteLink(`heroes/${heroClass.id}.html`, heroClass.displayName)))],
+    ${panel(t('Overview'), definitionList([
+      [t('Town'), siteLink(`towns/${town.id}.html`, town.name)],
+      [t('Dungeon level'), dungeon.level],
+      [t('Hero level needed'), dungeon.minimumHeroLevel],
+      [t('Recommended up to hero level'), dungeon.recommendedMaxLevel],
+      [t('Heroes allowed'), dungeon.maxPartySize],
+      [t('Opens after'), unlockedBy],
+      [t('Opens next'), commaList(unlocks.map((next) => siteLink(dungeonPath(next), next.name)))],
+      [t('Hero classes it opens'), commaList(game.data.classes.filter((heroClass) => heroClass.unlockAfterDungeonId === dungeon.id).map((heroClass) => siteLink(`heroes/${heroClass.id}.html`, heroClass.displayName)))],
     ]))}
-    ${panel('Monsters', definitionList([
-      ['Common', commaList(dungeon.monsterIds.map((id) => monsterLink(game, id)))],
-      ['Rare', dungeon.rareMonsterId ? monsterLink(game, dungeon.rareMonsterId) : html`<span class="muted">none</span>`],
-      ['Boss', dungeon.bossMonsterId ? monsterLink(game, dungeon.bossMonsterId) : html`<span class="muted">none</span>`],
+    ${panel(t('Monsters'), definitionList([
+      [t('Common'), commaList(dungeon.monsterIds.map((id) => monsterLink(game, id)))],
+      [t('Rare'), dungeon.rareMonsterId ? monsterLink(game, dungeon.rareMonsterId) : html`<span class="muted">${t('none')}</span>`],
+      [t('Boss'), dungeon.bossMonsterId ? monsterLink(game, dungeon.bossMonsterId) : html`<span class="muted">${t('none')}</span>`],
     ]))}`;
-  return { path: dungeonPath(dungeon), title: dungeon.name, section: 'dungeons', body, searchKind: 'Dungeon' };
+  return { path: dungeonPath(dungeon), title: dungeon.name, section: 'dungeons', body, searchKind: t('Dungeon') };
 }
 
 export function buildDungeonPages(game: GameIndex, text: GameText): Page[] {

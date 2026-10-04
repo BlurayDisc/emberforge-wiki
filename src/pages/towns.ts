@@ -4,16 +4,17 @@ import type { GameText } from '../data/text';
 import { card, cardGrid, commaList, definitionList, loreText, pageHeading, panel, siteLink, subheading } from '../render/components';
 import { html } from '../render/html';
 import type { Page } from '../render/page';
+import { t, tHtml } from '../i18n/ui';
 
 const townPath = (town: Town) => `towns/${town.id}.html`;
 
 function indexPage(game: GameIndex): Page {
   const body = html`
-    ${pageHeading('Towns', 'Each town serves one bracket of 10 levels. Tier N materials belong to town N.')}
+    ${pageHeading(t('Towns'), t('Each town serves one bracket of 10 levels. Tier N materials belong to town N.'))}
     ${cardGrid(game.data.towns.map((town) =>
-      card(townPath(town), town.name, [town.region, `Levels ${town.firstLevel}-${town.lastLevel}`, `${game.dungeonsOfTown(town.id).length} dungeons`])))}
-    ${panel('The castle', html`<p>The king and queen of the Vales hold court in the castle. ${siteLink('castle/index.html', 'Meet the court')}.</p>`)}`;
-  return { path: 'towns/index.html', title: 'Towns', section: 'towns', body };
+      card(townPath(town), town.name, [town.region, t('Levels {first}-{last}', { first: town.firstLevel, last: town.lastLevel }), t('{count} dungeons', { count: game.dungeonsOfTown(town.id).length })])))}
+    ${panel(t('The castle'), html`<p>${tHtml('The king and queen of the Vales hold court in the castle. {link}.', { link: siteLink('castle/index.html', t('Meet the court')) })}</p>`)}`;
+  return { path: 'towns/index.html', title: t('Towns'), section: 'towns', body };
 }
 
 // Only named buildings are listed. The houses, stalls and cottages have no label and are scenery.
@@ -35,23 +36,23 @@ function townPage(game: GameIndex, text: GameText, town: Town, townNumber: numbe
   const body = html`
     ${pageHeading(town.name, town.region)}
     ${loreText(text.find(`town.${town.id}.lore`))}
-    ${panel('Overview', definitionList([
-      ['Region', town.region],
-      ['Levels', `${town.firstLevel}-${town.lastLevel}`],
-      ['Material tier', townNumber],
-      ['Start of the game', isStartingTown ? 'Yes' : 'No'],
+    ${panel(t('Overview'), definitionList([
+      [t('Region'), town.region],
+      [t('Levels'), `${town.firstLevel}-${town.lastLevel}`],
+      [t('Material tier'), townNumber],
+      [t('Start of the game'), isStartingTown ? t('Yes') : t('No')],
     ]))}
-    ${panel('Buildings', html`
-      ${subheading('Places to visit')}<p>${buildingNames(services)}</p>
-      ${subheading('Landmarks')}<p>${buildingNames(landmarks)}</p>
-      <p class="muted">Plus ${sceneryCount} houses and stalls.</p>`)}
-    ${panel('Dungeons', dungeons.length
-      ? html`<ul>${dungeons.map((dungeon) => html`<li>${siteLink(`dungeons/${dungeon.id}.html`, dungeon.name)} (level ${dungeon.level})</li>`)}</ul>`
-      : html`<p class="muted">No dungeons in the game data yet.</p>`)}
-    ${panel('Materials of this tier', materials.length
+    ${panel(t('Buildings'), html`
+      ${subheading(t('Places to visit'))}<p>${buildingNames(services)}</p>
+      ${subheading(t('Landmarks'))}<p>${buildingNames(landmarks)}</p>
+      <p class="muted">${t('Plus {count} houses and stalls.', { count: sceneryCount })}</p>`)}
+    ${panel(t('Dungeons'), dungeons.length
+      ? html`<ul>${dungeons.map((dungeon) => html`<li>${siteLink(`dungeons/${dungeon.id}.html`, dungeon.name)} (${t('level {level}', { level: dungeon.level })})</li>`)}</ul>`
+      : html`<p class="muted">${t('No dungeons in the game data yet.')}</p>`)}
+    ${panel(t('Materials of this tier'), materials.length
       ? html`<p>${commaList(materials.map((material) => siteLink(`materials/${material.id}.html`, material.name)))}</p>`
-      : html`<p class="muted">No materials of this tier in the game data yet.</p>`)}`;
-  return { path: townPath(town), title: town.name, section: 'towns', body, searchKind: 'Town', searchKeywords: town.region };
+      : html`<p class="muted">${t('No materials of this tier in the game data yet.')}</p>`)}`;
+  return { path: townPath(town), title: town.name, section: 'towns', body, searchKind: t('Town'), searchKeywords: town.region };
 }
 
 export function buildTownPages(game: GameIndex, text: GameText): Page[] {

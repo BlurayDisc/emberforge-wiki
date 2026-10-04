@@ -1,3 +1,5 @@
+import { t } from '../i18n/ui';
+
 export function formatPercent(fraction: number): string {
   const percent = fraction * 100;
   if (percent > 0 && percent < 0.1) return `${Number(percent.toPrecision(2))}%`;
@@ -20,15 +22,19 @@ export function formatMoney(copper: number, copperPerSilver = 100, silverPerGold
   const gold = Math.floor(copper / (copperPerSilver * silverPerGold));
   const silver = Math.floor(copper / copperPerSilver) % silverPerGold;
   const remainingCopper = copper % copperPerSilver;
-  const parts = [gold ? `${gold}g` : '', silver ? `${silver}s` : '', remainingCopper || copper === 0 ? `${remainingCopper}c` : ''];
+  const parts = [
+    gold ? t('{amount}g', { amount: gold }) : '',
+    silver ? t('{amount}s', { amount: silver }) : '',
+    remainingCopper || copper === 0 ? t('{amount}c', { amount: remainingCopper }) : '',
+  ];
   return parts.filter(Boolean).join(' ');
 }
 
 export function formatDuration(totalSeconds: number): string {
-  if (totalSeconds < 60) return `${totalSeconds}s`;
+  if (totalSeconds < 60) return t('{seconds}s', { seconds: totalSeconds });
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = totalSeconds % 60;
-  return seconds ? `${minutes}m ${seconds}s` : `${minutes}m`;
+  return seconds ? t('{minutes}m {seconds}s', { minutes, seconds }) : t('{minutes}m', { minutes });
 }
 
 export function slugFromId(id: string): string {

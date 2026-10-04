@@ -1,3 +1,4 @@
+import { t } from '../i18n/ui';
 import { html, Html, raw } from './html';
 
 // "@/" is replaced with the path back to the site root when a page is written.
@@ -25,7 +26,7 @@ export function panel(title: string | Html | null, content: Html, options: Panel
 export const subheading = (title: string | Html): Html => html`<h3 class="group-heading">${title}</h3>`;
 
 export const jumpLinks = (entries: Array<{ anchor: string; label: string }>): Html =>
-  html`<nav class="jump-links" aria-label="On this page">${entries.map((entry) => html`<a href="#${entry.anchor}">${entry.label}</a>`)}</nav>`;
+  html`<nav class="jump-links" aria-label="${t('On this page')}">${entries.map((entry) => html`<a href="#${entry.anchor}">${entry.label}</a>`)}</nav>`;
 
 export const iconLink = (path: string, label: string, icon: Html | null): Html =>
   html`<a class="icon-link" href="@/${path}">${icon}<span>${label}</span></a>`;
@@ -58,4 +59,4 @@ export const filterBox = (placeholder: string): Html =>
 export const loreText = (text: string | undefined): Html | null => (text ? html`<p class="lore">${text}</p>` : null);
 
 export const commaList = (items: Html[]): Html =>
-  items.length === 0 ? html`<span class="muted">none</span>` : html`${items.flatMap((item, index) => (index === 0 ? [item] : [', ', item]))}`;
+  items.length === 0 ? html`<span class="muted">${t('none')}</span>` : html`${items.flatMap((item, index) => (index === 0 ? [item] : [t(', '), item]))}`;

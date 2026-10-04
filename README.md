@@ -22,6 +22,18 @@ The push starts the GitHub Action, which checks the build and publishes to GitHu
 
 The Changelog page (`/changelog/`, the link the game opens) shows one block for each version, newest first. The notes are written by hand in `changelog/v<number>.json`, because they group changes by kind (gameplay, classes, items, UI, fixes). To release a version, add a new file, for example `changelog/v0.4.json`, then push. Use `git log <old>..<new>` in the game repository as the source. Copy `changelog/v0.3.json` as a template.
 
+## Languages
+
+The wiki has two languages: English at the site root and Chinese in `zh/` (for example `/changelog/` and `/zh/changelog/`). The switch is in the top right corner and it remembers the choice.
+
+- Names and game text (monsters, items, spells, lore) come from the game files: `game-data/i18n/en.json` and `zh.json`.
+- Text that the wiki writes itself goes through `t('English text')` or `tHtml(...)` (`src/i18n/ui.ts`). The English text is the key. Add the Chinese text in `src/i18n/zh.ts`. A missing translation fails the build.
+- A new language needs a game text file, a dictionary in `src/i18n/` and an entry in `src/i18n/language.ts`.
+
+## Changelog
+
+The Changelog page (`/changelog/`, the link the game opens) shows one block for each version, newest first. The notes are written by hand, because they group changes by kind (gameplay, classes, items, UI, fixes). To release a version, add `changelog/v0.4.json` (English) and `changelog/v0.4.zh.json` (Chinese) with the same shape, then push. Copy the v0.3 files as a template. Use `git log <old>..<new>` in the game repository as the source. A version without its Chinese file fails the build.
+
 ## How it works
 
 - `src/data/` loads the JSON and answers questions (which dungeons hold a monster, which recipes use a material).

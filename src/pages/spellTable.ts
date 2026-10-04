@@ -5,6 +5,7 @@ import type { GameText } from '../data/text';
 import { badge, dataTable } from '../render/components';
 import { formatDuration, formatMoney } from '../render/format';
 import { html, type Html } from '../render/html';
+import { t } from '../i18n/ui';
 
 const percentOf = (fraction: number): number => Math.round(fraction * 100);
 
@@ -51,5 +52,5 @@ export function spellTable(game: GameIndex, text: GameText, heroClass: HeroClass
     formatDuration(spell.cooldownSeconds),
     formatMoney(learnCostCopper(game, spell), copperPerSilver, silverPerGold),
   ]);
-  return dataTable(['Level', 'Spell', 'Effect', `${resourceName} cost`, 'Cooldown', 'Academy price'], rows, { sortable: true });
+  return dataTable([t('Level'), t('Spell'), t('Effect'), t('{resource} cost', { resource: resourceName }), t('Cooldown'), t('Academy price')], rows, { sortable: true });
 }

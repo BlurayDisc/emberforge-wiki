@@ -5,6 +5,7 @@ import { formatSignedValueRange } from '../render/format';
 import { html } from '../render/html';
 import type { Page } from '../render/page';
 import { balanceNumber, balanceValue } from '../data/balance';
+import { t } from '../i18n/ui';
 
 export function buildAffixPages(game: GameIndex, text: GameText): Page[] {
   const d = game.data;
@@ -14,19 +15,19 @@ export function buildAffixPages(game: GameIndex, text: GameText): Page[] {
       .filter((affix) => affix.kind === kind)
       .sort((a, b) => text.statName(a.stat).localeCompare(text.statName(b.stat)) || a.displayName.localeCompare(b.displayName))
       .map((affix) => [affix.displayName, text.statName(affix.stat), formatSignedValueRange(affix.minimumValue, affix.maximumValue)]);
-    return panel(`${capitalised(kind)}es`, dataTable(['Affix', 'Stat', 'Value at base level'], rows, { sortable: true }), { anchor: kind });
+    return panel(t(`${capitalised(kind)}es`), dataTable([t('Affix'), t('Stat'), t('Value at base level')], rows, { sortable: true }), { anchor: kind });
   });
   const [magicMinimum, magicMaximum] = balanceValue<number[]>(d, 'items', 'magicAffixCounts');
   const [rareMinimum, rareMaximum] = balanceValue<number[]>(d, 'items', 'rareAffixCounts');
   const body = html`
-    ${pageHeading('Affixes', 'A prefix or suffix adds a stat to an item. Values grow with item level.')}
-    ${jumpLinks(kindIds.map((kind) => ({ anchor: kind, label: capitalised(kind) })))}
+    ${pageHeading(t('Affixes'), t('A prefix or suffix adds a stat to an item. Values grow with item level.'))}
+    ${jumpLinks(kindIds.map((kind) => ({ anchor: kind, label: t(`${capitalised(kind)}es`) })))}
     ${kindPanels}
-    ${panel('How many affixes', html`<ul>
-      <li>Common items have none.</li>
-      <li>Magic items have ${magicMinimum}-${magicMaximum} (at most ${balanceNumber(d, 'items', 'maximumAffixesPerKindMagic')} of each kind).</li>
-      <li>Rare items have ${rareMinimum}-${rareMaximum} (at most ${balanceNumber(d, 'items', 'maximumAffixesPerKindRare')} of each kind).</li>
-      <li>Affix values grow by ${Math.round(balanceNumber(d, 'items', 'affixGrowthPerItemLevel') * 100)}% for each item level.</li>
+    ${panel(t('How many affixes'), html`<ul>
+      <li>${t('Common items have none.')}</li>
+      <li>${t('Magic items have {range} (at most {maximum} of each kind).', { range: `${magicMinimum}-${magicMaximum}`, maximum: balanceNumber(d, 'items', 'maximumAffixesPerKindMagic') })}</li>
+      <li>${t('Rare items have {range} (at most {maximum} of each kind).', { range: `${rareMinimum}-${rareMaximum}`, maximum: balanceNumber(d, 'items', 'maximumAffixesPerKindRare') })}</li>
+      <li>${t('Affix values grow by {percent}% for each item level.', { percent: Math.round(balanceNumber(d, 'items', 'affixGrowthPerItemLevel') * 100) })}</li>
     </ul>`)}`;
-  return [{ path: 'affixes/index.html', title: 'Affixes', section: 'affixes', body }];
+  return [{ path: 'affixes/index.html', title: t('Affixes'), section: 'affixes', body }];
 }
