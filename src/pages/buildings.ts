@@ -80,7 +80,7 @@ export function buildBuildingPages(game: GameIndex, text: GameText): Page[] {
     ${panel(text.require('building.academy'), html`
       <p>${text.require('academy.intro')}</p>
       ${definitionList([
-        [t('Spell price'), t('{base} copper x spell level to the power {exponent}', { base: spells('learnCostBaseCopper'), exponent: spells('learnCostLevelExponent') })],
+        [t('Spell price'), t('A power curve through these points: {points}. It goes on past the last point.', { points: balanceValue<Array<{ level: number; copper: number }>>(game.data, 'spells', 'learnCostAnchors').map((anchor) => t('level {level}: {copper} copper', anchor)).join(t(', ')) })],
         [t('Ultimate price'), t('{factor}x the price of a normal spell', { factor: spells('ultimateCostFactor') })],
       ])}
       <p>${tHtml('Every spell and its price is on the {link} page.', { link: siteLink('spells/index.html', t('Spells')) })}</p>`, { anchor: 'academy' })}`;

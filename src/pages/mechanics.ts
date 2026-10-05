@@ -76,6 +76,7 @@ export function buildMechanicsPages(game: GameIndex, text: GameText): Page[] {
       { anchor: 'attributes', label: t('Attributes') },
       { anchor: 'roles', label: t('Combat roles') },
       { anchor: 'damage', label: t('Damage and criticals') },
+      { anchor: 'special-rules', label: t('Dodging, shields and burning') },
       { anchor: 'statuses', label: t('Statuses') },
       { anchor: 'resources', label: t('Class resources') },
       { anchor: 'experience', label: t('Experience') },

@@ -120,8 +120,13 @@ export class GameIndex {
     return material.setBonus !== undefined || this.data.baseItems.some((base) => base.mainCategory === material.category);
   }
 
+  // The spells that the game loads. A reserved spell waits for a class specialisation.
+  loadedSpells(): Spell[] {
+    return this.data.spells.filter((spell) => spell.reservedFor === undefined);
+  }
+
   spellsOfClass(classId: string): Spell[] {
-    return this.data.spells.filter((spell) => spell.classId === classId).sort((a, b) => a.unlockLevel - b.unlockLevel);
+    return this.loadedSpells().filter((spell) => spell.classId === classId).sort((a, b) => a.unlockLevel - b.unlockLevel);
   }
 
   setMaterialsOfTier(tier: number): Material[] {
@@ -141,33 +146,19 @@ export class GameIndex {
   recipesOfTier(tier: number): Recipe[] {
     const d = this.data;
     const levelsPerBracket = balanceNumber(d, 'items', 'levelsPerBracket');
-    const cellsPerMainUnit = balanceNumber(d, 'items', 'mainIngredientCellsPerUnit');
     const largeItemCellThreshold = balanceNumber(d, 'items', 'largeItemCellThreshold');
     const setMaterialSmallItem = balanceNumber(d, 'items', 'setMaterialSmallItem');
     const setMaterialLargeItem = balanceNumber(d, 'items', 'setMaterialLargeItem');
-    const setRecipeLevelStep = balanceNumber(d, 'items', 'setRecipeLevelStep');
     const setRecipeSlots = balanceValue<string[]>(d, 'items', 'setRecipeSlots');
     const craftSecondsBase = balanceNumber(d, 'crafting', 'craftSecondsBase');
     const craftSecondsPerLevel = balanceNumber(d, 'crafting', 'craftSecondsPerRequiredLevel');
     const craftFeeBase = balanceNumber(d, 'crafting', 'craftFeeBaseCopper');
     const craftFeePerLevel = balanceNumber(d, 'crafting', 'craftFeePerRequiredLevelCopper');
     const setMaterials = this.setMaterialsOfTier(tier);
-    // Same rule as setPieceCraftLevelOffset in the game. The pieces of one set open in the order of their basic recipes,
-    // each at least 1 level after the piece before it, and never above the last crafter level of the tier.
-    const setPieceCraftLevelOffset = (base: BaseItem, setMaterial: Material): number => {
-      const setPieces = d.baseItems
-        .filter((piece) => setRecipeSlots.includes(piece.slot) && piece.armourWeight === base.armourWeight)
-        .sort((first, second) => first.craftLevelOffset - second.craftLevelOffset);
-      let previousPieceOffset = 0;
-      for (const piece of setPieces) {
-        const setLevelFloor = (piece.slot === 'armour' ? setMaterial.setBodyArmourCraftLevelOffset : setMaterial.setCraftLevelOffset) ?? 0;
-        const ownOffset = Math.max(piece.craftLevelOffset + setRecipeLevelStep, setLevelFloor);
-        const pieceOffset = Math.min(levelsPerBracket, Math.max(ownOffset, previousPieceOffset + 1));
-        if (piece.id === base.id) return pieceOffset;
-        previousPieceOffset = pieceOffset;
-      }
-      return base.craftLevelOffset;
-    };
+    // Same rule as setRecipeCraftLevelOffset in the game: a set recipe opens when the crafter reaches the dungeon of its set material,
+    // and never before the basic recipe of the same base item.
+    const setRecipeCraftLevelOffset = (base: BaseItem, setMaterial: Material): number =>
+      Math.min(levelsPerBracket, Math.max(base.craftLevelOffset, setMaterial.setCraftLevelOffset ?? 0));
 
     return d.baseItems.flatMap((base): Recipe[] => {
       const main = d.materials.find((material) => material.tier === tier && material.category === base.mainCategory);
@@ -175,7 +166,7 @@ export class GameIndex {
       const cells = base.width * base.height;
       const variants = [null, ...(setRecipeSlots.includes(base.slot) ? setMaterials : [])];
       return variants.map((setMaterial): Recipe => {
-        const craftLevelOffset = setMaterial ? setPieceCraftLevelOffset(base, setMaterial) : base.craftLevelOffset;
+        const craftLevelOffset = setMaterial ? setRecipeCraftLevelOffset(base, setMaterial) : base.craftLevelOffset;
         const requiredCraftLevel = (tier - 1) * levelsPerBracket + craftLevelOffset;
         const namingMaterial = setMaterial ?? main;
         return {
@@ -189,7 +180,7 @@ export class GameIndex {
           craftFeeCopper: Math.round(craftFeeBase + craftFeePerLevel * requiredCraftLevel),
           craftSeconds: Math.round(craftSecondsBase + craftSecondsPerLevel * requiredCraftLevel),
           ingredients: [
-            { material: main, quantity: Math.max(1, Math.ceil(cells / cellsPerMainUnit)) },
+            { material: main, quantity: base.mainIngredientQuantity },
             ...(setMaterial ? [{ material: setMaterial, quantity: cells >= largeItemCellThreshold ? setMaterialLargeItem : setMaterialSmallItem }] : []),
           ],
         };

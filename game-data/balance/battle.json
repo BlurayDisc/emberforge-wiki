@@ -5,10 +5,12 @@
   "criticalDamageMultiplier": 1.5,
   "criticalChancePerSkillPoint": 0.0025,
   "maximumCriticalChance": 0.5,
+  "maximumDamageCut": 0.85,
   "mitigationBase": 50,
   "mitigationPerAttackerLevel": 10,
-  "damageVarianceFraction": 0.1,
+  "monsterDamageVarianceFraction": 0.1,
   "healBelowHealthFraction": 0.5,
   "healPowerMultiplier": 1.5,
-  "logTurnSeconds": 1
+  "logTurnSeconds": 1,
+  "burnTickSeconds": 1
 }

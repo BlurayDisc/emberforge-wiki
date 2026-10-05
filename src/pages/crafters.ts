@@ -54,7 +54,7 @@ function craftingQuality(game: GameIndex) {
     <ul>
       <li>${t('Every recipe has one fixed item level: the recipe level, never above the end of its tier. A hero needs that level to equip the item.')}</li>
       <li>${t('Base stats grow by {percent} for each item level. Speed does not grow.', { percent: formatPercent(balanceNumber(d, 'items', 'baseStatGrowthPerItemLevel')) })}</li>
-      <li>${t('Sell value grows by {percent} for each item level.', { percent: formatPercent(balanceNumber(d, 'items', 'sellGrowthPerItemLevel')) })}</li>
+      <li>${t('Sell value = ((crafting cost + {perIngredient} copper for each main ingredient) x the quality factor + {perAffix} copper for each affix + {perItem} copper) x (1 + {upgrade} for each upgrade level). Crafting cost is the material value plus the crafter fee.', { perIngredient: balanceNumber(d, 'items', 'sellAddedValueCopperPerIngredient'), perAffix: balanceNumber(d, 'items', 'sellAddedValueCopperPerAffix'), perItem: balanceNumber(d, 'items', 'sellAddedValueCopperPerItem'), upgrade: formatPercent(balanceNumber(d, 'items', 'sellGrowthPerUpgradeLevel')) })}</li>
     </ul>`;
 }
 

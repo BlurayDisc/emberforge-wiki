@@ -1027,6 +1027,67 @@
         "volume": 0.1,
         "delaySeconds": 1.0
       }
+    ],
+    "spell-debuff-burn": [
+      {
+        "wave": "noise",
+        "durationSeconds": 0.35,
+        "volume": 0.12,
+        "filter": {
+          "type": "lowpass",
+          "frequency": 2600
+        }
+      },
+      {
+        "wave": "triangle",
+        "startFrequency": 180,
+        "endFrequency": 420,
+        "durationSeconds": 0.25,
+        "volume": 0.1
+      }
+    ],
+    "spell-fly-fireball": [
+      {
+        "wave": "noise",
+        "durationSeconds": 0.4,
+        "volume": 0.14,
+        "filter": {
+          "type": "lowpass",
+          "frequency": 1200
+        }
+      },
+      {
+        "wave": "sawtooth",
+        "startFrequency": 140,
+        "endFrequency": 70,
+        "durationSeconds": 0.4,
+        "volume": 0.08
+      }
+    ],
+    "spell-hit-explosion": [
+      {
+        "wave": "noise",
+        "durationSeconds": 0.55,
+        "volume": 0.34,
+        "filter": {
+          "type": "lowpass",
+          "frequency": 1500
+        }
+      },
+      {
+        "wave": "triangle",
+        "startFrequency": 150,
+        "endFrequency": 35,
+        "durationSeconds": 0.5,
+        "volume": 0.32
+      },
+      {
+        "wave": "square",
+        "startFrequency": 90,
+        "endFrequency": 40,
+        "durationSeconds": 0.2,
+        "volume": 0.12
+      }
     ]
   },
   "classAttack": {
@@ -1076,6 +1137,19 @@
       "cast": "spell-cast-rune",
       "buff": "spell-buff-guard"
     },
+    "warrior.cleave": {
+      "cast": "spell-cast-power",
+      "impact": "spell-hit-slash",
+      "debuff": "spell-debuff-weaken"
+    },
+    "warrior.power-strike-2": {
+      "cast": "spell-cast-power",
+      "impact": "spell-hit-slash"
+    },
+    "warrior.shield-bash-2": {
+      "cast": "spell-cast-power",
+      "impact": "spell-hit-bash"
+    },
     "archer.aimed-shot": {
       "cast": "spell-cast-bow",
       "projectile": "spell-fly-arrow",
@@ -1086,11 +1160,26 @@
       "projectile": "spell-fly-arrow",
       "impact": "spell-hit-pierce"
     },
-    "archer.hamstring-shot": {
+    "archer.fleet-foot": {
+      "cast": "spell-cast-bow",
+      "buff": "spell-buff-haste"
+    },
+    "archer.evasive-shot": {
       "cast": "spell-cast-bow",
       "projectile": "spell-fly-arrow",
       "impact": "spell-hit-pierce",
-      "debuff": "spell-debuff-weaken"
+      "buff": "spell-buff-haste"
+    },
+    "archer.aimed-shot-2": {
+      "cast": "spell-cast-bow",
+      "projectile": "spell-fly-arrow",
+      "impact": "spell-hit-pierce"
+    },
+    "archer.volley": {
+      "cast": "spell-cast-bow",
+      "projectile": "spell-fly-arrow",
+      "impact": "spell-hit-pierce",
+      "debuff": "spell-debuff-slow"
     },
     "mage.fire-bolt": {
       "cast": "spell-cast-fire",
@@ -1103,10 +1192,20 @@
       "impact": "spell-hit-ice",
       "debuff": "spell-debuff-slow"
     },
-    "mage.arcane-missiles": {
+    "mage.mana-shield": {
       "cast": "spell-cast-arcane",
-      "projectile": "spell-fly-arcane",
-      "impact": "spell-hit-arcane"
+      "buff": "spell-buff-guard"
+    },
+    "mage.fireball": {
+      "cast": "spell-cast-fire",
+      "projectile": "spell-fly-fireball",
+      "impact": "spell-hit-explosion",
+      "debuff": "spell-debuff-burn"
+    },
+    "mage.fire-bolt-2": {
+      "cast": "spell-cast-fire",
+      "projectile": "spell-fly-fire",
+      "impact": "spell-hit-fire"
     },
     "priest.minor-heal": {
       "cast": "spell-cast-holy",
@@ -1120,6 +1219,14 @@
       "cast": "spell-cast-holy",
       "buff": "spell-buff-guard"
     },
+    "priest.healing-wave": {
+      "cast": "spell-cast-holy",
+      "impact": "spell-heal"
+    },
+    "priest.minor-heal-2": {
+      "cast": "spell-cast-holy",
+      "impact": "spell-heal"
+    },
     "thief.backstab": {
       "cast": "spell-cast-shadow",
       "impact": "spell-hit-stab"
@@ -1132,7 +1239,20 @@
       "cast": "spell-cast-shadow",
       "buff": "spell-buff-haste"
     },
+    "thief.smoke-bomb": {
+      "cast": "spell-cast-shadow",
+      "impact": "spell-hit-bash",
+      "debuff": "spell-debuff-weaken"
+    },
+    "thief.backstab-2": {
+      "cast": "spell-cast-shadow",
+      "impact": "spell-hit-stab"
+    },
     "barbarian.savage-swing": {
+      "cast": "spell-cast-power",
+      "impact": "spell-hit-slash"
+    },
+    "barbarian.blood-fury": {
       "cast": "spell-cast-power",
       "impact": "spell-hit-slash"
     },
@@ -1140,21 +1260,35 @@
       "cast": "spell-cast-roar",
       "buff": "spell-buff-rage"
     },
-    "barbarian.skull-splitter": {
+    "barbarian.ground-pound": {
       "cast": "spell-cast-power",
-      "impact": "spell-hit-crush"
+      "impact": "spell-hit-crush",
+      "debuff": "spell-debuff-weaken"
+    },
+    "barbarian.savage-swing-2": {
+      "cast": "spell-cast-power",
+      "impact": "spell-hit-slash"
     },
     "fighter.jab": {
       "cast": "spell-cast-ki",
       "impact": "spell-hit-fist"
     },
-    "fighter.palm-strike": {
+    "fighter.combo-strike": {
       "cast": "spell-cast-ki",
       "impact": "spell-hit-fist"
     },
-    "fighter.meditate": {
+    "fighter.iron-skin": {
+      "cast": "spell-cast-rune",
+      "buff": "spell-buff-guard"
+    },
+    "fighter.sweeping-kick": {
       "cast": "spell-cast-ki",
-      "impact": "spell-heal"
+      "impact": "spell-hit-fist",
+      "debuff": "spell-debuff-slow"
+    },
+    "fighter.jab-2": {
+      "cast": "spell-cast-ki",
+      "impact": "spell-hit-fist"
     }
   }
 }

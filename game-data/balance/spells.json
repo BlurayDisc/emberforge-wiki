@@ -1,7 +1,9 @@
 {
   "normalSlotCount": 3,
-  "learnCostBaseCopper": 10,
-  "learnCostLevelExponent": 1.8,
+  "learnCostAnchors": [
+    { "level": 2, "copper": 18 },
+    { "level": 10, "copper": 127 }
+  ],
   "ultimateCostFactor": 2,
   "ultimateOpeningDelaySeconds": 15,
   "healCastBelowHealthFraction": 0.6

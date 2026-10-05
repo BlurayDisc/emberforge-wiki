@@ -17,16 +17,15 @@ export function buildAffixPages(game: GameIndex, text: GameText): Page[] {
       .map((affix) => [affix.displayName, text.statName(affix.stat), formatSignedValueRange(affix.minimumValue, affix.maximumValue)]);
     return panel(t(`${capitalised(kind)}es`), dataTable([t('Affix'), t('Stat'), t('Value at base level')], rows, { sortable: true }), { anchor: kind });
   });
-  const [magicMinimum, magicMaximum] = balanceValue<number[]>(d, 'items', 'magicAffixCounts');
-  const [rareMinimum, rareMaximum] = balanceValue<number[]>(d, 'items', 'rareAffixCounts');
+  const affixRules = balanceValue<Record<string, { counts: number[]; maximumPerKind: number }>>(d, 'items', 'affixRulesByQuality');
+  const countRange = (counts: number[]): string => (Math.min(...counts) === Math.max(...counts) ? String(counts[0]) : `${Math.min(...counts)}-${Math.max(...counts)}`);
   const body = html`
     ${pageHeading(t('Affixes'), t('A prefix or suffix adds a stat to an item. Values grow with item level.'))}
     ${jumpLinks(kindIds.map((kind) => ({ anchor: kind, label: t(`${capitalised(kind)}es`) })))}
     ${kindPanels}
     ${panel(t('How many affixes'), html`<ul>
       <li>${t('Common items have none.')}</li>
-      <li>${t('Magic items have {range} (at most {maximum} of each kind).', { range: `${magicMinimum}-${magicMaximum}`, maximum: balanceNumber(d, 'items', 'maximumAffixesPerKindMagic') })}</li>
-      <li>${t('Rare items have {range} (at most {maximum} of each kind).', { range: `${rareMinimum}-${rareMaximum}`, maximum: balanceNumber(d, 'items', 'maximumAffixesPerKindRare') })}</li>
+      ${Object.entries(affixRules).map(([quality, rule]) => html`<li>${t('{quality} items have {range} (at most {maximum} of each kind).', { quality: capitalised(t(quality)), range: countRange(rule.counts), maximum: rule.maximumPerKind })}</li>`)}
       <li>${t('Affix values grow by {percent}% for each item level.', { percent: Math.round(balanceNumber(d, 'items', 'affixGrowthPerItemLevel') * 100) })}</li>
     </ul>`)}`;
   return [{ path: 'affixes/index.html', title: t('Affixes'), section: 'affixes', body }];

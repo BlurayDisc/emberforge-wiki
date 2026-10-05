@@ -1,18 +1,26 @@
-import { balanceNumber } from '../data/balance';
-import type { HeroClass, MonsterSpell, Spell, SpellEffect } from '../data/gameData';
+import { balanceNumber, balanceValue } from '../data/balance';
+import type { HeroClass, MonsterSpell, Spell, SpellEffect, SpellStatusEffect } from '../data/gameData';
 import type { GameIndex } from '../data/gameIndex';
 import type { GameText } from '../data/text';
 import { pixelArt } from '../render/art';
 import { badge, dataTable } from '../render/components';
-import { formatDuration, formatMoney } from '../render/format';
+import { formatDuration, formatMoney, formatPercent } from '../render/format';
 import { html, type Html } from '../render/html';
 import { t } from '../i18n/ui';
 
 const percentOf = (fraction: number): number => Math.round(fraction * 100);
 
 // Same wording rules as describeEffect in the game, so the wiki shows the text the player sees.
-function describeInflictedStatus(text: GameText, inflicts: { status: string; strength: number; durationSeconds: number }): string {
-  return text.format('spell.effect.inflicts', { effect: text.format(`spell.status.${inflicts.status}`, { percent: percentOf(inflicts.strength) }), seconds: inflicts.durationSeconds });
+function describeStatus(text: GameText, status: SpellStatusEffect): string {
+  return text.format(`spell.status.${status.status}`, { percent: percentOf(status.strength), charges: status.charges ?? 1 });
+}
+
+function describeInflictedStatus(text: GameText, inflicts: SpellStatusEffect): string {
+  return text.format('spell.effect.inflicts', { effect: describeStatus(text, inflicts), seconds: inflicts.durationSeconds });
+}
+
+function describeSelfStatus(text: GameText, own: SpellStatusEffect): string {
+  return text.format('spell.effect.alsoOnSelf', { effect: describeStatus(text, own), seconds: own.durationSeconds });
 }
 
 function describeEffect(text: GameText, effect: SpellEffect): string {
@@ -20,21 +28,32 @@ function describeEffect(text: GameText, effect: SpellEffect): string {
     case 'damage': {
       const damageText = effect.target === 'allEnemies'
         ? text.format('spell.effect.damageAllEnemies', { percent: percentOf(effect.power) })
-        : effect.hits > 1
-          ? text.format('spell.effect.damageEnemyMulti', { hits: effect.hits, percent: percentOf(effect.power) })
-          : text.format('spell.effect.damageEnemy', { percent: percentOf(effect.power) });
-      return effect.inflicts ? `${damageText} ${describeInflictedStatus(text, effect.inflicts)}` : damageText;
+        : effect.target === 'spreadEnemies'
+          ? text.format('spell.effect.damageSpread', { hits: effect.hits, percent: percentOf(effect.power) })
+          : effect.hits > 1
+            ? text.format('spell.effect.damageEnemyMulti', { hits: effect.hits, percent: percentOf(effect.power) })
+            : text.format('spell.effect.damageEnemy', { percent: percentOf(effect.power) });
+      const parts = [damageText];
+      if (effect.defencePower) parts.push(text.format('spell.effect.defenceBonus', { percent: percentOf(effect.defencePower) }));
+      if (effect.magicPower) parts.push(text.format('spell.effect.magicBonus', { percent: percentOf(effect.magicPower) }));
+      if (effect.inflicts) parts.push(describeInflictedStatus(text, effect.inflicts));
+      if (effect.alsoOnSelf) parts.push(describeSelfStatus(text, effect.alsoOnSelf));
+      return parts.join(' ');
     }
     case 'drain':
       return text.format('spell.effect.drain', { percent: percentOf(effect.power), heal: percentOf(effect.healFraction) });
     case 'heal':
       return text.format(`spell.effect.heal.${effect.target}`, { percent: percentOf(effect.power) });
-    case 'status':
-      return text.format('spell.effect.status', {
-        effect: text.format(`spell.status.${effect.status}`, { percent: percentOf(effect.strength) }),
+    case 'shield':
+      return text.format('spell.effect.shield', { percent: percentOf(effect.resourceFraction), absorb: effect.absorbPerResourcePoint, seconds: effect.durationSeconds });
+    case 'status': {
+      const statusText = text.format('spell.effect.status', {
+        effect: describeStatus(text, effect),
         target: text.require(`spell.target.${effect.target}`),
         seconds: effect.durationSeconds,
       });
+      return effect.alsoOnSelf ? `${statusText} ${describeSelfStatus(text, effect.alsoOnSelf)}` : statusText;
+    }
   }
 }
 
@@ -46,7 +65,7 @@ function describeMonsterEffect(text: GameText, effect: SpellEffect): string {
   }
   if (effect.kind === 'status') {
     return text.format('spell.effect.status', {
-      effect: text.format(`spell.status.${effect.status}`, { percent: percentOf(effect.strength) }),
+      effect: describeStatus(text, effect),
       target: text.require(`spell.monster.target.${effect.target}`),
       seconds: effect.durationSeconds,
     });
@@ -63,12 +82,23 @@ export const spellName = (text: GameText, spell: Spell): string => text.require(
 
 export const spellIcon = (text: GameText, spell: Spell, scale = 2): Html => pixelArt('spells/icons', spell.id, spellName(text, spell), scale);
 
-// Same formula as learnCostCopper in the game.
+interface CostAnchor { level: number; copper: number }
+
+// Same formula as learnCostCopper and interpolatePowerCurve in the game: a curve through the anchor points, straight lines on a log-log scale.
 function learnCostCopper(game: GameIndex, spell: Spell): number {
-  const baseCost = balanceNumber(game.data, 'spells', 'learnCostBaseCopper');
-  const levelExponent = balanceNumber(game.data, 'spells', 'learnCostLevelExponent');
+  const anchors = balanceValue<CostAnchor[]>(game.data, 'spells', 'learnCostAnchors');
+  const lastSegmentStart = Math.max(0, anchors.length - 2);
+  const segmentStart = anchors.findIndex((_anchor, index) => index < anchors.length - 1 && spell.unlockLevel <= (anchors[index + 1] as CostAnchor).level);
+  const from = anchors[segmentStart === -1 ? lastSegmentStart : segmentStart] as CostAnchor;
+  const to = anchors[(segmentStart === -1 ? lastSegmentStart : segmentStart) + 1] as CostAnchor;
+  const exponent = Math.log(to.copper / from.copper) / Math.log(to.level / from.level);
   const ultimateFactor = spell.isUltimate ? balanceNumber(game.data, 'spells', 'ultimateCostFactor') : 1;
-  return Math.max(1, Math.round(baseCost * spell.unlockLevel ** levelExponent * ultimateFactor));
+  return Math.max(1, Math.round(from.copper * (spell.unlockLevel / from.level) ** exponent * ultimateFactor));
+}
+
+// A shield costs a share of the pool. Every other spell has a fixed cost.
+function describeCost(text: GameText, spell: Spell): string | number {
+  return spell.effect.kind === 'shield' ? t('{percent} of maximum', { percent: formatPercent(spell.effect.resourceFraction) }) : spell.resourceCost;
 }
 
 export function spellTable(game: GameIndex, text: GameText, heroClass: HeroClass): Html {
@@ -79,7 +109,7 @@ export function spellTable(game: GameIndex, text: GameText, heroClass: HeroClass
     spell.unlockLevel,
     html`${spellIcon(text, spell)} ${spellName(text, spell)}${spell.isUltimate ? html` ${badge(text.require('spell.ultimate'), 'boss')}` : null}`,
     describeEffect(text, spell.effect),
-    spell.resourceCost,
+    describeCost(text, spell),
     formatDuration(spell.cooldownSeconds),
     formatMoney(learnCostCopper(game, spell), copperPerSilver, silverPerGold),
   ]);

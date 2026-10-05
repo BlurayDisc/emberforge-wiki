@@ -150,14 +150,18 @@
     "name": "Goblin Chief",
     "rank": "boss",
     "spriteKey": "monster-goblin-chief",
-    "fixedStats": { "hp": 4900, "attack": 2.8, "defence": 18, "resistance": 12 },
-    "speed": 95,
+    "fixedStats": { "hp": 8000, "attack": 7.0, "defence": 18, "resistance": 12 },
+    "speed": 52,
+    "targetPriority": "highestDefence",
     "spellIds": ["goblin-chief.cowing-roar", "goblin-chief.war-cry", "goblin-chief.crushing-cleaver"],
     "drops": [
       { "materialId": "coarse-sinew", "chance": 1, "minQuantity": 3, "maxQuantity": 5 },
       { "materialId": "quartz", "chance": 1, "minQuantity": 2, "maxQuantity": 3 },
       { "materialId": "faint-essence", "chance": 1, "minQuantity": 2, "maxQuantity": 3 },
       { "materialId": "tarnished-catalyst", "chance": 1, "minQuantity": 2, "maxQuantity": 2 }
+    ],
+    "itemDrops": [
+      { "baseId": "ring", "quality": "uncommon", "itemLevel": 7, "chance": 0.35 }
     ]
   },
   {
@@ -171,6 +175,9 @@
     "speed": 108,
     "drops": [
       { "materialId": "spider-silk", "chance": 0.8, "minQuantity": 1, "maxQuantity": 2 }
+    ],
+    "itemDrops": [
+      { "baseId": "ring", "quality": "common", "itemLevel": 7, "chance": 0.05 }
     ]
   },
   {

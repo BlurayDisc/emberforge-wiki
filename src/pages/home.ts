@@ -10,7 +10,7 @@ export function buildHomePage(game: GameIndex, _text: GameText): Page[] {
   const d = game.data;
   const countBySection: Record<string, string> = {
     heroes: t('{count} classes', { count: d.classes.length }),
-    spells: t('{count} spells', { count: d.spells.length }),
+    spells: t('{count} spells', { count: game.loadedSpells().length }),
     buildings: t('Town services'),
     monsters: t('{count} monsters', { count: d.monsters.length }),
     dungeons: t('{count} dungeons', { count: d.dungeons.length }),

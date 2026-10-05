@@ -16,6 +16,8 @@ export interface HeroClass {
   behavior: string;
   resourceId: string;
   primaryAttribute: string;
+  // How far one hit swings from its base damage: 0.1 means 90-110%.
+  damageVarianceFraction: number;
   recoveryRate: number;
   weaponTypes: string[];
   offHandTypes: string[];
@@ -41,6 +43,8 @@ export interface Monster {
   attackFactor?: number;
   defenceFactor?: number;
   fixedStats?: { hp: number; attack: number; defence: number; resistance: number };
+  // The share of the Defence of a hero that the monster ignores. No monster uses it yet.
+  armourPenetration?: number;
   spellIds?: string[];
   speed: number;
   drops: MonsterDrop[];
@@ -118,15 +122,26 @@ export interface BaseItem {
   height: number;
   profession: string;
   mainCategory: string;
+  // How many units of the main material one craft needs.
+  mainIngredientQuantity: number;
   baseStats: Stats;
   craftLevelOffset: number;
 }
 
+export interface SpellStatusEffect {
+  status: string;
+  strength: number;
+  durationSeconds: number;
+  // Evade only: how many hits the unit dodges.
+  charges?: number;
+}
+
 export type SpellEffect =
-  | { kind: 'damage'; damageKind: string; target: string; hits: number; power: number; inflicts?: { status: string; strength: number; durationSeconds: number } }
+  | { kind: 'damage'; damageKind: string; target: string; hits: number; power: number; defencePower?: number; magicPower?: number; inflicts?: SpellStatusEffect; alsoOnSelf?: SpellStatusEffect }
   | { kind: 'drain'; damageKind: string; target: string; hits: number; power: number; healFraction: number }
   | { kind: 'heal'; target: string; power: number }
-  | { kind: 'status'; status: string; target: string; strength: number; durationSeconds: number };
+  | { kind: 'shield'; target: string; resourceFraction: number; absorbPerResourcePoint: number; durationSeconds: number }
+  | { kind: 'status'; status: string; target: string; strength: number; durationSeconds: number; charges?: number; alsoOnSelf?: SpellStatusEffect };
 
 export interface Spell {
   id: string;
@@ -136,6 +151,11 @@ export interface Spell {
   cooldownSeconds: number;
   resourceCost: number;
   effect: SpellEffect;
+  // Rank 2 and 3 spells name the rank 1 spell of their family. A higher rank replaces the lower rank in the same slot.
+  familyId?: string;
+  rank?: number;
+  // A reserved spell is in the data, but the game does not load it. A class specialisation reuses it later.
+  reservedFor?: string;
 }
 
 // What a spell looks like and sounds like (data/spell-visuals.json and data/audio/sound-effects.json).

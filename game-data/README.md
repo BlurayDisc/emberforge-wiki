@@ -5,6 +5,7 @@ All game data lives in these JSON files. The game loads them through `src/conten
 | File | Content |
 |---|---|
 | `towns.json` | `startingTownId` and the 10 towns (one per bracket of 10 levels) |
+| `workshop-sections.json` | The workshop sections (Weapons, Armour) and the crafters in each. A crafter in no section is hidden (jewelcrafting, until a later unlock) |
 | `buildings.json` | Town buildings: label, panel to open, art style, position on the 480x270 stage |
 | `dungeons.json` | Dungeons: town, level, monster ids, rare monster id, boss id, `maxPartySize` (heroes allowed in one run: always 1) |
 | `monsters.json` | Monsters: rank, sprite, drop table, and the stats. A normal or rare monster has factors on the level curve (`balance/monster-scaling.json`). A boss has `fixedStats`: its real HP, attack, Defence and Resistance, with no scaling. |
@@ -15,6 +16,7 @@ All game data lives in these JSON files. The game loads them through `src/conten
 | `professions.json` | Profession ids and display names |
 | `affixes.json` | Item prefixes and suffixes: stat and value range |
 | `classes.json` | Hero classes: stats, growth per level, primary attribute (`primaryAttribute`), resource (`resourceId`), allowed gear, and the dungeon to clear before the class can be hired (`unlockAfterDungeonId`, null = open at the start) |
+| `spells.json` | Hero spells. A spell with `reservedFor: "specialisation"` stays in the file, but the game does not load it: a class specialisation reuses it later. Validation still checks it. |
 | `advancements.json` | Promotion classes. Each base class has 2 branches (level 20) and each branch has 1 master class (level 50). Data only: the game has no promotion command yet. |
 | `hero-names.json` | Names for new heroes |
 | `hero-appearance.json` | Skin, hair and eye colors, and the colors of each class. A hero name picks its look, for the portrait and the battle sprite. |

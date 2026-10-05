@@ -136,7 +136,7 @@ for (const base of baseItems) {
 for (const dungeon of dungeons) saveDataUrlImage(`dungeons/${dungeon.id}.png`, createDungeonIcon(dungeon.id, 1));
 
 // Every spell has an icon. Spells with a look in spell-visuals.json also have animated effects.
-interface SpellEntry { id: string }
+interface SpellEntry { id: string; reservedFor?: string }
 interface SpellLook { theme: string; cast?: string; projectile?: string; impact?: string; buff?: string; debuff?: string }
 interface EffectArtFrames { frames: PixelCanvas[]; framesPerSecond: number; looping: boolean }
 type EffectArtBuilder = (colors: unknown) => EffectArtFrames;
@@ -159,7 +159,8 @@ const MILLISECONDS_PER_SECOND = 1000;
 // A one-shot effect is over in under half a second. The last frame stays a little, so the loop is easy to watch.
 const ONE_SHOT_PAUSE_MILLISECONDS = 700;
 
-for (const spell of readGameData<SpellEntry[]>('spells.json')) saveDataUrlImage(`spells/icons/${spell.id}.png`, createSpellIcon(spell.id, 1));
+// A reserved spell is not loaded by the game, so the icon code does not know it.
+for (const spell of readGameData<SpellEntry[]>('spells.json').filter((candidate) => candidate.reservedFor === undefined)) saveDataUrlImage(`spells/icons/${spell.id}.png`, createSpellIcon(spell.id, 1));
 
 const spellLooks = readGameData<{ spells: Record<string, SpellLook> }>('spell-visuals.json').spells;
 const drawnEffects = new Set<string>();
