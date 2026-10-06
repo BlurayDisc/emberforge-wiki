@@ -1,0 +1,116 @@
+{
+  "version": "v0.5",
+  "date": "2026-10-07",
+  "compare": {
+    "from": "35410fc",
+    "to": "75a6fba"
+  },
+  "summary": "The game moves to new engines: Pixi.js for the picture and Tone.js for the sound. There is a new dungeon screen, an opening story and a balance pass. This list covers v0.4.1, v0.4.2 and v0.5.",
+  "highlights": [
+    {
+      "title": "New engines",
+      "text": "Pixi.js draws the town, the battle and the castle. Tone.js plays the music.",
+      "art": {
+        "folder": "spells/icons",
+        "file": "mage.fire-bolt"
+      }
+    },
+    {
+      "title": "Dungeon screen",
+      "text": "See the dungeon, its monsters and your heroes, and start the fight, all in one view.",
+      "art": {
+        "folder": "dungeons",
+        "file": "goblin-chief-lair"
+      }
+    },
+    {
+      "title": "Spell trees",
+      "text": "All 7 classes follow one blueprint: 6 spell families with ranks and an Ultimate at level 20.",
+      "art": {
+        "folder": "spells/icons",
+        "file": "priest.smite"
+      }
+    }
+  ],
+  "sections": [
+    {
+      "id": "gameplay",
+      "title": "Gameplay",
+      "kind": "gameplay",
+      "groups": [
+        {
+          "heading": "Spells and battle rules",
+          "tag": "New",
+          "items": [
+            "Each class has 6 spell families with ranks and one Ultimate at level 20.",
+            "New statuses: Evade, Burn, Hex and Empower. Dodge, absorb and burn show on the stage, the health bar and the combat log.",
+            "Each class has its own damage swing. A hit can never lose more than 85% of its damage to Defence."
+          ]
+        },
+        {
+          "heading": "Opening story",
+          "tag": "New",
+          "items": [
+            "A new player picks a language and sees a story of 5 pictures. The game asks about a new bracket when one starts."
+          ]
+        },
+        {
+          "heading": "Balance",
+          "items": [
+            "Kills needed per level in the best dungeon are now 1.9, 2.9, 2.9, 2.9, 3.9, 4.9, 4.9, 5.4, 5.4 and 6.9. A level-up keeps the extra XP.",
+            "The Goblin Chief attack is 7.7, and the Hobgoblin is 10% stronger.",
+            "Level 1 monsters always drop each basic material.",
+            "Crafter XP follows the number of main materials. Craft time follows the ingredient count."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui",
+      "title": "Interface",
+      "kind": "ui",
+      "groups": [
+        {
+          "heading": "New screens",
+          "tag": "New",
+          "items": [
+            "A new dungeon screen with the dungeon picture, the monsters, the hero picker and the Fight button.",
+            "A new monster detail window and a stack of toast messages.",
+            "A level-up window shows the gains of each class.",
+            "A summary window shows the new item when a crafter finishes.",
+            "The Leatherworking crafter has its own workshop section.",
+            "The recipe filter is saved for each crafter."
+          ]
+        },
+        {
+          "heading": "Sound and art",
+          "items": [
+            "New castle music: a slow march in D major. The town plays the music of the oldest active run.",
+            "New hero art for all 7 classes."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "known-issues",
+      "title": "Known issues",
+      "kind": "issues",
+      "intro": "These problems are known and are not fixed in this version.",
+      "groups": [
+        {
+          "heading": "Game",
+          "items": [
+            "The balance scenarios did not run for this version, so the numbers are not checked.",
+            "The new pictures and sounds are not checked by eye and ear yet."
+          ]
+        },
+        {
+          "heading": "Wiki",
+          "items": [
+            "The game data of this wiki is from v0.4.1. Pages do not show the v0.4.2 and v0.5 numbers yet."
+          ]
+        }
+      ]
+    }
+  ]
+}
