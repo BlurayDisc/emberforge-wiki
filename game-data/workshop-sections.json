@@ -1,6 +1,6 @@
 {
   "sections": [
-    {"id": "weapons", "professionIds": ["weaponsmithing", "fletching", "woodworking"]},
-    {"id": "armour", "professionIds": ["armoursmithing", "tailoring"]}
+    {"id": "weapons", "professionIds": ["weaponsmithing", "fletching", "enchanting"]},
+    {"id": "armour", "professionIds": ["armoursmithing", "leatherworking", "tailoring"]}
   ]
 }

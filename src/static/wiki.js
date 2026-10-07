@@ -88,7 +88,7 @@
 
   function setupLevelCalculators() {
     for (const calculator of document.querySelectorAll('[data-calc]')) {
-      const { base, growth } = JSON.parse(calculator.dataset.calc);
+      const statsOfLevel = JSON.parse(calculator.dataset.calc);
       const slider = calculator.querySelector('[data-calc-level]');
       const label = calculator.querySelector('[data-calc-level-label]');
       slider.addEventListener('input', () => {
@@ -96,7 +96,7 @@
         label.textContent = level;
         for (const cell of calculator.querySelectorAll('[data-calc-stat]')) {
           const stat = cell.dataset.calcStat;
-          cell.textContent = Math.round(base[stat] + growth[stat] * (level - 1));
+          cell.textContent = statsOfLevel[level][stat];
         }
       });
     }

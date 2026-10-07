@@ -45,7 +45,7 @@ function describeEffect(text: GameText, effect: SpellEffect): string {
     case 'heal':
       return text.format(`spell.effect.heal.${effect.target}`, { percent: percentOf(effect.power) });
     case 'shield':
-      return text.format('spell.effect.shield', { percent: percentOf(effect.resourceFraction), absorb: effect.absorbPerResourcePoint, seconds: effect.durationSeconds });
+      return text.format('spell.effect.shield', { percent: percentOf(effect.resourceFraction), flat: effect.absorbFlat, health: percentOf(effect.absorbMaxHpFraction), seconds: effect.durationSeconds });
     case 'status': {
       const statusText = text.format('spell.effect.status', {
         effect: describeStatus(text, effect),

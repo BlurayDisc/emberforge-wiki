@@ -22,8 +22,15 @@ export interface HeroClass {
   weaponTypes: string[];
   offHandTypes: string[];
   armourWeights: string[];
-  baseStats: Stats;
-  growthPerLevel: Stats;
+  // Placeholder classes wait for their own balance pass.
+  balanceStatus: string;
+  attributes: Record<'strength' | 'agility' | 'intelligence', { start: number; gainPerLevel: number }>;
+  baseHp: number;
+  baseDamage: number;
+  baseDefence: number;
+  baseResistance: number;
+  baseAttackSeconds: number;
+  criticalChanceBonus: number;
 }
 
 export interface MonsterDrop {
@@ -31,6 +38,15 @@ export interface MonsterDrop {
   chance: number;
   minQuantity: number;
   maxQuantity: number;
+  // When set, the drop gives the maximum with this chance and the minimum otherwise.
+  maxQuantityChance?: number;
+}
+
+export interface MonsterItemDrop {
+  baseId: string;
+  quality: string;
+  itemLevel: number;
+  chance: number;
 }
 
 export interface Monster {
@@ -38,16 +54,15 @@ export interface Monster {
   name: string;
   rank: MonsterRank;
   spriteKey: string;
-  // A boss has fixedStats and no factors. Other monsters follow the level curve times the factors.
-  hpFactor?: number;
-  attackFactor?: number;
-  defenceFactor?: number;
-  fixedStats?: { hp: number; attack: number; defence: number; resistance: number };
+  // A normal or rare monster follows the level curve times statFactor. A boss has flatStats and no statFactor.
+  statFactor?: number;
+  flatStats?: { hp: number; damage: number; armour: number; resistance: number; attackSeconds: number };
+  attackSeconds?: number;
   // The share of the Defence of a hero that the monster ignores. No monster uses it yet.
   armourPenetration?: number;
   spellIds?: string[];
-  speed: number;
   drops: MonsterDrop[];
+  itemDrops?: MonsterItemDrop[];
 }
 
 export interface Dungeon {
@@ -96,6 +111,15 @@ export interface CastleSpot {
   screen: number;
   kind: 'person' | 'landmark';
   tales: number;
+  // How many tales the spot has after the first chapter is cleared. They replace the first tales.
+  talesAfterChapter1?: number;
+}
+
+export interface StoryBeat {
+  id: string;
+  chapter: number;
+  trigger: { kind: 'firstHeroHired' | 'secondHeroHired' | 'firstClear'; dungeonId?: string };
+  pages: Array<{ scene: string }>;
 }
 
 export interface Material {
@@ -124,7 +148,10 @@ export interface BaseItem {
   mainCategory: string;
   // How many units of the main material one craft needs.
   mainIngredientQuantity: number;
+  // A stat with a growth is the value at item level 1. Any other stat is the value at the item level of the recipe.
   baseStats: Stats;
+  mainStat: string;
+  growthPerItemLevel?: Stats;
   craftLevelOffset: number;
 }
 
@@ -140,7 +167,7 @@ export type SpellEffect =
   | { kind: 'damage'; damageKind: string; target: string; hits: number; power: number; defencePower?: number; magicPower?: number; inflicts?: SpellStatusEffect; alsoOnSelf?: SpellStatusEffect }
   | { kind: 'drain'; damageKind: string; target: string; hits: number; power: number; healFraction: number }
   | { kind: 'heal'; target: string; power: number }
-  | { kind: 'shield'; target: string; resourceFraction: number; absorbPerResourcePoint: number; durationSeconds: number }
+  | { kind: 'shield'; target: string; resourceFraction: number; absorbFlat: number; absorbMaxHpFraction: number; durationSeconds: number }
   | { kind: 'status'; status: string; target: string; strength: number; durationSeconds: number; charges?: number; alsoOnSelf?: SpellStatusEffect };
 
 export interface Spell {
@@ -186,6 +213,7 @@ export interface Affix {
   stat: string;
   minimumValue: number;
   maximumValue: number;
+  scalesWithItemLevel?: boolean;
 }
 
 export interface GameSnapshotSource {
@@ -206,6 +234,7 @@ export interface GameData {
   buildings: Building[];
   advancements: Advancement[];
   castleSpots: CastleSpot[];
+  storyBeats: StoryBeat[];
   materials: Material[];
   baseItems: BaseItem[];
   affixes: Affix[];
@@ -225,7 +254,7 @@ function readJson<T>(relativePath: string): T {
 }
 
 function readBalanceFiles(): Record<string, BalanceFile> {
-  const balanceFileNames = ['backpack', 'battle', 'crafting', 'dungeon-run', 'economy', 'hero-sheet', 'items', 'mill', 'monster-scaling', 'progression', 'recovery', 'resources', 'spells'];
+  const balanceFileNames = ['backpack', 'battle', 'battlefield', 'crafting', 'dungeon-run', 'economy', 'hero-sheet', 'hero-stats', 'items', 'mill', 'monster-scaling', 'progression', 'recovery', 'resources', 'spells'];
   return Object.fromEntries(balanceFileNames.map((name) => [name, readJson<BalanceFile>(`balance/${name}.json`)]));
 }
 
@@ -244,6 +273,7 @@ export function loadGameData(language: Language): GameData {
     buildings: readJson('buildings.json'),
     advancements: readJson('advancements.json'),
     castleSpots: readJson<{ spots: CastleSpot[] }>('castle.json').spots,
+    storyBeats: readJson<{ beats: StoryBeat[] }>('story-beats.json').beats,
     materials: readJson('materials.json'),
     baseItems: readJson('base-items.json'),
     affixes: readJson('affixes.json'),

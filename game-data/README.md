@@ -8,7 +8,7 @@ All game data lives in these JSON files. The game loads them through `src/conten
 | `workshop-sections.json` | The workshop sections (Weapons, Armour) and the crafters in each. A crafter in no section is hidden (jewelcrafting, until a later unlock) |
 | `buildings.json` | Town buildings: label, panel to open, art style, position on the 480x270 stage |
 | `dungeons.json` | Dungeons: town, level, monster ids, rare monster id, boss id, `maxPartySize` (heroes allowed in one run: always 1) |
-| `monsters.json` | Monsters: rank, sprite, drop table, and the stats. A normal or rare monster has factors on the level curve (`balance/monster-scaling.json`). A boss has `fixedStats`: its real HP, attack, Defence and Resistance, with no scaling. |
+| `monsters.json` | Monsters: rank, sprite, drop table, and the stats. A normal or rare monster follows the level curve (`balance/monster-scaling.json`) times its `statFactor`, which lifts HP, damage, armour and resistance together. A boss has explicit `flatStats` (hp, damage, armour, resistance, attackSeconds) and no `statFactor`. |
 | `materials.json` | Materials: tier, category, sell value, crafted item name prefix |
 | `base-items.json` | Item bases: slot, gear type, size, profession, ingredient categories, base stats |
 | `balance/hero-sheet.json` | The size of the attribute bars on the hero screen |

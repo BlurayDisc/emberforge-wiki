@@ -3,59 +3,57 @@ import type { GameIndex } from '../data/gameIndex';
 import type { GameText } from '../data/text';
 import { commaList, dataTable, definitionList, jumpLinks, pageHeading, panel, siteLink } from '../render/components';
 import { combatRulePanels } from './combatRules';
+import { ATTRIBUTE_IDS } from '../data/gameFormulas';
 import { formatDuration, formatMoney, formatPercent } from '../render/format';
 import { html, type Html } from '../render/html';
 import { t, tHtml } from '../i18n/ui';
 import type { HeroClass } from '../data/gameData';
 import type { Page } from '../render/page';
 
-const ATTRIBUTE_IDS = ['strength', 'skill', 'magic'];
-
-interface ResourceRules {
-  attribute: string;
-  maximumPerAttributePoint: number;
-}
-
 // The three attributes are the core of a hero. This panel explains what each one does and which classes lean on it.
 function attributesPanel(game: GameIndex, text: GameText): Html {
   const d = game.data;
-  const battle = (key: string) => balanceNumber(d, 'battle', key);
+  const heroStat = (key: string) => balanceNumber(d, 'hero-stats', key);
   const classLinks = (classes: HeroClass[]) => commaList(classes.map((heroClass) => siteLink(`heroes/${heroClass.id}.html`, heroClass.displayName)));
-  const resourceRules = Object.keys(d.balance['resources'] ?? {}).map((resourceId) => ({ resourceId, rules: balanceValue<ResourceRules>(d, 'resources', resourceId) }));
+  const attributeEffects: Record<string, Html[]> = {
+    strength: [html`${t('Each point adds {amount} to the maximum {hp}.', { amount: heroStat('hpPerStrength'), hp: text.statName('hp') })}`],
+    agility: [html`${t('Each point adds {percent} to the attack speed bonus, so the attack time gets shorter.', { percent: formatPercent(heroStat('attackSpeedBonusPerAgility')) })}`],
+    intelligence: [
+      html`${t('Each point adds {amount} {resistance}.', { amount: heroStat('resistancePerIntelligence'), resistance: text.statName('resistance') })}`,
+      html`${t('Each point speeds up mana regeneration by {percent} (mana classes only).', { percent: formatPercent(heroStat('manaRegenBonusPerIntelligence')) })}`,
+    ],
+  };
   const attributeRows = ATTRIBUTE_IDS.map((attributeId) => {
     const primaryClasses = d.classes.filter((heroClass) => heroClass.primaryAttribute === attributeId);
     const attackKinds = [...new Set(primaryClasses.map((heroClass) => heroClass.attackKind))];
     const damageStatNames = attackKinds.map((kind) => text.statName(kind === 'magic' ? 'magicalDamage' : 'physicalDamage'));
-    const poolsGrownByAttribute = resourceRules.filter(({ rules }) => rules.attribute === attributeId);
     const effects = html`<ul>
       ${primaryClasses.length ? html`<li>${t('Primary attribute: every point adds 1 {damage} to the classes that use it as primary.', { damage: damageStatNames.join(t(' or ')) })}</li>` : null}
-      ${attributeId === 'strength' ? html`<li>${t('The {damage} of a magic class is its {attribute}.', { damage: text.statName('physicalDamage'), attribute: text.statName('strength') })}</li>` : null}
-      ${attributeId === 'skill' ? html`<li>${t('Critical chance = {attribute} x {perPoint}, up to {maximum}. This is true for every class.', { attribute: text.statName('skill'), perPoint: formatPercent(battle('criticalChancePerSkillPoint')), maximum: formatPercent(battle('maximumCriticalChance')) })}</li>` : null}
-      ${poolsGrownByAttribute.map(({ resourceId, rules }) => html`<li>${t('Each point adds {amount} to the maximum {resource}.', { amount: rules.maximumPerAttributePoint, resource: text.require(`resource.${resourceId}`) })}</li>`)}
+      ${(attributeEffects[attributeId] ?? []).map((effect) => html`<li>${effect}</li>`)}
     </ul>`;
     return [text.statName(attributeId), effects, primaryClasses.length ? classLinks(primaryClasses) : html`<span class="muted">${t('none')}</span>`];
   });
   const classRows = d.classes.map((heroClass) => {
     const damageStatId = heroClass.attackKind === 'magic' ? 'magicalDamage' : 'physicalDamage';
-    const resourceAttribute = resourceRules.find(({ resourceId }) => resourceId === heroClass.resourceId)?.rules.attribute;
     return [
       siteLink(`heroes/${heroClass.id}.html`, heroClass.displayName),
       text.statName(heroClass.primaryAttribute),
-      t('{damage} = {attribute} + weapon', { damage: text.statName(damageStatId), attribute: text.statName(heroClass.primaryAttribute) }),
-      `${text.require(`resource.${heroClass.resourceId}`)}${resourceAttribute ? ` (${text.statName(resourceAttribute)})` : ''}`,
+      t('{damage} = {base} + {attribute} + weapon', { damage: text.statName(damageStatId), base: heroClass.baseDamage, attribute: text.statName(heroClass.primaryAttribute) }),
+      text.require(`resource.${heroClass.resourceId}`),
     ];
   });
   return panel(t('Attributes'), html`
-    <p>${t('Every hero has three attributes: {strength}, {agility} and {intelligence}. Each class has one primary attribute. It sets the damage of the hero, so it is the stat to look for on gear.', { strength: text.statName('strength'), agility: text.statName('skill'), intelligence: text.statName('magic') })}</p>
+    <p>${t('Every hero has three attributes: {strength}, {agility} and {intelligence}. Each class has one primary attribute. It sets the damage of the hero, so it is the stat to look for on gear.', { strength: text.statName('strength'), agility: text.statName('agility'), intelligence: text.statName('intelligence') })}</p>
     ${dataTable([t('Attribute'), t('What it does'), t('Primary for')], attributeRows)}
     <h3>${t('Attributes of each class')}</h3>
-    ${dataTable([t('Class'), t('Primary attribute'), t('Attack damage'), t('Spell resource (grows with)')], classRows)}
+    ${dataTable([t('Class'), t('Primary attribute'), t('Attack damage'), t('Spell resource')], classRows)}
     <h3>${t('Main stats')}</h3>
     ${definitionList([
       [text.statName('hp'), t('The life of the hero. A hero at zero is knocked out.')],
-      [text.statName('defence'), tHtml('Cuts physical damage taken. The formula is under {link}.', { link: siteLink('mechanics/index.html#damage', t('Damage and criticals')) })],
-      [text.statName('resistance'), t('Cuts magical damage taken in the same way.')],
-      [text.statName('speed'), t('How fast the charge meter fills, so how often the hero acts.')],
+      [text.statName('defence'), tHtml('Takes points off each physical hit. The formula is under {link}. No attribute and no level adds to it.', { link: siteLink('mechanics/index.html#damage', t('Damage and criticals')) })],
+      [text.statName('resistance'), t('Takes points off each magical hit in the same way.')],
+      [text.statName('attackSeconds'), t('The time between two attacks. Agility, gear and the Haste status make it shorter.')],
+      [text.statName('movementSpeed'), t('How fast the unit runs on the battlefield. Boots add to it.')],
     ])}
     <p class="muted">${t('Gear adds to every attribute and stat. Weapons also add damage of their own.')}</p>`, { anchor: 'attributes' });
 }
@@ -75,6 +73,7 @@ export function buildMechanicsPages(game: GameIndex, text: GameText): Page[] {
     ${jumpLinks([
       { anchor: 'attributes', label: t('Attributes') },
       { anchor: 'roles', label: t('Combat roles') },
+      { anchor: 'realtime', label: t('Real-time battle') },
       { anchor: 'damage', label: t('Damage and criticals') },
       { anchor: 'special-rules', label: t('Dodging, shields and burning') },
       { anchor: 'statuses', label: t('Statuses') },

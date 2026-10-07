@@ -1,7 +1,77 @@
 {
-  "hp": { "base": 154.5, "perLevel": 26.26, "exponent": 1.6 },
-  "attack": { "base": 0.2, "perLevel": 1.36, "exponent": 0.5 },
-  "defence": { "base": 2, "perLevel": 1.2 },
-  "resistance": { "base": 1, "perLevel": 0.8 },
-  "criticalChance": 0.05
+  "defaultAttackSeconds": 1.65,
+  "minimumAttackSeconds": 1,
+  "maximumAttackSeconds": 2,
+  "anchors": [
+    {
+      "level": 1,
+      "hp": 430,
+      "damage": 36,
+      "armour": 0.0,
+      "resistance": 0.0
+    },
+    {
+      "level": 2,
+      "hp": 596,
+      "damage": 54,
+      "armour": 1.03,
+      "resistance": 0.0
+    },
+    {
+      "level": 3,
+      "hp": 697,
+      "damage": 62,
+      "armour": 2.11,
+      "resistance": 0.53
+    },
+    {
+      "level": 4,
+      "hp": 812,
+      "damage": 73,
+      "armour": 3.25,
+      "resistance": 1.08
+    },
+    {
+      "level": 5,
+      "hp": 933,
+      "damage": 83,
+      "armour": 5.0,
+      "resistance": 1.67
+    },
+    {
+      "level": 6,
+      "hp": 1059,
+      "damage": 96,
+      "armour": 6.83,
+      "resistance": 2.28
+    },
+    {
+      "level": 7,
+      "hp": 1184,
+      "damage": 108,
+      "armour": 9.33,
+      "resistance": 3.5
+    },
+    {
+      "level": 8,
+      "hp": 1308,
+      "damage": 121,
+      "armour": 11.94,
+      "resistance": 4.78
+    },
+    {
+      "level": 9,
+      "hp": 1430,
+      "damage": 132,
+      "armour": 14.67,
+      "resistance": 6.11
+    },
+    {
+      "level": 10,
+      "hp": 1562,
+      "damage": 144,
+      "armour": 16.25,
+      "resistance": 6.88
+    }
+  ]
 }

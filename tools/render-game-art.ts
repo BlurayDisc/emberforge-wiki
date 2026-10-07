@@ -42,6 +42,14 @@ class PixelCanvas {
           }
         }
       },
+      clearRect(x: number, y: number, width: number, height: number) {
+        const pixels = canvas.allocatedPixels();
+        for (let row = Math.max(0, y); row < Math.min(canvas.height, y + height); row++) {
+          for (let column = Math.max(0, x); column < Math.min(canvas.width, x + width); column++) {
+            pixels.set([0, 0, 0, 0], (row * canvas.width + column) * 4);
+          }
+        }
+      },
       getImageData(_x: number, _y: number, _width: number, _height: number) {
         return { data: canvas.allocatedPixels().slice() };
       },
@@ -103,7 +111,7 @@ const materials = readGameData<MaterialEntry[]>('materials.json');
 const baseItems = readGameData<BaseItemEntry[]>('base-items.json');
 const heroNames = readGameData<string[]>('hero-names.json');
 
-const { drawHeroSprite } = await importGameModule<{ drawHeroSprite: (classId: string, heroName: string) => unknown }>('src/render/heroSpriteArt.ts');
+const { drawHeroSprite } = await importGameModule<{ drawHeroSprite: (classId: string, heroName: string) => unknown }>('src/heroArt/battleSprite.ts');
 const { CREATURE_DRAWERS } = await importGameModule<{ CREATURE_DRAWERS: Record<string, () => unknown> }>('src/render/creatureArt.ts');
 const { createItemIcon, createMaterialIcon, createDungeonIcon } = await importGameModule<{
   createItemIcon: (baseId: string, materialId: string, mainCategory: string, scale: number) => unknown;

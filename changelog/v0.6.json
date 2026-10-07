@@ -1,0 +1,136 @@
+{
+  "version": "v0.6",
+  "date": "2026-10-08",
+  "compare": {
+    "from": "75a6fba",
+    "to": "29f5f47"
+  },
+  "summary": "Battles now run in real time on a battlefield. Heroes follow Strength, Agility and Intelligence, and armour is flat. There is a balance pass, new art for all creatures and heroes, and a story with 9 scenes. This list covers v0.5.1, v0.5.2 and v0.6.",
+  "highlights": [
+    {
+      "title": "Real-time battle",
+      "text": "Heroes and monsters run, aim and fight on a battlefield. There are no turns.",
+      "art": {
+        "folder": "monsters",
+        "file": "monster-goblin-chief"
+      }
+    },
+    {
+      "title": "Attributes and flat armour",
+      "text": "Strength, Agility and Intelligence replace Skill and Magic. Armour takes points off each hit.",
+      "art": {
+        "folder": "heroes",
+        "file": "warrior"
+      }
+    },
+    {
+      "title": "Story",
+      "text": "Nine scenes follow your first chapter, from the first hero to the road east.",
+      "art": {
+        "folder": "dungeons",
+        "file": "old-wood-hollow"
+      }
+    }
+  ],
+  "sections": [
+    {
+      "id": "gameplay",
+      "title": "Gameplay",
+      "kind": "gameplay",
+      "groups": [
+        {
+          "heading": "Real-time battle",
+          "tag": "New",
+          "items": [
+            "Heroes and monsters move on a battlefield, 36 long and 8 deep. Melee units run to their target. Archers, Mages and Priests hit from a distance.",
+            "A unit attacks the nearest enemy. It stands still while it attacks or casts.",
+            "Attack time replaces Speed. Agility and gear make it shorter. Haste and Slow share the same pool.",
+            "Boots add movement speed. Ranged classes run at 80% of the speed of melee classes."
+          ]
+        },
+        {
+          "heading": "Attributes and damage",
+          "tag": "Reworked",
+          "items": [
+            "Heroes have Strength, Agility and Intelligence. Skill and Magic are gone.",
+            "Health follows Strength (14.6 for each point). Magic resist follows Intelligence (0.2 for each point). Armour comes only from class base values and gear.",
+            "Damage = class base + primary attribute + weapon.",
+            "Armour and Magic resist are flat. A hit = attack x swing x spell power x critical multiplier - armour, and never less than 1.",
+            "Critical chance is 4% for every unit. Critical damage is 200%. Resource pools are fixed: 30 Mana, 28 Stamina, 24 Hatred and 26 Rage.",
+            "Mana Shield absorbs a flat amount plus a share of the maximum health."
+          ]
+        },
+        {
+          "heading": "Balance",
+          "items": [
+            "Monsters use a table of anchors for each level, and each monster has a stat factor. Monsters have an attack time between 1.0 and 2.0 seconds.",
+            "The Goblin Chief has 1,600 health, 148 damage, 19 armour and 8 Magic resist. Crushing Cleaver waits 12 seconds.",
+            "Level 1 kills give more experience. A hero needs 380 experience for level 2.",
+            "Weapon damage grows by a flat amount for each item level. Armour gives Armour and Magic resist, not health.",
+            "Each upgrade level adds 1 to the main stat, or 5% of it on a strong item. The upgrade chances are higher.",
+            "Crafter levels 1 to 8 use a fixed experience table. A crafter gains at most 2 levels from one craft while below level 2.",
+            "Set recipes open at the same crafter level as the basic recipe. Weapons that open at crafter level 1 have no set recipe.",
+            "The Toadskin set gives +25 health. The Spider Silk set gives +2 attack speed. The Sharp Fang set gives +2 Agility."
+          ]
+        },
+        {
+          "heading": "Gear",
+          "tag": "New",
+          "items": [
+            "New affixes: Swift, Vital, Robust, Keen, Savage, Vampiric, Brisk, Brutal, Wise, Stalwart and Blessed.",
+            "Gear can add attack speed, critical chance, critical damage, life steal and movement speed. These are percent points.",
+            "Woodworking is now Enchanting, and a new Leatherworking crafter makes hide armour and belts."
+          ]
+        },
+        {
+          "heading": "Story",
+          "tag": "New",
+          "items": [
+            "Nine story scenes play in chapter 1: the first hero, the second hero, each dungeon, and the end of the chapter.",
+            "After chapter 1, the people of the castle have new things to say."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui",
+      "title": "Interface",
+      "kind": "ui",
+      "groups": [
+        {
+          "heading": "Screens",
+          "tag": "New",
+          "items": [
+            "Hero stat labels, and an equip preview in the backpack that shows the change of each stat.",
+            "A wide view option shows more of the town on a narrow screen.",
+            "Town people talk about your company, your gear and the time of day.",
+            "The town has fewer buildings, so it is easier to cross."
+          ]
+        },
+        {
+          "heading": "Sound and art",
+          "items": [
+            "All creatures and all hero portraits are drawn again. The Goblin Chief is a big boss sprite.",
+            "New music data for the town, the battle and the story."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "known-issues",
+      "title": "Known issues",
+      "kind": "issues",
+      "intro": "These problems are known and are not fixed in this version.",
+      "groups": [
+        {
+          "heading": "Game",
+          "items": [
+            "The balance scenarios did not run for this version, so the numbers are not checked.",
+            "The new pictures and sounds are not checked by eye and ear yet.",
+            "Priest, Thief, Barbarian and Fighter have placeholder numbers."
+          ]
+        }
+      ]
+    }
+  ]
+}

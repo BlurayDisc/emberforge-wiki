@@ -1,0 +1,13 @@
+{
+  "beats": [
+    {"id": "ch1-first-hero", "chapter": 1, "trigger": {"kind": "firstHeroHired"}, "pages": [{"scene": "tavern"}, {"scene": "firstSword"}]},
+    {"id": "ch1-second-hero", "chapter": 1, "trigger": {"kind": "secondHeroHired"}, "pages": [{"scene": "campfire"}]},
+    {"id": "ch1-rat-cellar", "chapter": 1, "trigger": {"kind": "firstClear", "dungeonId": "rat-cellar"}, "pages": [{"scene": "cellarDoor"}, {"scene": "coldWall"}]},
+    {"id": "ch1-scarecrow-field", "chapter": 1, "trigger": {"kind": "firstClear", "dungeonId": "scarecrow-field"}, "pages": [{"scene": "scarecrowField"}]},
+    {"id": "ch1-wolf-trail", "chapter": 1, "trigger": {"kind": "firstClear", "dungeonId": "wolf-trail"}, "pages": [{"scene": "wolfTrail"}]},
+    {"id": "ch1-sunken-mill", "chapter": 1, "trigger": {"kind": "firstClear", "dungeonId": "sunken-mill"}, "pages": [{"scene": "sunkenMill"}]},
+    {"id": "ch1-goblin-camp", "chapter": 1, "trigger": {"kind": "firstClear", "dungeonId": "goblin-camp"}, "pages": [{"scene": "goblinTent"}, {"scene": "stewardCoins"}]},
+    {"id": "ch1-old-wood-hollow", "chapter": 1, "trigger": {"kind": "firstClear", "dungeonId": "old-wood-hollow"}, "pages": [{"scene": "hollowTree"}, {"scene": "dwarfMural"}]},
+    {"id": "ch1-goblin-chief-lair", "chapter": 1, "trigger": {"kind": "firstClear", "dungeonId": "goblin-chief-lair"}, "pages": [{"scene": "chiefLair"}, {"scene": "royalGrain"}, {"scene": "kingRibbon"}, {"scene": "townAtDusk"}, {"scene": "emberVoice", "voice": "ember"}, {"scene": "roadEastDawn"}]}
+  ]
+}

@@ -4,13 +4,11 @@
     "name": "Cave Rat",
     "rank": "normal",
     "spriteKey": "monster-rat",
-    "hpFactor": 0.8,
-    "attackFactor": 0.8,
-    "defenceFactor": 0.7,
-    "speed": 110,
+    "statFactor": 0.92,
+    "attackSeconds": 1.4,
     "drops": [
-      { "materialId": "rawhide", "chance": 0.55, "minQuantity": 1, "maxQuantity": 2 },
-      { "materialId": "copper-ore", "chance": 0.7, "minQuantity": 1, "maxQuantity": 2 }
+      { "materialId": "rawhide", "chance": 1, "minQuantity": 1, "maxQuantity": 2, "maxQuantityChance": 0.1 },
+      { "materialId": "copper-ore", "chance": 1, "minQuantity": 1, "maxQuantity": 2, "maxQuantityChance": 0.1 }
     ]
   },
   {
@@ -18,10 +16,8 @@
     "name": "Wolf",
     "rank": "normal",
     "spriteKey": "monster-wolf",
-    "hpFactor": 1,
-    "attackFactor": 1,
-    "defenceFactor": 0.9,
-    "speed": 115,
+    "statFactor": 0.92,
+    "attackSeconds": 1.4,
     "drops": [
       { "materialId": "sharp-fang", "chance": 0.8, "minQuantity": 1, "maxQuantity": 2 }
     ]
@@ -31,10 +27,8 @@
     "name": "Goblin",
     "rank": "normal",
     "spriteKey": "monster-goblin",
-    "hpFactor": 1.18,
-    "attackFactor": 1.28,
-    "defenceFactor": 1.18,
-    "speed": 100,
+    "statFactor": 1,
+    "attackSeconds": 1.65,
     "drops": [
       { "materialId": "bone-shard", "chance": 0.8, "minQuantity": 1, "maxQuantity": 2 },
       { "materialId": "quartz", "chance": 0.2, "minQuantity": 1, "maxQuantity": 1 }
@@ -45,10 +39,8 @@
     "name": "Rat King",
     "rank": "rare",
     "spriteKey": "monster-rat",
-    "hpFactor": 2.5,
-    "attackFactor": 1.1,
-    "defenceFactor": 1,
-    "speed": 105,
+    "statFactor": 1.25,
+    "attackSeconds": 1.4,
     "drops": [
       { "materialId": "rawhide", "chance": 1, "minQuantity": 2, "maxQuantity": 3 },
       { "materialId": "copper-ore", "chance": 1, "minQuantity": 2, "maxQuantity": 3 },
@@ -61,13 +53,11 @@
     "name": "Straw Scarecrow",
     "rank": "normal",
     "spriteKey": "monster-scarecrow",
-    "hpFactor": 0.85,
-    "attackFactor": 0.8,
-    "defenceFactor": 0.7,
-    "speed": 100,
+    "statFactor": 1.04,
+    "attackSeconds": 1.8,
     "drops": [
-      { "materialId": "linen", "chance": 0.6, "minQuantity": 1, "maxQuantity": 2 },
-      { "materialId": "pine-wood", "chance": 0.6, "minQuantity": 1, "maxQuantity": 2 }
+      { "materialId": "linen", "chance": 1, "minQuantity": 1, "maxQuantity": 2, "maxQuantityChance": 0.1 },
+      { "materialId": "pine-wood", "chance": 1, "minQuantity": 1, "maxQuantity": 2, "maxQuantityChance": 0.1 }
     ]
   },
   {
@@ -75,10 +65,8 @@
     "name": "Harvest King",
     "rank": "rare",
     "spriteKey": "monster-scarecrow",
-    "hpFactor": 2.5,
-    "attackFactor": 1.1,
-    "defenceFactor": 1,
-    "speed": 100,
+    "statFactor": 1.25,
+    "attackSeconds": 1.8,
     "drops": [
       { "materialId": "linen", "chance": 1, "minQuantity": 2, "maxQuantity": 3 },
       { "materialId": "pine-wood", "chance": 1, "minQuantity": 2, "maxQuantity": 3 },
@@ -91,10 +79,8 @@
     "name": "Alpha Wolf",
     "rank": "rare",
     "spriteKey": "monster-wolf",
-    "hpFactor": 2.5,
-    "attackFactor": 1.2,
-    "defenceFactor": 1,
-    "speed": 120,
+    "statFactor": 1.25,
+    "attackSeconds": 1.4,
     "drops": [
       { "materialId": "sharp-fang", "chance": 1, "minQuantity": 2, "maxQuantity": 3 },
       { "materialId": "faint-essence", "chance": 0.5, "minQuantity": 1, "maxQuantity": 2 },
@@ -106,10 +92,8 @@
     "name": "Mill Toad",
     "rank": "normal",
     "spriteKey": "monster-toad",
-    "hpFactor": 1.05,
-    "attackFactor": 1,
-    "defenceFactor": 0.95,
-    "speed": 104,
+    "statFactor": 1.04,
+    "attackSeconds": 1.8,
     "drops": [
       { "materialId": "toadskin", "chance": 0.8, "minQuantity": 1, "maxQuantity": 2 }
     ]
@@ -119,10 +103,8 @@
     "name": "Warty Elder",
     "rank": "rare",
     "spriteKey": "monster-toad",
-    "hpFactor": 2.5,
-    "attackFactor": 1.2,
-    "defenceFactor": 1,
-    "speed": 106,
+    "statFactor": 1.25,
+    "attackSeconds": 1.8,
     "drops": [
       { "materialId": "toadskin", "chance": 1, "minQuantity": 2, "maxQuantity": 3 },
       { "materialId": "faint-essence", "chance": 0.5, "minQuantity": 1, "maxQuantity": 2 },
@@ -134,10 +116,8 @@
     "name": "Goblin Captain",
     "rank": "rare",
     "spriteKey": "monster-goblin",
-    "hpFactor": 2.68,
-    "attackFactor": 1.6,
-    "defenceFactor": 1.28,
-    "speed": 100,
+    "statFactor": 1.25,
+    "attackSeconds": 1.65,
     "drops": [
       { "materialId": "bone-shard", "chance": 1, "minQuantity": 2, "maxQuantity": 3 },
       { "materialId": "quartz", "chance": 0.6, "minQuantity": 1, "maxQuantity": 2 },
@@ -150,9 +130,7 @@
     "name": "Goblin Chief",
     "rank": "boss",
     "spriteKey": "monster-goblin-chief",
-    "fixedStats": { "hp": 8000, "attack": 7.0, "defence": 18, "resistance": 12 },
-    "speed": 52,
-    "targetPriority": "highestDefence",
+    "flatStats": {"hp": 1600, "damage": 148, "armour": 19, "resistance": 8, "attackSeconds": 1.65},
     "spellIds": ["goblin-chief.cowing-roar", "goblin-chief.war-cry", "goblin-chief.crushing-cleaver"],
     "drops": [
       { "materialId": "coarse-sinew", "chance": 1, "minQuantity": 3, "maxQuantity": 5 },
@@ -169,10 +147,8 @@
     "name": "Bark Spider",
     "rank": "normal",
     "spriteKey": "monster-spider",
-    "hpFactor": 1.12,
-    "attackFactor": 1.34,
-    "defenceFactor": 1.07,
-    "speed": 108,
+    "statFactor": 0.95,
+    "attackSeconds": 1.5,
     "drops": [
       { "materialId": "spider-silk", "chance": 0.8, "minQuantity": 1, "maxQuantity": 2 }
     ],
@@ -185,10 +161,8 @@
     "name": "Hobgoblin",
     "rank": "normal",
     "spriteKey": "monster-hobgoblin",
-    "hpFactor": 1.2,
-    "attackFactor": 1.2,
-    "defenceFactor": 1.2,
-    "speed": 98,
+    "statFactor": 1.12,
+    "attackSeconds": 1.8,
     "drops": [
       { "materialId": "coarse-sinew", "chance": 0.7, "minQuantity": 1, "maxQuantity": 2 },
       { "materialId": "quartz", "chance": 0.25, "minQuantity": 1, "maxQuantity": 1 },
@@ -200,10 +174,8 @@
     "name": "Hollow Broodmother",
     "rank": "rare",
     "spriteKey": "monster-spider",
-    "hpFactor": 2.68,
-    "attackFactor": 1.6,
-    "defenceFactor": 1.07,
-    "speed": 110,
+    "statFactor": 1.25,
+    "attackSeconds": 1.5,
     "drops": [
       { "materialId": "spider-silk", "chance": 1, "minQuantity": 2, "maxQuantity": 3 },
       { "materialId": "faint-essence", "chance": 0.5, "minQuantity": 1, "maxQuantity": 2 },

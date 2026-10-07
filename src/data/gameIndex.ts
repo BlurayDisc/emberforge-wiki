@@ -155,19 +155,20 @@ export class GameIndex {
     const craftFeeBase = balanceNumber(d, 'crafting', 'craftFeeBaseCopper');
     const craftFeePerLevel = balanceNumber(d, 'crafting', 'craftFeePerRequiredLevelCopper');
     const setMaterials = this.setMaterialsOfTier(tier);
-    // Same rule as setRecipeCraftLevelOffset in the game: a set recipe opens when the crafter reaches the dungeon of its set material,
-    // and never before the basic recipe of the same base item.
-    const setRecipeCraftLevelOffset = (base: BaseItem, setMaterial: Material): number =>
-      Math.min(levelsPerBracket, Math.max(base.craftLevelOffset, setMaterial.setCraftLevelOffset ?? 0));
+    const craftSecondsReferenceMaterialCount = balanceNumber(d, 'crafting', 'craftSecondsReferenceMaterialCount');
+    const craftSecondsFactorPerMaterial = balanceNumber(d, 'crafting', 'craftSecondsFactorPerMaterial');
+    const firstSetBaseCraftLevelOffset = balanceNumber(d, 'items', 'setRecipeFirstBaseCraftLevelOffset');
 
     return d.baseItems.flatMap((base): Recipe[] => {
       const main = d.materials.find((material) => material.tier === tier && material.category === base.mainCategory);
       if (!main) return [];
       const cells = base.width * base.height;
-      const variants = [null, ...(setRecipeSlots.includes(base.slot) ? setMaterials : [])];
+      // Same rule as listRecipes in the game: armour of every weight has set recipes. A weapon or off-hand item has them only when it does not open at the first crafter level.
+      const canMakeSetPieces = setRecipeSlots.includes(base.slot) && (base.armourWeight !== null || base.craftLevelOffset >= firstSetBaseCraftLevelOffset);
+      const variants = [null, ...(canMakeSetPieces ? setMaterials : [])];
       return variants.map((setMaterial): Recipe => {
-        const craftLevelOffset = setMaterial ? setRecipeCraftLevelOffset(base, setMaterial) : base.craftLevelOffset;
-        const requiredCraftLevel = (tier - 1) * levelsPerBracket + craftLevelOffset;
+        // Every set recipe of a base item opens with its basic recipe.
+        const requiredCraftLevel = (tier - 1) * levelsPerBracket + base.craftLevelOffset;
         const namingMaterial = setMaterial ?? main;
         return {
           base,
@@ -178,7 +179,8 @@ export class GameIndex {
           itemLevel: Math.min(requiredCraftLevel, tier * levelsPerBracket),
           // Same formula as craftFeeCopper in the game.
           craftFeeCopper: Math.round(craftFeeBase + craftFeePerLevel * requiredCraftLevel),
-          craftSeconds: Math.round(craftSecondsBase + craftSecondsPerLevel * requiredCraftLevel),
+          // Same formula as craftSeconds in the game: each main material above or below the reference count changes the time by a fixed step.
+          craftSeconds: Math.max(1, Math.round((craftSecondsBase + craftSecondsPerLevel * requiredCraftLevel) * (1 + craftSecondsFactorPerMaterial * (base.mainIngredientQuantity - craftSecondsReferenceMaterialCount)))),
           ingredients: [
             { material: main, quantity: base.mainIngredientQuantity },
             ...(setMaterial ? [{ material: setMaterial, quantity: cells >= largeItemCellThreshold ? setMaterialLargeItem : setMaterialSmallItem }] : []),

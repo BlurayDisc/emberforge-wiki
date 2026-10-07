@@ -1,6 +1,7 @@
 import { balanceNumber, balanceValue } from '../data/balance';
+import { monsterStatsAtLevel } from '../data/gameFormulas';
 import type { GameIndex, MonsterAppearance } from '../data/gameIndex';
-import type { Dungeon, Monster } from '../data/gameData';
+import type { Dungeon, Monster, MonsterDrop } from '../data/gameData';
 import type { GameText } from '../data/text';
 import { pixelArt } from '../render/art';
 import { badge, cardGrid, card, dataTable, definitionList, filterBox, jumpLinks, loreText, pageHeading, panel, siteLink, subheading } from '../render/components';
@@ -15,27 +16,8 @@ const RANK_ORDER = ['normal', 'rare', 'boss'];
 const monsterPath = (monster: Monster) => `monsters/${monster.id}.html`;
 const rankSortKey = (monster: Monster) => (RANK_ORDER.includes(monster.rank) ? RANK_ORDER.indexOf(monster.rank) : RANK_ORDER.length);
 
-// Same formula as scaledAtLevel in the game. The exponent bends the curve.
-function scaledStat(game: GameIndex, key: string, level: number): number {
-  const scaling = balanceValue<{ base: number; perLevel: number; exponent?: number }>(game.data, 'monster-scaling', key);
-  return scaling.base + scaling.perLevel * level ** (scaling.exponent ?? 1);
-}
-
-const roundedToHundredths = (value: number): number => Math.round(value * 100) / 100;
-
-// Same formulas as statsOf in the game: a boss uses its own numbers, other monsters follow the level curve.
-function monsterStatsAtLevel(game: GameIndex, monster: Monster, level: number) {
-  if (monster.fixedStats) return { ...monster.fixedStats, attack: roundedToHundredths(monster.fixedStats.attack) };
-  return {
-    hp: Math.round(scaledStat(game, 'hp', level) * (monster.hpFactor ?? 1)),
-    attack: roundedToHundredths(scaledStat(game, 'attack', level) * (monster.attackFactor ?? 1)),
-    defence: Math.round(scaledStat(game, 'defence', level) * (monster.defenceFactor ?? 1)),
-    resistance: Math.round(scaledStat(game, 'resistance', level) * (monster.defenceFactor ?? 1)),
-  };
-}
-
 function monsterCard(game: GameIndex, monster: Monster): Html {
-  return card(monsterPath(monster), monster.name, [t('Speed {speed}', { speed: monster.speed })], badge(t(monster.rank), monster.rank), pixelArt('monsters', monster.spriteKey, monster.name, 2));
+  return card(monsterPath(monster), monster.name, [t('Attack time {seconds}s', { seconds: monster.flatStats?.attackSeconds ?? monster.attackSeconds ?? balanceNumber(game.data, 'monster-scaling', 'defaultAttackSeconds') })], badge(t(monster.rank), monster.rank), pixelArt('monsters', monster.spriteKey, monster.name, 2));
 }
 
 // Monsters are grouped by the town and the dungeon they fight in. Rare monsters and bosses follow the common ones.
@@ -64,16 +46,30 @@ function indexPage(game: GameIndex): Page {
 
 function appearanceRows(game: GameIndex, monster: Monster, appearances: MonsterAppearance[]) {
   return appearances.map(({ dungeon, role }) => {
-    const stats = monsterStatsAtLevel(game, monster, dungeon.level);
-    return [siteLink(`dungeons/${dungeon.id}.html`, dungeon.name), t(role), dungeon.level, stats.hp, stats.attack, stats.defence, stats.resistance];
+    const stats = monsterStatsAtLevel(game.data, monster, dungeon.level);
+    return [siteLink(`dungeons/${dungeon.id}.html`, dungeon.name), t(role), dungeon.level, stats.hp, stats.damage, stats.armour, stats.resistance, t('{seconds}s', { seconds: stats.attackSeconds })];
   });
+}
+
+export function dropAmountText(drop: MonsterDrop): string {
+  if (drop.maxQuantityChance === undefined) return formatQuantityRange(drop.minQuantity, drop.maxQuantity);
+  return t('{minimum}, or {maximum} with a {percent} chance', { minimum: drop.minQuantity, maximum: drop.maxQuantity, percent: formatPercent(drop.maxQuantityChance) });
+}
+
+function itemDropRows(game: GameIndex, monster: Monster) {
+  return (monster.itemDrops ?? []).map((drop) => [
+    siteLink(`equipment/${drop.baseId}.html`, game.baseItemsById.get(drop.baseId)?.name ?? drop.baseId),
+    t(drop.quality),
+    drop.itemLevel,
+    formatPercent(drop.chance),
+  ]);
 }
 
 function dropRows(game: GameIndex, monster: Monster) {
   return monster.drops.map((drop) => [
     siteLink(`materials/${drop.materialId}.html`, game.material(drop.materialId).name),
     formatPercent(drop.chance),
-    formatQuantityRange(drop.minQuantity, drop.maxQuantity),
+    dropAmountText(drop),
   ]);
 }
 
@@ -94,20 +90,17 @@ function monsterPage(game: GameIndex, text: GameText, monster: Monster): Page {
     <p>${badge(t(monster.rank), monster.rank)}</p>
     ${loreText(text.find(`monster.${monster.id}.lore`))}
     ${panel(t('Battle traits'), definitionList([
-      [t('Speed'), monster.speed],
-      ...(monster.fixedStats
+      [t('Attack time'), t('{seconds}s', { seconds: monster.flatStats?.attackSeconds ?? monster.attackSeconds ?? balanceNumber(game.data, 'monster-scaling', 'defaultAttackSeconds') })],
+      ...(monster.flatStats
         ? [[t('Stats'), t('Fixed numbers. They do not follow the level curve.')] as [string, string]]
-        : [
-            [t('Health factor'), `${monster.hpFactor ?? 1}x`] as [string, string],
-            [t('Attack factor'), `${monster.attackFactor ?? 1}x`] as [string, string],
-            [t('Defence factor'), `${monster.defenceFactor ?? 1}x`] as [string, string],
-          ]),
+        : [[t('Stat factor'), t('{factor}x of the level curve. It lifts health, damage, armour and resistance together.', { factor: monster.statFactor ?? 1 })] as [string, string]]),
     ]))}
     ${spells.length ? panel(t('Spells'), html`<p>${t('A monster spell costs no resource. It waits only for its cooldown.')}</p>${monsterSpellTable(text, spells)}`) : null}
     ${panel(t('Stats by dungeon'), appearances.length
-      ? dataTable([t('Dungeon'), t('Role'), t('Level'), t('Health'), t('Attack'), t('Defence'), t('Resistance')], appearanceRows(game, monster, appearances))
+      ? dataTable([t('Dungeon'), t('Role'), t('Level'), t('Health'), t('Damage'), t('Armour'), t('Resistance'), t('Attack time')], appearanceRows(game, monster, appearances))
       : html`<p class="muted">${t('This monster is not placed in a dungeon yet.')}</p>`)}
     ${panel(t('Loot'), dataTable([t('Material'), t('Chance'), t('Amount')], dropRows(game, monster)))}
+    ${(monster.itemDrops ?? []).length ? panel(t('Item drops'), dataTable([t('Item'), t('Quality'), t('Item level'), t('Chance')], itemDropRows(game, monster))) : null}
     ${panel(t('Rewards'), rewardNotes(game, monster))}`;
   return { path: monsterPath(monster), title: monster.name, section: 'monsters', body, searchKind: t('Monster ({rank})', { rank: t(monster.rank) }) };
 }

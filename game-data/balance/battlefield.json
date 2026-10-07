@@ -1,0 +1,76 @@
+{
+  "tickSeconds": 0.05,
+  "fieldLength": 36,
+  "fieldDepth": 8,
+  "meleeReach": 0.3,
+  "bodyOverlapTolerance": 0.05,
+  "baseMovementSpeed": 6,
+  "meleeMeetSeconds": 2.5,
+  "targetSwitchDistanceMargin": 2,
+  "unreachableSwitchSeconds": 1,
+  "holdWhenStuckSeconds": 0.15,
+  "prepareSpellsWithinDistance": 10,
+  "rangedStartOffset": 2,
+  "attackHitFraction": 0.5,
+  "steeringAnglesDegrees": [
+    40,
+    80,
+    120
+  ],
+  "defaultProfile": {
+    "rangeFieldFraction": 0,
+    "movementSpeedFactor": 1
+  },
+  "classProfiles": {
+    "warrior": {
+      "rangeFieldFraction": 0,
+      "movementSpeedFactor": 1
+    },
+    "barbarian": {
+      "rangeFieldFraction": 0,
+      "movementSpeedFactor": 1
+    },
+    "fighter": {
+      "rangeFieldFraction": 0,
+      "movementSpeedFactor": 1
+    },
+    "thief": {
+      "rangeFieldFraction": 0,
+      "movementSpeedFactor": 1
+    },
+    "archer": {
+      "rangeFieldFraction": 0.38,
+      "movementSpeedFactor": 0.8
+    },
+    "mage": {
+      "rangeFieldFraction": 0.38,
+      "movementSpeedFactor": 0.8
+    },
+    "priest": {
+      "rangeFieldFraction": 0.38,
+      "movementSpeedFactor": 0.8
+    }
+  },
+  "monsterRankProfiles": {
+    "normal": {
+      "rangeFieldFraction": 0,
+      "movementSpeedFactor": 1
+    },
+    "rare": {
+      "rangeFieldFraction": 0,
+      "movementSpeedFactor": 1
+    },
+    "boss": {
+      "rangeFieldFraction": 0,
+      "movementSpeedFactor": 1
+    }
+  },
+  "monsterProfiles": {},
+  "bodyRadiusByRank": {
+    "hero": 0.5,
+    "normal": 0.5,
+    "rare": 0.6,
+    "boss": 1
+  },
+  "spellRangeFieldFractions": {}
+}

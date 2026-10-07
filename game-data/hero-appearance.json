@@ -36,22 +36,22 @@
     },
     "archer": {
       "gender": "female",
-      "hair": "#6a4a2a",
+      "hair": "#e6c35a",
       "slender": true,
       "background": "#2d4a33",
       "backgroundShade": "#243d29",
-      "cloth": "#3f7a4a",
-      "clothShade": "#2c5736",
-      "trim": "#c9a24e"
+      "cloth": "#4a8a52",
+      "clothShade": "#2f6a3c",
+      "trim": "#e0c070"
     },
     "mage": {
       "gender": "female",
       "hair": "#d23a2a",
       "slender": true,
-      "background": "#3d2a5a",
-      "backgroundShade": "#31224a",
-      "cloth": "#7b4bb7",
-      "clothShade": "#58337f",
+      "background": "#4a2530",
+      "backgroundShade": "#3b1d27",
+      "cloth": "#d04a2a",
+      "clothShade": "#9a2e1c",
       "trim": "#f2c14e"
     },
     "priest": {
@@ -62,11 +62,12 @@
       "trim": "#f2c14e"
     },
     "thief": {
-      "background": "#2a2a35",
-      "backgroundShade": "#22222b",
-      "cloth": "#454356",
-      "clothShade": "#2e2c3b",
-      "trim": "#b23a3a"
+      "hair": "#7a5a32",
+      "background": "#1f2a2a",
+      "backgroundShade": "#182222",
+      "cloth": "#2b2a3c",
+      "clothShade": "#1b1a28",
+      "trim": "#5be37a"
     },
     "barbarian": {
       "background": "#4a2f24",

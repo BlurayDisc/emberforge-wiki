@@ -1,6 +1,6 @@
 import type { GameData } from './gameData';
 
-const STAT_DISPLAY_ORDER = ['hp', 'physicalDamage', 'magicalDamage', 'strength', 'magic', 'skill', 'speed', 'defence', 'resistance'];
+const STAT_DISPLAY_ORDER = ['hp', 'damage', 'physicalDamage', 'magicalDamage', 'strength', 'agility', 'intelligence', 'defence', 'resistance', 'attackSpeed', 'attackSeconds', 'criticalChance', 'criticalDamage', 'lifeSteal', 'movementSpeed'];
 
 export function orderedStatIds(statIds: Iterable<string>): string[] {
   const known = new Set(statIds);

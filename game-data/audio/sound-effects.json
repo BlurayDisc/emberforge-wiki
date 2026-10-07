@@ -993,7 +993,7 @@
         "endFrequency": 523,
         "durationSeconds": 1.4,
         "volume": 0.14,
-        "delaySeconds": 1.0
+        "delaySeconds": 1
       },
       {
         "wave": "triangle",
@@ -1001,7 +1001,7 @@
         "endFrequency": 659,
         "durationSeconds": 1.4,
         "volume": 0.12,
-        "delaySeconds": 1.0
+        "delaySeconds": 1
       },
       {
         "wave": "triangle",
@@ -1009,7 +1009,7 @@
         "endFrequency": 784,
         "durationSeconds": 1.4,
         "volume": 0.12,
-        "delaySeconds": 1.0
+        "delaySeconds": 1
       },
       {
         "wave": "square",
@@ -1017,7 +1017,7 @@
         "endFrequency": 1047,
         "durationSeconds": 1.4,
         "volume": 0.08,
-        "delaySeconds": 1.0
+        "delaySeconds": 1
       },
       {
         "wave": "triangle",
@@ -1025,7 +1025,7 @@
         "endFrequency": 262,
         "durationSeconds": 1.4,
         "volume": 0.1,
-        "delaySeconds": 1.0
+        "delaySeconds": 1
       }
     ],
     "spell-debuff-burn": [
@@ -1087,6 +1087,267 @@
         "endFrequency": 40,
         "durationSeconds": 0.2,
         "volume": 0.12
+      }
+    ],
+    "cat-meow": [
+      {
+        "wave": "triangle",
+        "startFrequency": 520,
+        "endFrequency": 930,
+        "durationSeconds": 0.11,
+        "volume": 0.16
+      },
+      {
+        "wave": "triangle",
+        "startFrequency": 930,
+        "endFrequency": 560,
+        "durationSeconds": 0.22,
+        "volume": 0.16,
+        "delaySeconds": 0.11
+      },
+      {
+        "wave": "noise",
+        "durationSeconds": 0.3,
+        "volume": 0.03,
+        "filter": {
+          "type": "bandpass",
+          "frequency": 1800
+        }
+      }
+    ],
+    "cat-mew-happy": [
+      {
+        "wave": "triangle",
+        "startFrequency": 800,
+        "endFrequency": 1250,
+        "durationSeconds": 0.08,
+        "volume": 0.14
+      },
+      {
+        "wave": "triangle",
+        "startFrequency": 1250,
+        "endFrequency": 900,
+        "durationSeconds": 0.1,
+        "volume": 0.14,
+        "delaySeconds": 0.08
+      },
+      {
+        "wave": "triangle",
+        "startFrequency": 850,
+        "endFrequency": 1300,
+        "durationSeconds": 0.08,
+        "volume": 0.12,
+        "delaySeconds": 0.22
+      },
+      {
+        "wave": "triangle",
+        "startFrequency": 1300,
+        "endFrequency": 950,
+        "durationSeconds": 0.12,
+        "volume": 0.12,
+        "delaySeconds": 0.3
+      }
+    ],
+    "cat-purr": [
+      {
+        "wave": "sawtooth",
+        "startFrequency": 62,
+        "endFrequency": 55,
+        "durationSeconds": 0.045,
+        "volume": 0.1,
+        "delaySeconds": 0
+      },
+      {
+        "wave": "sawtooth",
+        "startFrequency": 70,
+        "endFrequency": 60,
+        "durationSeconds": 0.045,
+        "volume": 0.1,
+        "delaySeconds": 0.05
+      },
+      {
+        "wave": "sawtooth",
+        "startFrequency": 62,
+        "endFrequency": 55,
+        "durationSeconds": 0.045,
+        "volume": 0.1,
+        "delaySeconds": 0.1
+      },
+      {
+        "wave": "sawtooth",
+        "startFrequency": 70,
+        "endFrequency": 60,
+        "durationSeconds": 0.045,
+        "volume": 0.1,
+        "delaySeconds": 0.15
+      },
+      {
+        "wave": "sawtooth",
+        "startFrequency": 62,
+        "endFrequency": 55,
+        "durationSeconds": 0.045,
+        "volume": 0.1,
+        "delaySeconds": 0.2
+      },
+      {
+        "wave": "sawtooth",
+        "startFrequency": 70,
+        "endFrequency": 60,
+        "durationSeconds": 0.045,
+        "volume": 0.1,
+        "delaySeconds": 0.25
+      },
+      {
+        "wave": "sawtooth",
+        "startFrequency": 62,
+        "endFrequency": 55,
+        "durationSeconds": 0.045,
+        "volume": 0.1,
+        "delaySeconds": 0.3
+      },
+      {
+        "wave": "sawtooth",
+        "startFrequency": 70,
+        "endFrequency": 60,
+        "durationSeconds": 0.045,
+        "volume": 0.1,
+        "delaySeconds": 0.35
+      },
+      {
+        "wave": "sawtooth",
+        "startFrequency": 62,
+        "endFrequency": 55,
+        "durationSeconds": 0.045,
+        "volume": 0.1,
+        "delaySeconds": 0.4
+      },
+      {
+        "wave": "sawtooth",
+        "startFrequency": 70,
+        "endFrequency": 60,
+        "durationSeconds": 0.045,
+        "volume": 0.1,
+        "delaySeconds": 0.45
+      }
+    ],
+    "dog-woof": [
+      {
+        "wave": "sawtooth",
+        "startFrequency": 330,
+        "endFrequency": 150,
+        "durationSeconds": 0.1,
+        "volume": 0.2
+      },
+      {
+        "wave": "noise",
+        "durationSeconds": 0.07,
+        "volume": 0.1,
+        "filter": {
+          "type": "bandpass",
+          "frequency": 900
+        }
+      },
+      {
+        "wave": "sawtooth",
+        "startFrequency": 300,
+        "endFrequency": 130,
+        "durationSeconds": 0.12,
+        "volume": 0.2,
+        "delaySeconds": 0.17
+      },
+      {
+        "wave": "noise",
+        "durationSeconds": 0.07,
+        "volume": 0.1,
+        "filter": {
+          "type": "bandpass",
+          "frequency": 800
+        },
+        "delaySeconds": 0.17
+      }
+    ],
+    "dog-yip-happy": [
+      {
+        "wave": "square",
+        "startFrequency": 620,
+        "endFrequency": 1050,
+        "durationSeconds": 0.06,
+        "volume": 0.11
+      },
+      {
+        "wave": "square",
+        "startFrequency": 700,
+        "endFrequency": 1150,
+        "durationSeconds": 0.06,
+        "volume": 0.11,
+        "delaySeconds": 0.1
+      },
+      {
+        "wave": "square",
+        "startFrequency": 780,
+        "endFrequency": 1250,
+        "durationSeconds": 0.07,
+        "volume": 0.11,
+        "delaySeconds": 0.2
+      }
+    ],
+    "hen-cluck": [
+      {
+        "wave": "square",
+        "startFrequency": 620,
+        "endFrequency": 380,
+        "durationSeconds": 0.05,
+        "volume": 0.1
+      },
+      {
+        "wave": "square",
+        "startFrequency": 560,
+        "endFrequency": 340,
+        "durationSeconds": 0.05,
+        "volume": 0.1,
+        "delaySeconds": 0.09
+      },
+      {
+        "wave": "square",
+        "startFrequency": 520,
+        "endFrequency": 300,
+        "durationSeconds": 0.07,
+        "volume": 0.1,
+        "delaySeconds": 0.18
+      }
+    ],
+    "hen-cheep-happy": [
+      {
+        "wave": "triangle",
+        "startFrequency": 1700,
+        "endFrequency": 2300,
+        "durationSeconds": 0.05,
+        "volume": 0.1,
+        "delaySeconds": 0
+      },
+      {
+        "wave": "triangle",
+        "startFrequency": 1820,
+        "endFrequency": 2420,
+        "durationSeconds": 0.05,
+        "volume": 0.1,
+        "delaySeconds": 0.08
+      },
+      {
+        "wave": "triangle",
+        "startFrequency": 1940,
+        "endFrequency": 2540,
+        "durationSeconds": 0.05,
+        "volume": 0.1,
+        "delaySeconds": 0.16
+      },
+      {
+        "wave": "triangle",
+        "startFrequency": 2060,
+        "endFrequency": 2660,
+        "durationSeconds": 0.05,
+        "volume": 0.1,
+        "delaySeconds": 0.24
       }
     ]
   },
@@ -1289,6 +1550,33 @@
     "fighter.jab-2": {
       "cast": "spell-cast-ki",
       "impact": "spell-hit-fist"
+    }
+  },
+  "animalSounds": {
+    "cat": {
+      "idle": [
+        "cat-meow"
+      ],
+      "petted": [
+        "cat-purr",
+        "cat-mew-happy"
+      ]
+    },
+    "dog": {
+      "idle": [
+        "dog-woof"
+      ],
+      "petted": [
+        "dog-yip-happy"
+      ]
+    },
+    "hen": {
+      "idle": [
+        "hen-cluck"
+      ],
+      "petted": [
+        "hen-cheep-happy"
+      ]
     }
   }
 }

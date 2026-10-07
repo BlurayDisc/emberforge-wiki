@@ -5,7 +5,7 @@ import { card, cardGrid, dataTable, definitionList, pageHeading, panel, siteLink
 import { formatDuration, formatMoney, formatPercent } from '../render/format';
 import { html, type Html } from '../render/html';
 import type { Page } from '../render/page';
-import { itemLink, recipeIngredientLinks, sortedForDisplay } from './equipment';
+import { describeBaseStats, itemLink, recipeIngredientLinks, sortedForDisplay } from './equipment';
 import { t } from '../i18n/ui';
 
 const crafterPath = (professionId: string) => `crafters/${professionId}.html`;
@@ -53,19 +53,23 @@ function craftingQuality(game: GameIndex) {
     ])}
     <ul>
       <li>${t('Every recipe has one fixed item level: the recipe level, never above the end of its tier. A hero needs that level to equip the item.')}</li>
-      <li>${t('Base stats grow by {percent} for each item level. Speed does not grow.', { percent: formatPercent(balanceNumber(d, 'items', 'baseStatGrowthPerItemLevel')) })}</li>
+      <li>${t('Only weapon damage grows with item level: a base item lists the damage at item level 1 and a flat gain for each next level. Other base stats stay the same.')}</li>
+      <li>${t('Each upgrade level adds the larger of 1 and {percent} of the main stat of the item (rounded).', { percent: formatPercent(balanceNumber(d, 'crafting', 'upgradeMainStatFractionPerLevel')) })}</li>
       <li>${t('Sell value = ((crafting cost + {perIngredient} copper for each main ingredient) x the quality factor + {perAffix} copper for each affix + {perItem} copper) x (1 + {upgrade} for each upgrade level). Crafting cost is the material value plus the crafter fee.', { perIngredient: balanceNumber(d, 'items', 'sellAddedValueCopperPerIngredient'), perAffix: balanceNumber(d, 'items', 'sellAddedValueCopperPerAffix'), perItem: balanceNumber(d, 'items', 'sellAddedValueCopperPerItem'), upgrade: formatPercent(balanceNumber(d, 'items', 'sellGrowthPerUpgradeLevel')) })}</li>
     </ul>`;
 }
 
 function craftingNumbers(game: GameIndex) {
   const d = game.data;
+  const experienceByLevel = balanceValue<number[]>(d, 'crafting', 'experienceToNextByLevel');
   return definitionList([
     [t('Level cap'), balanceNumber(d, 'crafting', 'maximumLevel')],
-    [t('Craft time'), t('{base}s plus {perLevel}s per required level', { base: balanceNumber(d, 'crafting', 'craftSecondsBase'), perLevel: balanceNumber(d, 'crafting', 'craftSecondsPerRequiredLevel') })],
+    [t('Craft time'), t('({base}s plus {perLevel}s per required level) x (1 + {factor} for each main material above {reference}, minus {factor} for each below)', { base: balanceNumber(d, 'crafting', 'craftSecondsBase'), perLevel: balanceNumber(d, 'crafting', 'craftSecondsPerRequiredLevel'), factor: balanceNumber(d, 'crafting', 'craftSecondsFactorPerMaterial'), reference: balanceNumber(d, 'crafting', 'craftSecondsReferenceMaterialCount') })],
     [t('Recipe level'), t('(tier - 1) x {levels} plus the item offset', { levels: balanceNumber(d, 'items', 'levelsPerBracket') })],
     [t('Crafter fee'), t('{base} plus {perLevel} copper per required level, paid for every item', { base: formatMoney(balanceNumber(d, 'crafting', 'craftFeeBaseCopper')), perLevel: balanceNumber(d, 'crafting', 'craftFeePerRequiredLevelCopper') })],
-    [t('Experience per craft'), t('{base} plus {perLevel} per required level', { base: balanceNumber(d, 'crafting', 'experienceBase'), perLevel: balanceNumber(d, 'crafting', 'experiencePerRequiredLevel') })],
+    [t('Experience per craft'), t('({base} plus {perLevel} per required level) for each unit of the main material. It falls by {gapStep} for each level the crafter is above the recipe, down to {minimum}.', { base: balanceNumber(d, 'crafting', 'experiencePerMaterialBase'), perLevel: balanceNumber(d, 'crafting', 'experiencePerMaterialPerRequiredLevel'), gapStep: formatPercent(balanceNumber(d, 'crafting', 'levelGapStep')), minimum: formatPercent(balanceNumber(d, 'crafting', 'levelGapFactorMinimum')) })],
+    [t('Experience to the next level'), t('Levels 1 to {count}: {list}. After that: {base} x level to the power {exponent}.', { count: experienceByLevel.length, list: experienceByLevel.join(t(', ')), base: balanceNumber(d, 'crafting', 'experienceToNextBase'), exponent: balanceNumber(d, 'crafting', 'experienceToNextExponent') })],
+    [t('Levels from one craft'), t('A crafter below level {level} gains at most {count} levels from one craft. The extra experience stays for the next craft.', { level: balanceNumber(d, 'crafting', 'levelsPerCraftCapBelowLevel'), count: balanceNumber(d, 'crafting', 'maximumLevelsPerCraft') })],
   ]);
 }
 
@@ -76,6 +80,7 @@ function crafterPage(game: GameIndex, text: GameText, professionId: string, prof
     text.slotName(recipe.base.slot),
     recipe.requiredCraftLevel,
     recipe.itemLevel,
+    describeBaseStats(text, recipe.base, recipe.itemLevel),
     recipeIngredientLinks(recipe),
     formatMoney(recipe.craftFeeCopper),
     formatDuration(recipe.craftSeconds),
@@ -87,7 +92,7 @@ function crafterPage(game: GameIndex, text: GameText, professionId: string, prof
   const body = html`
     ${pageHeading(professionName)}
     ${panel(t('Makes'), makes.length ? definitionList(makesBySlot) : html`<p class="muted">${t('Nothing yet.')}</p>`)}
-    ${panel(t('Recipes'), rows.length ? dataTable([t('Result'), t('Slot'), t('Crafter level'), t('Item level'), t('Ingredients'), t('Crafter fee'), t('Craft time')], rows, { sortable: true }) : html`<p class="muted">${t('No recipes yet.')}</p>`)}
+    ${panel(t('Recipes'), rows.length ? dataTable([t('Result'), t('Slot'), t('Crafter level'), t('Item level'), t('Base stats at item level'), t('Ingredients'), t('Crafter fee'), t('Craft time')], rows, { sortable: true }) : html`<p class="muted">${t('No recipes yet.')}</p>`)}
     ${panel(t('Crafting levels'), craftingNumbers(game))}`;
   return { path: crafterPath(professionId), title: professionName, section: 'crafters', body, searchKind: t('Crafter') };
 }

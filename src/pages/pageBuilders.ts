@@ -14,6 +14,7 @@ import { buildMaterialPages } from './materials';
 import { buildMechanicsPages } from './mechanics';
 import { buildMonsterPages } from './monsters';
 import { buildSpellPages } from './spells';
+import { buildStoryPages } from './story';
 import { buildTownPages } from './towns';
 
 // To add a wiki section: write a module that returns Page[], then list it here.
@@ -26,6 +27,7 @@ export const PAGE_BUILDERS: Array<(game: GameIndex, text: GameText) => Page[]> =
   buildTownPages,
   buildBuildingPages,
   buildCastlePages,
+  buildStoryPages,
   buildEquipmentPages,
   buildMaterialPages,
   buildCrafterPages,

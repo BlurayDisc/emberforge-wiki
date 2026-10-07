@@ -5,6 +5,5 @@
   "expansionBaseCostCopper": 100,
   "expansionCostGrowth": 1.5,
   "maximumExpansions": 14,
-  "warningFillFraction": 0.8,
-  "urgentFillFraction": 0.95
+  "fullFillFraction": 0.9
 }

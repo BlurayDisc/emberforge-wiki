@@ -11,7 +11,7 @@
     "id": "arcane",
     "kind": "prefix",
     "displayName": "Arcane",
-    "stat": "magic",
+    "stat": "intelligence",
     "minimumValue": 1,
     "maximumValue": 3
   },
@@ -32,26 +32,119 @@
     "maximumValue": 3
   },
   {
+    "id": "swift",
+    "kind": "prefix",
+    "displayName": "Swift",
+    "stat": "agility",
+    "minimumValue": 1,
+    "maximumValue": 3
+  },
+  {
+    "id": "vital",
+    "kind": "prefix",
+    "displayName": "Vital",
+    "stat": "hp",
+    "minimumValue": 15,
+    "maximumValue": 40
+  },
+  {
+    "id": "robust",
+    "kind": "prefix",
+    "displayName": "Robust",
+    "stat": "hp",
+    "minimumValue": 25,
+    "maximumValue": 60
+  },
+  {
+    "id": "keen",
+    "kind": "prefix",
+    "displayName": "Keen",
+    "stat": "criticalChance",
+    "minimumValue": 1,
+    "maximumValue": 3,
+    "scalesWithItemLevel": false
+  },
+  {
+    "id": "savage",
+    "kind": "prefix",
+    "displayName": "Savage",
+    "stat": "criticalDamage",
+    "minimumValue": 4,
+    "maximumValue": 12,
+    "scalesWithItemLevel": false
+  },
+  {
+    "id": "vampiric",
+    "kind": "prefix",
+    "displayName": "Vampiric",
+    "stat": "lifeSteal",
+    "minimumValue": 1,
+    "maximumValue": 4,
+    "scalesWithItemLevel": false
+  },
+  {
+    "id": "brisk",
+    "kind": "prefix",
+    "displayName": "Brisk",
+    "stat": "attackSpeed",
+    "minimumValue": 2,
+    "maximumValue": 4,
+    "scalesWithItemLevel": false
+  },
+  {
+    "id": "brutal",
+    "kind": "prefix",
+    "displayName": "Brutal",
+    "stat": "strength",
+    "minimumValue": 2,
+    "maximumValue": 4
+  },
+  {
+    "id": "wise",
+    "kind": "prefix",
+    "displayName": "Wise",
+    "stat": "intelligence",
+    "minimumValue": 2,
+    "maximumValue": 4
+  },
+  {
+    "id": "stalwart",
+    "kind": "prefix",
+    "displayName": "Stalwart",
+    "stat": "defence",
+    "minimumValue": 2,
+    "maximumValue": 4
+  },
+  {
+    "id": "blessed",
+    "kind": "prefix",
+    "displayName": "Blessed",
+    "stat": "resistance",
+    "minimumValue": 2,
+    "maximumValue": 4
+  },
+  {
     "id": "of-the-bear",
     "kind": "suffix",
     "displayName": "of the Bear",
     "stat": "hp",
-    "minimumValue": 4,
-    "maximumValue": 10
+    "minimumValue": 20,
+    "maximumValue": 50
   },
   {
     "id": "of-haste",
     "kind": "suffix",
     "displayName": "of Haste",
-    "stat": "speed",
-    "minimumValue": 1,
-    "maximumValue": 3
+    "stat": "attackSpeed",
+    "minimumValue": 2,
+    "maximumValue": 5,
+    "scalesWithItemLevel": false
   },
   {
     "id": "of-precision",
     "kind": "suffix",
     "displayName": "of Precision",
-    "stat": "skill",
+    "stat": "agility",
     "minimumValue": 1,
     "maximumValue": 3
   },
@@ -67,7 +160,7 @@
     "id": "of-insight",
     "kind": "suffix",
     "displayName": "of Insight",
-    "stat": "magic",
+    "stat": "intelligence",
     "minimumValue": 1,
     "maximumValue": 3
   },
@@ -92,8 +185,8 @@
     "kind": "suffix",
     "displayName": "of the Whale",
     "stat": "hp",
-    "minimumValue": 6,
-    "maximumValue": 14
+    "minimumValue": 30,
+    "maximumValue": 70
   },
   {
     "id": "of-the-titan",
@@ -107,7 +200,7 @@
     "id": "of-the-hawk",
     "kind": "suffix",
     "displayName": "of the Hawk",
-    "stat": "skill",
+    "stat": "agility",
     "minimumValue": 1,
     "maximumValue": 2
   },
@@ -115,15 +208,16 @@
     "id": "of-the-fox",
     "kind": "suffix",
     "displayName": "of the Fox",
-    "stat": "speed",
-    "minimumValue": 1,
-    "maximumValue": 2
+    "stat": "attackSpeed",
+    "minimumValue": 2,
+    "maximumValue": 4,
+    "scalesWithItemLevel": false
   },
   {
     "id": "of-the-sage",
     "kind": "suffix",
     "displayName": "of the Sage",
-    "stat": "magic",
+    "stat": "intelligence",
     "minimumValue": 2,
     "maximumValue": 4
   },

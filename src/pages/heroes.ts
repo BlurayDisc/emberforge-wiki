@@ -1,21 +1,20 @@
 import { balanceNumber } from '../data/balance';
+import { ATTRIBUTE_IDS, heroStatsAtLevel } from '../data/gameFormulas';
 import type { GameIndex } from '../data/gameIndex';
 import type { HeroClass } from '../data/gameData';
-import { capitalised, orderedStatIds, type GameText } from '../data/text';
+import { capitalised, type GameText } from '../data/text';
 import { pixelArt } from '../render/art';
 import { badge, card, cardGrid, commaList, dataTable, definitionList, jumpLinks, loreText, pageHeading, panel, siteLink } from '../render/components';
-import { formatNumber } from '../render/format';
+import { formatNumber, formatPercent } from '../render/format';
 import { armourWeightList, itemLink, sortedForDisplay } from './equipment';
 import { spellTable } from './spellTable';
 import { html, type Html } from '../render/html';
 import type { Page } from '../render/page';
 import { t, tHtml } from '../i18n/ui';
 
-const SAMPLE_LEVELS = [1, 10, 20, 50, 100];
-
-export function heroStatAtLevel(base: number, growthPerLevel: number, level: number): number {
-  return Math.round(base + growthPerLevel * (level - 1));
-}
+const SAMPLE_LEVELS = [1, 5, 10, 20, 50, 100];
+const STAT_IDS_OF_HERO = ['hp', 'damage', 'strength', 'agility', 'intelligence', 'defence', 'resistance', 'attackSeconds', 'criticalChance'] as const;
+const statValueText = (statId: string, value: number): string => (statId === 'criticalChance' ? `${formatNumber(value)}%` : formatNumber(value));
 
 const classPath = (heroClass: HeroClass) => `heroes/${heroClass.id}.html`;
 
@@ -36,7 +35,6 @@ function unlockDungeonName(game: GameIndex, heroClass: HeroClass): string | null
 }
 
 function indexPage(game: GameIndex, text: GameText): Page {
-  const statIds = orderedStatIds(game.data.classes.flatMap((heroClass) => Object.keys(heroClass.baseStats)));
   const body = html`
     ${pageHeading(t('Heroes'), t('Your company is made of heroes. Each class fights in its own way.'))}
     ${jumpLinks([
@@ -47,8 +45,11 @@ function indexPage(game: GameIndex, text: GameText): Page {
     ${panel(t('Classes'), cardGrid(game.data.classes.map((heroClass) => heroCard(game, text, heroClass))), { anchor: 'classes' })}
     ${panel(t('Promotions'), promotionTrees(game), { anchor: 'promotions' })}
     ${panel(t('Level 1 stats side by side'), dataTable(
-      [t('Class'), ...statIds.map((statId) => text.statName(statId))],
-      game.data.classes.map((heroClass) => [siteLink(classPath(heroClass), heroClass.displayName), ...statIds.map((statId) => heroClass.baseStats[statId] ?? 0)]),
+      [t('Class'), ...STAT_IDS_OF_HERO.map((statId) => text.statName(statId))],
+      game.data.classes.map((heroClass) => {
+        const stats = heroStatsAtLevel(game.data, heroClass, 1);
+        return [siteLink(classPath(heroClass), heroClass.displayName), ...STAT_IDS_OF_HERO.map((statId) => statValueText(statId, stats[statId]))];
+      }),
       { sortable: true }), { anchor: 'stats' })}
     ${panel(t('Hero names'), html`<p>${t('New heroes get a name from this list.')}</p><p>${game.data.heroNames.join(t(', '))}</p>`)}`;
   return { path: 'heroes/index.html', title: t('Heroes'), section: 'heroes', body };
@@ -86,46 +87,46 @@ function promotionTrees(game: GameIndex): Html {
   return html`${promotionNote()}${classesWithPromotions.map((heroClass) => html`<h3 class="group-heading">${heroClass.displayName}</h3>${promotionTree(game, heroClass)}`)}`;
 }
 
-const ATTRIBUTE_IDS = ['strength', 'skill', 'magic'];
-const MAIN_STAT_IDS = ['hp', 'defence', 'resistance', 'speed'];
-
-// The base is the value at level 1. A hero gains the per level number with each level (same formula as heroStatAtLevel).
+// The start value and the gain per level of an attribute. The value at a level is round(start + gain x (level - 1)).
 function attributePanel(game: GameIndex, text: GameText, heroClass: HeroClass): Html {
   const levelCap = balanceNumber(game.data, 'progression', 'levelCap');
-  const statRow = (statId: string) => {
-    const isPrimary = statId === heroClass.primaryAttribute;
-    const name = isPrimary ? html`${text.statName(statId)} <span class="muted">(${t('primary')})</span>` : html`${text.statName(statId)}`;
-    return [
-      name,
-      formatNumber(heroClass.baseStats[statId] ?? 0),
-      `+${formatNumber(heroClass.growthPerLevel[statId] ?? 0)}`,
-      heroStatAtLevel(heroClass.baseStats[statId] ?? 0, heroClass.growthPerLevel[statId] ?? 0, levelCap),
-    ];
-  };
-  const headers = (firstColumn: string) => [firstColumn, t('Base (level 1)'), t('Gain per level'), t('At level {level}', { level: levelCap })];
+  const atCap = heroStatsAtLevel(game.data, heroClass, levelCap);
+  const attributeRows = ATTRIBUTE_IDS.map((attributeId) => {
+    const isPrimary = attributeId === heroClass.primaryAttribute;
+    const name = isPrimary ? html`${text.statName(attributeId)} <span class="muted">(${t('primary')})</span>` : html`${text.statName(attributeId)}`;
+    const { start, gainPerLevel } = heroClass.attributes[attributeId];
+    return [name, formatNumber(start), `+${formatNumber(gainPerLevel)}`, atCap[attributeId]];
+  });
+  const damageStat = text.statName(heroClass.attackKind === 'magic' ? 'magicalDamage' : 'physicalDamage');
   return html`
-    <p>${t('The {attribute} of this class is its primary attribute. Each point adds 1 {damage}.', { attribute: text.statName(heroClass.primaryAttribute), damage: text.statName(heroClass.attackKind === 'magic' ? 'magicalDamage' : 'physicalDamage') })}</p>
-    ${dataTable(headers(t('Attribute')), ATTRIBUTE_IDS.map(statRow))}
-    ${dataTable(headers(t('Main stat')), MAIN_STAT_IDS.map(statRow))}
-    <p class="muted">${tHtml('Value at a level = base + gain x (level - 1). See {link} for what each attribute does.', { link: siteLink('mechanics/index.html#attributes', t('Mechanics')) })}</p>`;
+    <p>${t('The {attribute} of this class is its primary attribute. Each point adds 1 {damage}.', { attribute: text.statName(heroClass.primaryAttribute), damage: damageStat })}</p>
+    ${dataTable([t('Attribute'), t('Start (level 1)'), t('Gain per level'), t('At level {level}', { level: levelCap })], attributeRows)}
+    ${definitionList([
+      [text.statName('hp'), t('{base} + {perStrength} x {strength}', { base: heroClass.baseHp, perStrength: balanceNumber(game.data, 'hero-stats', 'hpPerStrength'), strength: text.statName('strength') })],
+      [text.statName('damage'), t('{base} + {attribute} + weapon', { base: heroClass.baseDamage, attribute: text.statName(heroClass.primaryAttribute) })],
+      [text.statName('defence'), t('{base}. No attribute and no level adds to it.', { base: heroClass.baseDefence })],
+      [text.statName('resistance'), t('{base} + {perIntelligence} x {intelligence}', { base: heroClass.baseResistance, perIntelligence: balanceNumber(game.data, 'hero-stats', 'resistancePerIntelligence'), intelligence: text.statName('intelligence') })],
+      [text.statName('attackSeconds'), t('{base}s divided by (1 + {agility} x {perAgility} + gear)', { base: heroClass.baseAttackSeconds, agility: text.statName('agility'), perAgility: balanceNumber(game.data, 'hero-stats', 'attackSpeedBonusPerAgility') })],
+      [text.statName('criticalChance'), t('{base} + {bonus} for this class + gear', { base: formatPercent(balanceNumber(game.data, 'battle', 'baseCriticalChance')), bonus: formatPercent(heroClass.criticalChanceBonus) })],
+    ])}
+    <p class="muted">${tHtml('See {link} for what each attribute does.', { link: siteLink('mechanics/index.html#attributes', t('Mechanics')) })}</p>`;
 }
 
-function levelCalculator(game: GameIndex, text: GameText, heroClass: HeroClass): ReturnType<typeof html> {
+// The page holds the stats of every level, so the slider needs no formula in the browser.
+function levelCalculator(game: GameIndex, text: GameText, heroClass: HeroClass): Html {
   const levelCap = balanceNumber(game.data, 'progression', 'levelCap');
-  const statIds = orderedStatIds(Object.keys(heroClass.baseStats));
-  const sampleLevels = [...SAMPLE_LEVELS.filter((level) => level <= levelCap)];
-  const statRows = statIds.map((statId) => [
-    text.statName(statId),
-    ...sampleLevels.map((level) => heroStatAtLevel(heroClass.baseStats[statId] ?? 0, heroClass.growthPerLevel[statId] ?? 0, level)),
-    formatNumber(heroClass.growthPerLevel[statId] ?? 0),
-  ]);
-  const calculatorData = JSON.stringify({ base: heroClass.baseStats, growth: heroClass.growthPerLevel });
+  const sampleLevels = [...new Set([...SAMPLE_LEVELS.filter((level) => level <= levelCap), levelCap])];
+  const statsOfLevel = Object.fromEntries(Array.from({ length: levelCap }, (_, index) => {
+    const stats = heroStatsAtLevel(game.data, heroClass, index + 1);
+    return [index + 1, Object.fromEntries(STAT_IDS_OF_HERO.map((statId) => [statId, statValueText(statId, stats[statId])]))];
+  }));
+  const statRows = STAT_IDS_OF_HERO.map((statId) => [text.statName(statId), ...sampleLevels.map((level) => statsOfLevel[level]![statId]!)]);
   return html`
-    ${dataTable([t('Stat'), ...sampleLevels.map((level) => t('Lv {level}', { level })), t('Growth per level')], statRows)}
-    <div class="level-calc" data-calc='${calculatorData}'>
+    ${dataTable([t('Stat'), ...sampleLevels.map((level) => t('Lv {level}', { level }))], statRows)}
+    <div class="level-calc" data-calc='${JSON.stringify(statsOfLevel)}'>
       <label>${t('Pick a level:')} <input type="range" min="1" max="${levelCap}" value="1" data-calc-level> <strong data-calc-level-label>1</strong></label>
-      <ul class="calc-output">${statIds.map((statId) => html`<li><span>${text.statName(statId)}</span><strong data-calc-stat="${statId}">${heroClass.baseStats[statId] ?? 0}</strong></li>`)}</ul>
-      <p class="muted">${t('Stats are before gear. Formula: base + growth x (level - 1), rounded.')}</p>
+      <ul class="calc-output">${STAT_IDS_OF_HERO.map((statId) => html`<li><span>${text.statName(statId)}</span><strong data-calc-stat="${statId}">${statsOfLevel[1]![statId]}</strong></li>`)}</ul>
+      <p class="muted">${t('Stats are before gear. Weapon damage is not included.')}</p>
     </div>`;
 }
 
@@ -156,6 +157,7 @@ function classPage(game: GameIndex, text: GameText, heroClass: HeroClass): Page 
       [t('Armour'), capitalised(armourWeightList(text, heroClass))],
       [t('Resource'), text.require(`resource.${heroClass.resourceId}`)],
       [t('Recovery rate'), `${heroClass.recoveryRate}x`],
+      [t('Balance status'), heroClass.balanceStatus === 'placeholder' ? t('Placeholder numbers, waiting for a balance pass') : t('Balanced')],
     ]))}
     ${panel(t('Attributes'), attributePanel(game, text, heroClass), { anchor: 'attributes' })}
     ${panel(t('Stats by level'), levelCalculator(game, text, heroClass))}

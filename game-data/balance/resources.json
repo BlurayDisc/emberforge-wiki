@@ -1,39 +1,27 @@
 {
   "mana": {
-    "maximumBase": 8,
-    "maximumPerLevel": 3.4,
-    "attribute": "magic",
-    "maximumPerAttributePoint": 0.6,
+    "maximum": 30,
     "startFraction": 1,
-    "regenFractionPerSecond": 0.026,
+    "regenFractionPerSecond": 0.018,
     "gainFractionPerHitDealt": 0,
     "gainFractionPerHitTaken": 0
   },
   "stamina": {
-    "maximumBase": 8,
-    "maximumPerLevel": 3,
-    "attribute": "strength",
-    "maximumPerAttributePoint": 0.5,
+    "maximum": 28,
     "startFraction": 1,
-    "regenFractionPerSecond": 0.034,
+    "regenFractionPerSecond": 0.022,
     "gainFractionPerHitDealt": 0,
     "gainFractionPerHitTaken": 0
   },
   "hatred": {
-    "maximumBase": 10,
-    "maximumPerLevel": 3,
-    "attribute": "skill",
-    "maximumPerAttributePoint": 1,
+    "maximum": 24,
     "startFraction": 0.5,
     "regenFractionPerSecond": 0.02,
     "gainFractionPerHitDealt": 0.04,
     "gainFractionPerHitTaken": 0
   },
   "rage": {
-    "maximumBase": 10,
-    "maximumPerLevel": 3,
-    "attribute": "strength",
-    "maximumPerAttributePoint": 1,
+    "maximum": 26,
     "startFraction": 0,
     "regenFractionPerSecond": 0,
     "gainFractionPerHitDealt": 0.08,

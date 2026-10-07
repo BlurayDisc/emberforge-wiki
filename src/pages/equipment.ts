@@ -1,4 +1,5 @@
 import { balanceNumber, balanceValue } from '../data/balance';
+import { baseStatAtItemLevel, PERCENT_STAT_IDS } from '../data/gameFormulas';
 import type { BaseItem, HeroClass, Material } from '../data/gameData';
 import type { GameIndex, Recipe } from '../data/gameIndex';
 import { orderedStatIds, type GameText } from '../data/text';
@@ -23,9 +24,15 @@ export function armourWeightList(text: GameText, heroClass: HeroClass): string {
   return heroClass.armourWeights.map((weight) => text.armourWeightName(weight).toLowerCase()).join(t(' or '));
 }
 
+// A percent stat (attack speed, critical chance, ...) is a number of percent points.
+export function statBonusText(text: GameText, statId: string, value: number): string {
+  const signedValue = `${value < 0 ? '-' : '+'}${Math.abs(value)}${PERCENT_STAT_IDS.includes(statId) ? '%' : ''}`;
+  return t('{value} {stat}', { value: signedValue, stat: text.statName(statId) });
+}
+
 export function setBonusText(text: GameText, material: Material): string {
   const bonus = material.setBonus!;
-  return t('+{value} {stat}', { value: bonus.value, stat: text.statName(bonus.stat) });
+  return statBonusText(text, bonus.stat, bonus.value);
 }
 
 export function itemPicture(game: GameIndex, base: BaseItem, scale: number): Html | null {
@@ -37,9 +44,14 @@ export function itemLink(game: GameIndex, base: BaseItem): Html {
   return iconLink(itemPath(base), base.name, itemPicture(game, base, 2));
 }
 
-export function describeBaseStats(text: GameText, base: BaseItem): string {
+// A stat with a growth is shown at the given item level. Without an item level, it is shown at item level 1.
+export function describeBaseStats(text: GameText, base: BaseItem, itemLevel = 1): string {
   const statIds = orderedStatIds(Object.keys(base.baseStats));
-  return statIds.map((statId) => t('+{value} {stat}', { value: base.baseStats[statId] ?? 0, stat: text.statName(statId) })).join(t(', ')) || t('none');
+  return statIds.map((statId) => statBonusText(text, statId, baseStatAtItemLevel(base, statId, itemLevel))).join(t(', ')) || t('none');
+}
+
+function growthText(text: GameText, base: BaseItem): string {
+  return Object.entries(base.growthPerItemLevel ?? {}).map(([statId, growth]) => statBonusText(text, statId, growth)).join(t(', '));
 }
 
 export function recipeIngredientLinks(recipe: Recipe) {
@@ -58,12 +70,31 @@ function itemRows(game: GameIndex, text: GameText, items: BaseItem[]) {
 }
 
 const itemTableHeaders = () => [t('Item'), t('Slot'), t('Backpack size'), t('Base stats'), t('Crafted by'), t('Level offset')];
+const sortableItemTable = (headers: Array<string | Html>, rows: Array<Array<string | number | Html>>) => dataTable(headers, rows, { sortable: true });
 
 function classPanel(game: GameIndex, text: GameText, heroClass: HeroClass, items: BaseItem[]): Html {
   const heading = html`${pixelArt('heroes', heroClass.id, heroClass.displayName, 2)} ${siteLink(`heroes/${heroClass.id}.html`, heroClass.displayName)}`;
   return panel(heading, html`
     <p class="muted">${heroClass.roleDescription} ${t('Wears {weight} armour.', { weight: armourWeightList(text, heroClass) })}</p>
-    ${dataTable(itemTableHeaders(), itemRows(game, text, items))}`, { anchor: `class-${heroClass.id}`, isFilterGroup: true });
+    ${sortableItemTable(itemTableHeaders(), itemRows(game, text, items))}`, { anchor: `class-${heroClass.id}`, isFilterGroup: true });
+}
+
+const slotAnchor = (slot: string) => `slot-${slot}`;
+
+// One panel for each slot (boots, legs, ...). The table lists every class that can wear the item, so a player can compare all items of a slot.
+function slotPanels(game: GameIndex, text: GameText): Html[] {
+  const slots = [...new Set(game.data.baseItems.map((base) => base.slot))].sort((a, b) => slotRank(a) - slotRank(b) || a.localeCompare(b));
+  return slots.map((slot) => {
+    const rows = sortedForDisplay(game.data.baseItems.filter((base) => base.slot === slot)).map((base) => [
+      itemLink(game, base),
+      commaList(game.classesAllowedForItem(base).map((heroClass) => siteLink(`heroes/${heroClass.id}.html`, heroClass.displayName))),
+      `${base.width}x${base.height}`,
+      describeBaseStats(text, base),
+      game.data.professions[base.profession] ?? base.profession,
+      base.craftLevelOffset,
+    ]);
+    return panel(text.slotName(slot), sortableItemTable([t('Item'), t('Worn by'), t('Backpack size'), t('Base stats'), t('Crafted by'), t('Level offset')], rows), { anchor: slotAnchor(slot), isFilterGroup: true });
+  });
 }
 
 function indexPage(game: GameIndex, text: GameText): Page {
@@ -73,19 +104,23 @@ function indexPage(game: GameIndex, text: GameText): Page {
   const itemsForNoClass = game.data.baseItems.filter((base) => wearerCount(base) === 0);
   const classPanels = game.data.classes.map((heroClass) =>
     classPanel(game, text, heroClass, game.itemsAllowedForClass(heroClass).filter((base) => !itemsForEveryClass.includes(base))));
+  const slotIds = [...new Set(game.data.baseItems.map((base) => base.slot))].sort((a, b) => slotRank(a) - slotRank(b) || a.localeCompare(b));
   const jumpEntries = [
     ...game.data.classes.map((heroClass) => ({ anchor: `class-${heroClass.id}`, label: heroClass.displayName })),
     ...(itemsForEveryClass.length ? [{ anchor: 'all-classes', label: t('All classes') }] : []),
     ...(itemsForNoClass.length ? [{ anchor: 'no-class', label: t('No class yet') }] : []),
+    ...slotIds.map((slot) => ({ anchor: slotAnchor(slot), label: text.slotName(slot) })),
   ];
   const slotCount = new Set(game.data.baseItems.map((base) => base.slot)).size;
   const body = html`
-    ${pageHeading(t('Equipment'), t('{items} item types in {slots} slots, grouped by the class that can use them. Crafted gear gets stronger with item level.', { items: game.data.baseItems.length, slots: slotCount }))}
+    ${pageHeading(t('Equipment'), t('{items} item types in {slots} slots, grouped by the class that can use them, and then by slot. Click a column title to sort a table.', { items: game.data.baseItems.length, slots: slotCount }))}
     ${filterBox(t('Filter equipment...'))}
     ${jumpLinks(jumpEntries)}
     ${classPanels}
-    ${itemsForEveryClass.length ? panel(t('All classes'), dataTable(itemTableHeaders(), itemRows(game, text, itemsForEveryClass)), { anchor: 'all-classes', isFilterGroup: true }) : null}
-    ${itemsForNoClass.length ? panel(t('No class can use these yet'), dataTable(itemTableHeaders(), itemRows(game, text, itemsForNoClass)), { anchor: 'no-class', isFilterGroup: true }) : null}`;
+    ${itemsForEveryClass.length ? panel(t('All classes'), sortableItemTable(itemTableHeaders(), itemRows(game, text, itemsForEveryClass)), { anchor: 'all-classes', isFilterGroup: true }) : null}
+    ${itemsForNoClass.length ? panel(t('No class can use these yet'), sortableItemTable(itemTableHeaders(), itemRows(game, text, itemsForNoClass)), { anchor: 'no-class', isFilterGroup: true }) : null}
+    <h2 class="group-heading">${t('Items by slot')}</h2>
+    ${slotPanels(game, text)}`;
   return { path: 'equipment/index.html', title: t('Equipment'), section: 'equipment', body };
 }
 
@@ -95,6 +130,7 @@ function recipeRows(game: GameIndex, text: GameText, base: BaseItem) {
     t('Tier {tier}', { tier: recipe.tier }),
     recipe.requiredCraftLevel,
     recipe.itemLevel,
+    describeBaseStats(text, base, recipe.itemLevel),
     recipeIngredientLinks(recipe),
     formatMoney(recipe.craftFeeCopper),
     formatDuration(recipe.craftSeconds),
@@ -123,12 +159,14 @@ function itemPage(game: GameIndex, text: GameText, base: BaseItem): Page {
         [t('Gear type'), text.gearTypeName(base.gearType)],
         [t('Backpack size'), `${base.width} x ${base.height}`],
         [t('Base stats'), describeBaseStats(text, base)],
+        ...(base.growthPerItemLevel ? [[t('Growth per item level'), growthText(text, base)] as [string, string]] : []),
+        [t('Main stat'), text.statName(base.mainStat)],
         [t('Stat roll spread'), t('plus or minus {percent}%', { percent: Math.round(spreadFraction * 100) })],
-        ...(unscaledStatsOfItem.length ? [[t('Does not grow with item level'), commaList(unscaledStatsOfItem.map((statId) => html`${text.statName(statId)}`))] as [string, Html]] : []),
+        ...(unscaledStatsOfItem.length ? [[t('Does not change with item level'), commaList(unscaledStatsOfItem.map((statId) => html`${text.statName(statId)}`))] as [string, Html]] : []),
         [t('Worn by'), commaList(wearers.map((heroClass) => siteLink(`heroes/${heroClass.id}.html`, heroClass.displayName)))],
       ])}`)}
-    ${line.length > 1 ? panel(t('Weapon line'), html`<p>${t('Items of the same type and size, from the first step to the last. The step is the crafter level offset.')}</p>
-      ${dataTable([t('Item'), t('Base stats'), t('Level offset')], line.map((step) => [itemLink(game, step), describeBaseStats(text, step), step.craftLevelOffset]))}`) : null}
+    ${line.length > 1 ? panel(t('Weapon line'), html`<p>${t('Items of the same type and size, from the first step to the last. The step is the crafter level offset. Base stats are shown at the first item level of each step.')}</p>
+      ${dataTable([t('Item'), t('Base stats'), t('Level offset')], line.map((step) => [itemLink(game, step), describeBaseStats(text, step, step.craftLevelOffset), step.craftLevelOffset]))}`) : null}
     ${panel(t('Crafting'), definitionList([
       [t('Crafter'), siteLink(`crafters/${base.profession}.html`, game.data.professions[base.profession] ?? base.profession)],
       [t('Main material'), text.categoryName(base.mainCategory)],
@@ -136,7 +174,7 @@ function itemPage(game: GameIndex, text: GameText, base: BaseItem): Page {
       [t('Crafter level offset'), `+${base.craftLevelOffset}`],
     ]))}
     ${panel(t('Recipes'), recipeRows(game, text, base).length
-      ? dataTable([t('Result'), t('Tier'), t('Crafter level'), t('Item level'), t('Ingredients'), t('Crafter fee'), t('Craft time')], recipeRows(game, text, base))
+      ? dataTable([t('Result'), t('Tier'), t('Crafter level'), t('Item level'), t('Base stats at item level'), t('Ingredients'), t('Crafter fee'), t('Craft time')], recipeRows(game, text, base))
       : html`<p class="muted">${t('No recipe yet: the needed materials are not in the game data.')}</p>`)}`;
   return { path: itemPath(base), title: base.name, section: 'equipment', body, searchKind: t('Equipment'), searchKeywords: `${base.slot} ${base.gearType} ${wearers.map((heroClass) => heroClass.displayName).join(' ')}` };
 }

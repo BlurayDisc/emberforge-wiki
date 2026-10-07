@@ -2,7 +2,7 @@
   {
     "id": "warrior",
     "unlockAfterDungeonId": null,
-    "recoveryRate": 1.0,
+    "recoveryRate": 1,
     "displayName": "Warrior",
     "roleDescription": "Front-line melee fighter with high HP and Defence.",
     "attackKind": "physical",
@@ -14,17 +14,27 @@
     "weaponTypes": ["sword", "axe"],
     "offHandTypes": ["shield"],
     "armourWeights": ["heavy"],
-    "baseStats": { "hp": 54, "strength": 9, "magic": 1, "skill": 6, "speed": 100, "defence": 7, "resistance": 2 },
-    "growthPerLevel": { "hp": 10.4, "strength": 1.9, "magic": 0.2, "skill": 0.8, "speed": 0.1, "defence": 3.4, "resistance": 0.6 }
+    "balanceStatus": "baseline",
+    "attributes": {
+      "strength": { "start": 26, "gainPerLevel": 2.2 },
+      "agility": { "start": 18, "gainPerLevel": 1.9 },
+      "intelligence": { "start": 8, "gainPerLevel": 0.9 }
+    },
+    "baseHp": 213,
+    "baseDamage": 13,
+    "baseDefence": 5,
+    "baseResistance": 3,
+    "baseAttackSeconds": 1.65,
+    "criticalChanceBonus": 0
   },
   {
     "id": "archer",
     "unlockAfterDungeonId": null,
-    "recoveryRate": 1.0,
+    "recoveryRate": 1,
     "displayName": "Archer",
     "roleDescription": "Ranged physical damage. Fast and accurate.",
     "attackKind": "physical",
-    "primaryAttribute": "skill",
+    "primaryAttribute": "agility",
     "damageVarianceFraction": 0.2,
     "behavior": "fighter",
     "resourceId": "stamina",
@@ -32,8 +42,18 @@
     "weaponTypes": ["bow"],
     "offHandTypes": ["quiver"],
     "armourWeights": ["medium"],
-    "baseStats": { "hp": 42, "strength": 9, "magic": 1, "skill": 7.26, "speed": 108, "defence": 1, "resistance": 3 },
-    "growthPerLevel": { "hp": 7.7, "strength": 1, "magic": 0.2, "skill": 2.62, "speed": 0.1, "defence": 0.1, "resistance": 0.7 }
+    "balanceStatus": "baseline",
+    "attributes": {
+      "strength": { "start": 18, "gainPerLevel": 2.1 },
+      "agility": { "start": 23, "gainPerLevel": 2.6 },
+      "intelligence": { "start": 11, "gainPerLevel": 1.2 }
+    },
+    "baseHp": 207,
+    "baseDamage": 13,
+    "baseDefence": 3,
+    "baseResistance": 4,
+    "baseAttackSeconds": 1.5,
+    "criticalChanceBonus": 0
   },
   {
     "id": "mage",
@@ -42,7 +62,7 @@
     "displayName": "Mage",
     "roleDescription": "Ranged magic damage. Fragile.",
     "attackKind": "magic",
-    "primaryAttribute": "magic",
+    "primaryAttribute": "intelligence",
     "damageVarianceFraction": 0.2,
     "behavior": "fighter",
     "resourceId": "mana",
@@ -50,8 +70,18 @@
     "weaponTypes": ["staff", "wand"],
     "offHandTypes": ["tome"],
     "armourWeights": ["light"],
-    "baseStats": { "hp": 42, "strength": 1, "magic": 12, "skill": 6, "speed": 96, "defence": 3, "resistance": 6 },
-    "growthPerLevel": { "hp": 8.4, "strength": 0.2, "magic": 2.7, "skill": 0.8, "speed": 0.1, "defence": 0.6, "resistance": 1.2 }
+    "balanceStatus": "baseline",
+    "attributes": {
+      "strength": { "start": 16, "gainPerLevel": 2.1 },
+      "agility": { "start": 12, "gainPerLevel": 1.2 },
+      "intelligence": { "start": 23, "gainPerLevel": 2.6 }
+    },
+    "baseHp": 196,
+    "baseDamage": 21,
+    "baseDefence": 1,
+    "baseResistance": 4,
+    "baseAttackSeconds": 1.7,
+    "criticalChanceBonus": 0
   },
   {
     "id": "priest",
@@ -60,7 +90,7 @@
     "displayName": "Priest",
     "roleDescription": "Heals allies below half health.",
     "attackKind": "magic",
-    "primaryAttribute": "magic",
+    "primaryAttribute": "intelligence",
     "damageVarianceFraction": 0.15,
     "behavior": "healer",
     "resourceId": "mana",
@@ -68,8 +98,18 @@
     "weaponTypes": ["mace", "wand"],
     "offHandTypes": ["tome"],
     "armourWeights": ["light"],
-    "baseStats": { "hp": 38, "strength": 1, "magic": 9, "skill": 5, "speed": 98, "defence": 3, "resistance": 7 },
-    "growthPerLevel": { "hp": 7, "strength": 0.2, "magic": 1, "skill": 0.6, "speed": 0.1, "defence": 0.6, "resistance": 1.3 }
+    "balanceStatus": "placeholder",
+    "attributes": {
+      "strength": { "start": 16, "gainPerLevel": 2 },
+      "agility": { "start": 11, "gainPerLevel": 1.1 },
+      "intelligence": { "start": 24, "gainPerLevel": 2.5 }
+    },
+    "baseHp": 199,
+    "baseDamage": 17,
+    "baseDefence": 2,
+    "baseResistance": 8,
+    "baseAttackSeconds": 1.75,
+    "criticalChanceBonus": 0
   },
   {
     "id": "thief",
@@ -78,7 +118,7 @@
     "displayName": "Thief",
     "roleDescription": "Very fast melee attacker with high critical chance.",
     "attackKind": "physical",
-    "primaryAttribute": "skill",
+    "primaryAttribute": "agility",
     "damageVarianceFraction": 0.18,
     "behavior": "fighter",
     "resourceId": "hatred",
@@ -86,13 +126,23 @@
     "weaponTypes": ["dagger"],
     "offHandTypes": ["dagger"],
     "armourWeights": ["medium"],
-    "baseStats": { "hp": 38, "strength": 12, "magic": 1, "skill": 7.26, "speed": 125, "defence": 1, "resistance": 3 },
-    "growthPerLevel": { "hp": 6.9, "strength": 1.2, "magic": 0.2, "skill": 2.21, "speed": 0.2, "defence": 0.1, "resistance": 0.6 }
+    "balanceStatus": "placeholder",
+    "attributes": {
+      "strength": { "start": 17, "gainPerLevel": 1.9 },
+      "agility": { "start": 24, "gainPerLevel": 2.8 },
+      "intelligence": { "start": 10, "gainPerLevel": 1 }
+    },
+    "baseHp": 203,
+    "baseDamage": 13,
+    "baseDefence": 3,
+    "baseResistance": 3,
+    "baseAttackSeconds": 1.3,
+    "criticalChanceBonus": 0.02
   },
   {
     "id": "barbarian",
     "unlockAfterDungeonId": "goblin-chief-lair",
-    "recoveryRate": 1.0,
+    "recoveryRate": 1,
     "displayName": "Barbarian",
     "roleDescription": "Two-handed melee brute. Huge damage, no shield.",
     "attackKind": "physical",
@@ -104,8 +154,18 @@
     "weaponTypes": ["greataxe", "maul"],
     "offHandTypes": [],
     "armourWeights": ["medium"],
-    "baseStats": { "hp": 53, "strength": 10, "magic": 1, "skill": 5, "speed": 98, "defence": 3, "resistance": 2 },
-    "growthPerLevel": { "hp": 11.2, "strength": 2.65, "magic": 0.2, "skill": 0.7, "speed": 0.1, "defence": 0.6, "resistance": 0.5 }
+    "balanceStatus": "placeholder",
+    "attributes": {
+      "strength": { "start": 28, "gainPerLevel": 2.6 },
+      "agility": { "start": 16, "gainPerLevel": 1.7 },
+      "intelligence": { "start": 7, "gainPerLevel": 0.8 }
+    },
+    "baseHp": 211,
+    "baseDamage": 16,
+    "baseDefence": 2,
+    "baseResistance": 2,
+    "baseAttackSeconds": 1.7,
+    "criticalChanceBonus": 0
   },
   {
     "id": "fighter",
@@ -122,7 +182,17 @@
     "weaponTypes": ["knuckles"],
     "offHandTypes": ["knuckles"],
     "armourWeights": ["medium"],
-    "baseStats": { "hp": 48, "strength": 8, "magic": 1, "skill": 10, "speed": 118, "defence": 3, "resistance": 3 },
-    "growthPerLevel": { "hp": 10, "strength": 2.3, "magic": 0.2, "skill": 1.1, "speed": 0.15, "defence": 0.6, "resistance": 0.6 }
+    "balanceStatus": "placeholder",
+    "attributes": {
+      "strength": { "start": 22, "gainPerLevel": 2.2 },
+      "agility": { "start": 21, "gainPerLevel": 2.3 },
+      "intelligence": { "start": 8, "gainPerLevel": 0.9 }
+    },
+    "baseHp": 209,
+    "baseDamage": 13,
+    "baseDefence": 4,
+    "baseResistance": 3,
+    "baseAttackSeconds": 1.5,
+    "criticalChanceBonus": 0
   }
 ]

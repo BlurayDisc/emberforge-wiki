@@ -103,12 +103,6 @@
             "The balance scenarios did not run for this version, so the numbers are not checked.",
             "The new pictures and sounds are not checked by eye and ear yet."
           ]
-        },
-        {
-          "heading": "Wiki",
-          "items": [
-            "The game data of this wiki is from v0.4.1. Pages do not show the v0.4.2 and v0.5 numbers yet."
-          ]
         }
       ]
     }

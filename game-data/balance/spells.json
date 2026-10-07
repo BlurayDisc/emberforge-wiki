@@ -6,5 +6,6 @@
   ],
   "ultimateCostFactor": 2,
   "ultimateOpeningDelaySeconds": 15,
-  "healCastBelowHealthFraction": 0.6
+  "healCastBelowHealthFraction": 0.6,
+  "defaultCastSeconds": 0.8
 }

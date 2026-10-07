@@ -4,10 +4,11 @@ import type { GameIndex } from '../data/gameIndex';
 import type { GameText } from '../data/text';
 import { pixelArt } from '../render/art';
 import { commaList, dataTable, definitionList, filterBox, iconLink, jumpLinks, loreText, pageHeading, panel, siteLink, subheading } from '../render/components';
-import { formatMoney, formatPercent, formatQuantityRange } from '../render/format';
+import { formatMoney, formatPercent } from '../render/format';
 import { html, type Html } from '../render/html';
 import type { Page } from '../render/page';
 import { itemLink, setBonusText } from './equipment';
+import { dropAmountText } from './monsters';
 import { t } from '../i18n/ui';
 
 const commaListText = (names: string[]): string => names.join(t(', '));
@@ -54,7 +55,7 @@ function materialPage(game: GameIndex, text: GameText, material: Material): Page
   const usedIn = [...new Map(usingRecipes.map((recipe) => [recipe.base.id, recipe])).values()];
   const dropRows = droppedBy.map((monster) => {
     const drop = monster.drops.find((candidate) => candidate.materialId === material.id)!;
-    return [siteLink(`monsters/${monster.id}.html`, monster.name), t(monster.rank), formatPercent(drop.chance), formatQuantityRange(drop.minQuantity, drop.maxQuantity)];
+    return [siteLink(`monsters/${monster.id}.html`, monster.name), t(monster.rank), formatPercent(drop.chance), dropAmountText(drop)];
   });
   const body = html`
     ${pageHeading(material.name, t('Tier {tier} {category}', { tier: material.tier, category: text.categoryName(material.category).toLowerCase() }))}

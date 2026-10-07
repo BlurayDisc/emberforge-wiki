@@ -10,8 +10,11 @@
     "mainCategory": "ore",
     "mainIngredientQuantity": 2,
     "baseStats": {
-      "physicalDamage": 5,
-      "skill": 1
+      "physicalDamage": 7
+    },
+    "mainStat": "physicalDamage",
+    "growthPerItemLevel": {
+      "physicalDamage": 1.6
     },
     "armourWeight": null,
     "craftLevelOffset": 1
@@ -25,9 +28,13 @@
     "height": 3,
     "profession": "weaponsmithing",
     "mainCategory": "ore",
-    "mainIngredientQuantity": 3,
+    "mainIngredientQuantity": 2,
     "baseStats": {
-      "physicalDamage": 6
+      "physicalDamage": 7
+    },
+    "mainStat": "physicalDamage",
+    "growthPerItemLevel": {
+      "physicalDamage": 1.5
     },
     "armourWeight": null,
     "craftLevelOffset": 3
@@ -43,8 +50,12 @@
     "mainCategory": "ore",
     "mainIngredientQuantity": 2,
     "baseStats": {
-      "magicalDamage": 6,
+      "magicalDamage": 7,
       "resistance": 2
+    },
+    "mainStat": "magicalDamage",
+    "growthPerItemLevel": {
+      "magicalDamage": 1.5
     },
     "armourWeight": null,
     "craftLevelOffset": 3
@@ -60,9 +71,13 @@
     "mainCategory": "ore",
     "mainIngredientQuantity": 1,
     "baseStats": {
-      "physicalDamage": 4,
-      "speed": 1,
-      "skill": 1
+      "physicalDamage": 6,
+      "attackSpeed": 3,
+      "agility": 1
+    },
+    "mainStat": "physicalDamage",
+    "growthPerItemLevel": {
+      "physicalDamage": 1.36
     },
     "armourWeight": null,
     "craftLevelOffset": 1
@@ -76,10 +91,14 @@
     "height": 3,
     "profession": "fletching",
     "mainCategory": "wood",
-    "mainIngredientQuantity": 4,
+    "mainIngredientQuantity": 3,
     "baseStats": {
-      "physicalDamage": 6,
-      "skill": 1
+      "physicalDamage": 7,
+      "agility": 1
+    },
+    "mainStat": "physicalDamage",
+    "growthPerItemLevel": {
+      "physicalDamage": 1.6
     },
     "armourWeight": null,
     "craftLevelOffset": 1
@@ -91,14 +110,18 @@
     "gearType": "staff",
     "width": 1,
     "height": 4,
-    "profession": "woodworking",
+    "profession": "enchanting",
     "mainCategory": "wood",
-    "mainIngredientQuantity": 3,
+    "mainIngredientQuantity": 2,
     "baseStats": {
       "magicalDamage": 8
     },
+    "mainStat": "magicalDamage",
+    "growthPerItemLevel": {
+      "magicalDamage": 1.83
+    },
     "armourWeight": null,
-    "craftLevelOffset": 7
+    "craftLevelOffset": 5
   },
   {
     "id": "wand",
@@ -107,12 +130,16 @@
     "gearType": "wand",
     "width": 1,
     "height": 2,
-    "profession": "woodworking",
+    "profession": "enchanting",
     "mainCategory": "wood",
     "mainIngredientQuantity": 1,
     "baseStats": {
-      "magicalDamage": 5,
-      "speed": 1
+      "magicalDamage": 7,
+      "attackSpeed": 3
+    },
+    "mainStat": "magicalDamage",
+    "growthPerItemLevel": {
+      "magicalDamage": 1.6
     },
     "armourWeight": null,
     "craftLevelOffset": 1
@@ -128,9 +155,10 @@
     "mainCategory": "ore",
     "mainIngredientQuantity": 3,
     "baseStats": {
-      "defence": 7,
+      "defence": 5,
       "resistance": 1
     },
+    "mainStat": "defence",
     "armourWeight": null,
     "craftLevelOffset": 5
   },
@@ -145,8 +173,11 @@
     "mainCategory": "wood",
     "mainIngredientQuantity": 1,
     "baseStats": {
-      "physicalDamage": 2,
-      "skill": 1
+      "physicalDamage": 2
+    },
+    "mainStat": "physicalDamage",
+    "growthPerItemLevel": {
+      "physicalDamage": 0.33
     },
     "armourWeight": null,
     "craftLevelOffset": 4
@@ -158,12 +189,16 @@
     "gearType": "tome",
     "width": 2,
     "height": 2,
-    "profession": "tailoring",
+    "profession": "enchanting",
     "mainCategory": "cloth",
     "mainIngredientQuantity": 2,
     "baseStats": {
-      "magicalDamage": 3,
+      "magicalDamage": 2,
       "resistance": 2
+    },
+    "mainStat": "magicalDamage",
+    "growthPerItemLevel": {
+      "magicalDamage": 0.25
     },
     "armourWeight": null,
     "craftLevelOffset": 5
@@ -179,9 +214,13 @@
     "mainCategory": "ore",
     "mainIngredientQuantity": 1,
     "baseStats": {
-      "physicalDamage": 2,
-      "skill": 1,
-      "speed": 1
+      "physicalDamage": 3,
+      "agility": 1,
+      "attackSpeed": 3
+    },
+    "mainStat": "physicalDamage",
+    "growthPerItemLevel": {
+      "physicalDamage": 0.67
     },
     "armourWeight": null,
     "craftLevelOffset": 4
@@ -193,13 +232,14 @@
     "gearType": "accessory",
     "width": 2,
     "height": 1,
-    "profession": "tailoring",
+    "profession": "leatherworking",
     "mainCategory": "hide",
     "mainIngredientQuantity": 1,
     "baseStats": {
-      "hp": 6,
-      "defence": 1
+      "defence": 3,
+      "hp": 30
     },
+    "mainStat": "defence",
     "armourWeight": null,
     "craftLevelOffset": 6
   },
@@ -214,9 +254,9 @@
     "mainCategory": "gem",
     "mainIngredientQuantity": 1,
     "baseStats": {
-      "skill": 2,
-      "hp": 2
+      "criticalChance": 2
     },
+    "mainStat": "criticalChance",
     "armourWeight": null,
     "craftLevelOffset": 7
   },
@@ -231,9 +271,9 @@
     "mainCategory": "gem",
     "mainIngredientQuantity": 1,
     "baseStats": {
-      "hp": 4,
-      "resistance": 2
+      "attackSpeed": 4
     },
+    "mainStat": "attackSpeed",
     "armourWeight": null,
     "craftLevelOffset": 9
   },
@@ -250,10 +290,10 @@
     "mainIngredientQuantity": 2,
     "baseStats": {
       "defence": 5,
-      "resistance": 1,
-      "hp": 4
+      "resistance": 1
     },
-    "craftLevelOffset": 1
+    "mainStat": "defence",
+    "craftLevelOffset": 4
   },
   {
     "id": "helm-medium",
@@ -263,15 +303,15 @@
     "armourWeight": "medium",
     "width": 2,
     "height": 2,
-    "profession": "tailoring",
+    "profession": "leatherworking",
     "mainCategory": "hide",
     "mainIngredientQuantity": 1,
     "baseStats": {
-      "defence": 2,
-      "resistance": 2,
-      "hp": 4
+      "defence": 4,
+      "resistance": 2
     },
-    "craftLevelOffset": 1
+    "mainStat": "defence",
+    "craftLevelOffset": 4
   },
   {
     "id": "helm-light",
@@ -285,11 +325,11 @@
     "mainCategory": "cloth",
     "mainIngredientQuantity": 1,
     "baseStats": {
-      "defence": 1,
-      "resistance": 3,
-      "hp": 4
+      "defence": 3,
+      "resistance": 3
     },
-    "craftLevelOffset": 1
+    "mainStat": "defence",
+    "craftLevelOffset": 4
   },
   {
     "id": "armour-heavy",
@@ -303,10 +343,10 @@
     "mainCategory": "ore",
     "mainIngredientQuantity": 3,
     "baseStats": {
-      "defence": 10,
-      "resistance": 2,
-      "hp": 10
+      "defence": 12,
+      "resistance": 2
     },
+    "mainStat": "defence",
     "craftLevelOffset": 8
   },
   {
@@ -317,14 +357,14 @@
     "armourWeight": "medium",
     "width": 2,
     "height": 3,
-    "profession": "tailoring",
+    "profession": "leatherworking",
     "mainCategory": "hide",
     "mainIngredientQuantity": 2,
     "baseStats": {
-      "defence": 4,
-      "resistance": 3,
-      "hp": 10
+      "defence": 8,
+      "resistance": 3
     },
+    "mainStat": "defence",
     "craftLevelOffset": 8
   },
   {
@@ -339,10 +379,10 @@
     "mainCategory": "cloth",
     "mainIngredientQuantity": 2,
     "baseStats": {
-      "defence": 2,
-      "resistance": 6,
-      "hp": 10
+      "defence": 5,
+      "resistance": 6
     },
+    "mainStat": "defence",
     "craftLevelOffset": 8
   },
   {
@@ -357,10 +397,10 @@
     "mainCategory": "ore",
     "mainIngredientQuantity": 2,
     "baseStats": {
-      "defence": 3,
-      "resistance": 1,
-      "skill": 1
+      "defence": 5,
+      "resistance": 1
     },
+    "mainStat": "defence",
     "craftLevelOffset": 2
   },
   {
@@ -371,14 +411,14 @@
     "armourWeight": "medium",
     "width": 2,
     "height": 2,
-    "profession": "tailoring",
+    "profession": "leatherworking",
     "mainCategory": "hide",
     "mainIngredientQuantity": 1,
     "baseStats": {
-      "defence": 1,
-      "resistance": 1,
-      "skill": 1
+      "defence": 4,
+      "resistance": 1
     },
+    "mainStat": "defence",
     "craftLevelOffset": 2
   },
   {
@@ -393,10 +433,10 @@
     "mainCategory": "cloth",
     "mainIngredientQuantity": 1,
     "baseStats": {
-      "defence": 1,
-      "resistance": 2,
-      "skill": 1
+      "defence": 2,
+      "resistance": 2
     },
+    "mainStat": "defence",
     "craftLevelOffset": 2
   },
   {
@@ -412,9 +452,9 @@
     "mainIngredientQuantity": 3,
     "baseStats": {
       "defence": 7,
-      "resistance": 1,
-      "hp": 6
+      "resistance": 1
     },
+    "mainStat": "defence",
     "craftLevelOffset": 6
   },
   {
@@ -425,14 +465,14 @@
     "armourWeight": "medium",
     "width": 2,
     "height": 3,
-    "profession": "tailoring",
+    "profession": "leatherworking",
     "mainCategory": "hide",
     "mainIngredientQuantity": 2,
     "baseStats": {
-      "defence": 3,
-      "resistance": 2,
-      "hp": 6
+      "defence": 5,
+      "resistance": 2
     },
+    "mainStat": "defence",
     "craftLevelOffset": 6
   },
   {
@@ -447,11 +487,11 @@
     "mainCategory": "cloth",
     "mainIngredientQuantity": 2,
     "baseStats": {
-      "defence": 1,
-      "resistance": 4,
-      "hp": 6
+      "defence": 4,
+      "resistance": 4
     },
-    "craftLevelOffset": 6
+    "mainStat": "defence",
+    "craftLevelOffset": 5
   },
   {
     "id": "boots-heavy",
@@ -465,11 +505,12 @@
     "mainCategory": "ore",
     "mainIngredientQuantity": 2,
     "baseStats": {
-      "defence": 3,
+      "defence": 4,
       "resistance": 1,
-      "speed": 1
+      "movementSpeed": 5
     },
-    "craftLevelOffset": 4
+    "mainStat": "defence",
+    "craftLevelOffset": 1
   },
   {
     "id": "boots-medium",
@@ -479,15 +520,16 @@
     "armourWeight": "medium",
     "width": 2,
     "height": 2,
-    "profession": "tailoring",
+    "profession": "leatherworking",
     "mainCategory": "hide",
     "mainIngredientQuantity": 1,
     "baseStats": {
-      "defence": 1,
+      "defence": 3,
       "resistance": 1,
-      "speed": 1
+      "movementSpeed": 5
     },
-    "craftLevelOffset": 4
+    "mainStat": "defence",
+    "craftLevelOffset": 1
   },
   {
     "id": "boots-light",
@@ -501,11 +543,12 @@
     "mainCategory": "cloth",
     "mainIngredientQuantity": 1,
     "baseStats": {
-      "defence": 1,
+      "defence": 2,
       "resistance": 2,
-      "speed": 1
+      "movementSpeed": 5
     },
-    "craftLevelOffset": 4
+    "mainStat": "defence",
+    "craftLevelOffset": 1
   },
   {
     "id": "greataxe",
@@ -516,10 +559,14 @@
     "height": 3,
     "profession": "weaponsmithing",
     "mainCategory": "ore",
-    "mainIngredientQuantity": 6,
+    "mainIngredientQuantity": 4,
     "baseStats": {
-      "physicalDamage": 13,
-      "speed": -1
+      "physicalDamage": 11,
+      "attackSpeed": -3
+    },
+    "mainStat": "physicalDamage",
+    "growthPerItemLevel": {
+      "physicalDamage": 2.33
     },
     "armourWeight": null,
     "craftLevelOffset": 7
@@ -533,11 +580,15 @@
     "height": 3,
     "profession": "weaponsmithing",
     "mainCategory": "ore",
-    "mainIngredientQuantity": 5,
+    "mainIngredientQuantity": 3,
     "baseStats": {
-      "physicalDamage": 10,
+      "physicalDamage": 11,
       "defence": 1,
-      "speed": -1
+      "attackSpeed": -3
+    },
+    "mainStat": "physicalDamage",
+    "growthPerItemLevel": {
+      "physicalDamage": 2.4
     },
     "armourWeight": null,
     "craftLevelOffset": 1
@@ -553,9 +604,12 @@
     "mainCategory": "ore",
     "mainIngredientQuantity": 1,
     "baseStats": {
-      "physicalDamage": 4,
-      "speed": 1,
-      "skill": 1
+      "physicalDamage": 6,
+      "attackSpeed": 3
+    },
+    "mainStat": "physicalDamage",
+    "growthPerItemLevel": {
+      "physicalDamage": 1.36
     },
     "armourWeight": null,
     "craftLevelOffset": 1
@@ -572,8 +626,11 @@
     "mainIngredientQuantity": 1,
     "baseStats": {
       "physicalDamage": 3,
-      "speed": 1,
-      "skill": 1
+      "attackSpeed": 3
+    },
+    "mainStat": "physicalDamage",
+    "growthPerItemLevel": {
+      "physicalDamage": 0.67
     },
     "armourWeight": null,
     "craftLevelOffset": 4
@@ -589,8 +646,11 @@
     "mainCategory": "ore",
     "mainIngredientQuantity": 3,
     "baseStats": {
-      "physicalDamage": 9,
-      "skill": 2
+      "physicalDamage": 7
+    },
+    "mainStat": "physicalDamage",
+    "growthPerItemLevel": {
+      "physicalDamage": 1.62
     },
     "armourWeight": null,
     "craftLevelOffset": 9
@@ -604,10 +664,14 @@
     "height": 3,
     "profession": "fletching",
     "mainCategory": "wood",
-    "mainIngredientQuantity": 4,
+    "mainIngredientQuantity": 3,
     "baseStats": {
       "physicalDamage": 7,
-      "skill": 1
+      "agility": 1
+    },
+    "mainStat": "physicalDamage",
+    "growthPerItemLevel": {
+      "physicalDamage": 1.5
     },
     "armourWeight": null,
     "craftLevelOffset": 3
@@ -621,10 +685,14 @@
     "height": 3,
     "profession": "fletching",
     "mainCategory": "wood",
-    "mainIngredientQuantity": 5,
+    "mainIngredientQuantity": 4,
     "baseStats": {
-      "physicalDamage": 8,
-      "skill": 2
+      "physicalDamage": 7,
+      "agility": 2
+    },
+    "mainStat": "physicalDamage",
+    "growthPerItemLevel": {
+      "physicalDamage": 1.5
     },
     "armourWeight": null,
     "craftLevelOffset": 5
@@ -638,10 +706,14 @@
     "height": 3,
     "profession": "fletching",
     "mainCategory": "wood",
-    "mainIngredientQuantity": 5,
+    "mainIngredientQuantity": 4,
     "baseStats": {
-      "physicalDamage": 9,
-      "skill": 2
+      "physicalDamage": 7,
+      "agility": 2
+    },
+    "mainStat": "physicalDamage",
+    "growthPerItemLevel": {
+      "physicalDamage": 1.67
     },
     "armourWeight": null,
     "craftLevelOffset": 7
@@ -653,12 +725,16 @@
     "gearType": "wand",
     "width": 1,
     "height": 2,
-    "profession": "woodworking",
+    "profession": "enchanting",
     "mainCategory": "wood",
     "mainIngredientQuantity": 1,
     "baseStats": {
-      "magicalDamage": 6,
-      "speed": 1
+      "magicalDamage": 7,
+      "attackSpeed": 3
+    },
+    "mainStat": "magicalDamage",
+    "growthPerItemLevel": {
+      "magicalDamage": 1.5
     },
     "armourWeight": null,
     "craftLevelOffset": 3
@@ -670,14 +746,18 @@
     "gearType": "staff",
     "width": 1,
     "height": 4,
-    "profession": "woodworking",
+    "profession": "enchanting",
     "mainCategory": "wood",
     "mainIngredientQuantity": 3,
     "baseStats": {
-      "magicalDamage": 9
+      "magicalDamage": 8
+    },
+    "mainStat": "magicalDamage",
+    "growthPerItemLevel": {
+      "magicalDamage": 1.88
     },
     "armourWeight": null,
-    "craftLevelOffset": 9
+    "craftLevelOffset": 7
   },
   {
     "id": "flanged-mace",
@@ -690,8 +770,12 @@
     "mainCategory": "ore",
     "mainIngredientQuantity": 3,
     "baseStats": {
-      "magicalDamage": 8,
+      "magicalDamage": 7,
       "resistance": 2
+    },
+    "mainStat": "magicalDamage",
+    "growthPerItemLevel": {
+      "magicalDamage": 1.67
     },
     "armourWeight": null,
     "craftLevelOffset": 7
@@ -707,9 +791,13 @@
     "mainCategory": "ore",
     "mainIngredientQuantity": 1,
     "baseStats": {
-      "physicalDamage": 5,
-      "speed": 1,
-      "skill": 1
+      "physicalDamage": 6,
+      "attackSpeed": 3,
+      "agility": 1
+    },
+    "mainStat": "physicalDamage",
+    "growthPerItemLevel": {
+      "physicalDamage": 1.5
     },
     "armourWeight": null,
     "craftLevelOffset": 3
@@ -726,8 +814,12 @@
     "mainIngredientQuantity": 2,
     "baseStats": {
       "physicalDamage": 6,
-      "speed": 1,
-      "skill": 1
+      "attackSpeed": 3,
+      "agility": 1
+    },
+    "mainStat": "physicalDamage",
+    "growthPerItemLevel": {
+      "physicalDamage": 1.25
     },
     "armourWeight": null,
     "craftLevelOffset": 5
@@ -743,9 +835,13 @@
     "mainCategory": "ore",
     "mainIngredientQuantity": 2,
     "baseStats": {
-      "physicalDamage": 7,
-      "speed": 1,
-      "skill": 1
+      "physicalDamage": 6,
+      "attackSpeed": 3,
+      "agility": 1
+    },
+    "mainStat": "physicalDamage",
+    "growthPerItemLevel": {
+      "physicalDamage": 1.33
     },
     "armourWeight": null,
     "craftLevelOffset": 7
@@ -759,11 +855,15 @@
     "height": 3,
     "profession": "weaponsmithing",
     "mainCategory": "ore",
-    "mainIngredientQuantity": 5,
+    "mainIngredientQuantity": 3,
     "baseStats": {
       "physicalDamage": 11,
       "defence": 1,
-      "speed": -1
+      "attackSpeed": -3
+    },
+    "mainStat": "physicalDamage",
+    "growthPerItemLevel": {
+      "physicalDamage": 2.0
     },
     "armourWeight": null,
     "craftLevelOffset": 3
@@ -777,11 +877,15 @@
     "height": 3,
     "profession": "weaponsmithing",
     "mainCategory": "ore",
-    "mainIngredientQuantity": 6,
+    "mainIngredientQuantity": 4,
     "baseStats": {
-      "physicalDamage": 12,
-      "skill": 1,
-      "speed": -1
+      "physicalDamage": 11,
+      "agility": 1,
+      "attackSpeed": -3
+    },
+    "mainStat": "physicalDamage",
+    "growthPerItemLevel": {
+      "physicalDamage": 2.25
     },
     "armourWeight": null,
     "craftLevelOffset": 5
@@ -797,9 +901,12 @@
     "mainCategory": "ore",
     "mainIngredientQuantity": 1,
     "baseStats": {
-      "physicalDamage": 5,
-      "speed": 1,
-      "skill": 1
+      "physicalDamage": 6,
+      "attackSpeed": 3
+    },
+    "mainStat": "physicalDamage",
+    "growthPerItemLevel": {
+      "physicalDamage": 1.5
     },
     "armourWeight": null,
     "craftLevelOffset": 3
@@ -816,8 +923,11 @@
     "mainIngredientQuantity": 2,
     "baseStats": {
       "physicalDamage": 6,
-      "speed": 1,
-      "skill": 2
+      "attackSpeed": 3
+    },
+    "mainStat": "physicalDamage",
+    "growthPerItemLevel": {
+      "physicalDamage": 1.25
     },
     "armourWeight": null,
     "craftLevelOffset": 5
@@ -833,9 +943,12 @@
     "mainCategory": "ore",
     "mainIngredientQuantity": 2,
     "baseStats": {
-      "physicalDamage": 7,
-      "speed": 1,
-      "skill": 2
+      "physicalDamage": 6,
+      "attackSpeed": 3
+    },
+    "mainStat": "physicalDamage",
+    "growthPerItemLevel": {
+      "physicalDamage": 1.33
     },
     "armourWeight": null,
     "craftLevelOffset": 7
@@ -847,12 +960,16 @@
     "gearType": "wand",
     "width": 1,
     "height": 2,
-    "profession": "woodworking",
+    "profession": "enchanting",
     "mainCategory": "wood",
     "mainIngredientQuantity": 2,
     "baseStats": {
       "magicalDamage": 7,
-      "speed": 1
+      "attackSpeed": 3
+    },
+    "mainStat": "magicalDamage",
+    "growthPerItemLevel": {
+      "magicalDamage": 1.5
     },
     "armourWeight": null,
     "craftLevelOffset": 5
@@ -866,10 +983,13 @@
     "height": 3,
     "profession": "weaponsmithing",
     "mainCategory": "ore",
-    "mainIngredientQuantity": 3,
+    "mainIngredientQuantity": 2,
     "baseStats": {
-      "physicalDamage": 7,
-      "skill": 1
+      "physicalDamage": 7
+    },
+    "mainStat": "physicalDamage",
+    "growthPerItemLevel": {
+      "physicalDamage": 1.5
     },
     "armourWeight": null,
     "craftLevelOffset": 5
@@ -883,10 +1003,14 @@
     "height": 3,
     "profession": "weaponsmithing",
     "mainCategory": "ore",
-    "mainIngredientQuantity": 3,
+    "mainIngredientQuantity": 2,
     "baseStats": {
-      "physicalDamage": 8,
-      "skill": 1
+      "physicalDamage": 7,
+      "agility": 1
+    },
+    "mainStat": "physicalDamage",
+    "growthPerItemLevel": {
+      "physicalDamage": 1.67
     },
     "armourWeight": null,
     "craftLevelOffset": 7

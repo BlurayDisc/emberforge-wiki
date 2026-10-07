@@ -52,7 +52,7 @@ export function buildBuildingPages(game: GameIndex, text: GameText): Page[] {
       <p>${tHtml('Crafters make gear here. Recipes, levels and quality are on the {link} pages.', { link: siteLink('crafters/index.html', t('Crafters')) })}</p>
       ${definitionList([
         [t('Crafter fee'), t('{base} plus {perLevel} copper per required level, paid for every crafted item', { base: formatMoney(crafting('craftFeeBaseCopper')), perLevel: crafting('craftFeePerRequiredLevelCopper') })],
-        [t('Craft time'), t('{base}s plus {perLevel}s per required level', { base: crafting('craftSecondsBase'), perLevel: crafting('craftSecondsPerRequiredLevel') })],
+        [t('Craft time'), t('{base}s plus {perLevel}s per required level, changed by the number of main materials', { base: crafting('craftSecondsBase'), perLevel: crafting('craftSecondsPerRequiredLevel') })],
       ])}`, { anchor: 'workshop' })}
     ${panel(text.require('building.bank'), html`
       <p>${t('The Bank sells storage upgrades and tools. Each storage upgrade costs more than the one before.')}</p>
