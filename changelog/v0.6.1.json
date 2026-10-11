@@ -1,0 +1,83 @@
+{
+  "version": "v0.6.1",
+  "date": "2026-10-08",
+  "compare": {
+    "from": "29f5f47",
+    "to": "4c13ef6"
+  },
+  "summary": "Heroes now cast their spells in slot order. Some monsters, spells and crafter experience have a balance pass. Dungeons give bonus materials.",
+  "highlights": [
+    {
+      "title": "Spell order",
+      "text": "Heroes cast spells 1, 2 and 3, then the Ultimate. One basic attack follows each spell.",
+      "art": {
+        "folder": "spells/icons",
+        "file": "archer.aimed-shot"
+      }
+    },
+    {
+      "title": "Boss and drops",
+      "text": "The Goblin Chief has 1,800 HP. Dungeons now give bonus materials.",
+      "art": {
+        "folder": "monsters",
+        "file": "monster-goblin-chief"
+      }
+    }
+  ],
+  "sections": [
+    {
+      "id": "gameplay",
+      "title": "Gameplay",
+      "kind": "gameplay",
+      "groups": [
+        {
+          "heading": "Battle and spells",
+          "tag": "Changed",
+          "items": [
+            "Heroes cast in slot order 1, 2, 3, then the Ultimate, with one basic attack after each spell. A spell that is not ready is skipped. Monsters are unchanged.",
+            "Shield Bash adds 160%, 175% and 190% of Defence. Power Strike II, Aimed Shot II and Fire Bolt II do 195%, and rank III does 210%. Frost Shard does 160%, 175% and 190%.",
+            "Warrior base damage is 11 (was 13)."
+          ]
+        },
+        {
+          "heading": "Monsters and drops",
+          "tag": "Changed",
+          "items": [
+            "Goblin Chief has 1,800 HP and attacks every 1.5 seconds. The Hobgoblin factor is 0.83. The Bark Spider factor is 0.90.",
+            "Quartz is a rare drop from the Wolf Trail on. It never takes the guaranteed drop.",
+            "No monster drops Faint Essence or Tarnished Catalyst."
+          ]
+        },
+        {
+          "heading": "Dungeon bonus drops",
+          "tag": "New",
+          "items": [
+            "From the Wolf Trail on, each won fight has a 15% chance to give 1 basic material (Copper Ore, Pine Wood, Rawhide or Linen). The dungeon screen shows it."
+          ]
+        },
+        {
+          "heading": "Crafting",
+          "tag": "Changed",
+          "items": [
+            "Crafter experience from level 4 is 7% to 17% lower."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui",
+      "title": "Screens and art",
+      "kind": "ui",
+      "groups": [
+        {
+          "heading": "Other",
+          "items": [
+            "The Goblin Chief's Lair has a new backdrop with a goblin throne and banners.",
+            "The game has app icons and a web manifest. The tab title and install name follow the game language.",
+            "Castle tales are split into pages. Layout fixes for modals, the backpack, the run report and the story pager."
+          ]
+        }
+      ]
+    }
+  ]
+}

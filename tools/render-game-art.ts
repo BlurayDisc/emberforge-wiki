@@ -50,6 +50,21 @@ class PixelCanvas {
           }
         }
       },
+      // Portrait art is made of opaque pixels and clear pixels, so a pixel with alpha is copied whole.
+      drawImage(source: PixelCanvas, offsetX: number, offsetY: number) {
+        const sourcePixels = source.allocatedPixels();
+        const pixels = canvas.allocatedPixels();
+        for (let row = 0; row < source.height; row++) {
+          for (let column = 0; column < source.width; column++) {
+            const targetRow = row + offsetY;
+            const targetColumn = column + offsetX;
+            if (targetRow < 0 || targetRow >= canvas.height || targetColumn < 0 || targetColumn >= canvas.width) continue;
+            const sourceStart = (row * source.width + column) * 4;
+            if (sourcePixels[sourceStart + 3] === 0) continue;
+            pixels.set(sourcePixels.subarray(sourceStart, sourceStart + 4), (targetRow * canvas.width + targetColumn) * 4);
+          }
+        }
+      },
       getImageData(_x: number, _y: number, _width: number, _height: number) {
         return { data: canvas.allocatedPixels().slice() };
       },
@@ -113,6 +128,7 @@ const heroNames = readGameData<string[]>('hero-names.json');
 
 const { drawHeroSprite } = await importGameModule<{ drawHeroSprite: (classId: string, heroName: string) => unknown }>('src/heroArt/battleSprite.ts');
 const { CREATURE_DRAWERS } = await importGameModule<{ CREATURE_DRAWERS: Record<string, () => unknown> }>('src/render/creatureArt.ts');
+const { createCrafterPortrait } = await importGameModule<{ createCrafterPortrait: (professionId: string, scale: number) => unknown }>('src/ui/crafterPortraitArt.ts');
 const { createItemIcon, createMaterialIcon, createDungeonIcon } = await importGameModule<{
   createItemIcon: (baseId: string, materialId: string, mainCategory: string, scale: number) => unknown;
   createMaterialIcon: (materialId: string, category: string, scale: number) => unknown;
@@ -125,6 +141,8 @@ rmSync(artFolder, { recursive: true, force: true });
 const sampleHeroName = heroNames[0];
 if (!sampleHeroName) throw new Error('hero-names.json has no names.');
 for (const heroClass of classes) savePixelCanvas(`heroes/${heroClass.id}.png`, drawHeroSprite(heroClass.id, sampleHeroName));
+
+for (const professionId of Object.keys(readGameData<Record<string, string>>('professions.json'))) saveDataUrlImage(`crafters/${professionId}.png`, createCrafterPortrait(professionId, 2));
 
 for (const spriteKey of new Set(monsters.map((monster) => monster.spriteKey))) {
   const drawCreature = CREATURE_DRAWERS[spriteKey];

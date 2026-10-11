@@ -78,6 +78,7 @@ export interface Dungeon {
   minimumHeroLevel: number;
   recommendedMaxLevel: number;
   unlockAfter: string | null;
+  bonusDrops: Array<{ materialIds: string[]; chance: number; quantity: number }>;
 }
 
 export interface Town {

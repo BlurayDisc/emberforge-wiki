@@ -7,6 +7,7 @@ import { html, type Html } from '../render/html';
 import type { Page } from '../render/page';
 import { describeBaseStats, itemLink, recipeIngredientLinks, sortedForDisplay } from './equipment';
 import { t } from '../i18n/ui';
+import { pixelArt } from '../render/art';
 
 const crafterPath = (professionId: string) => `crafters/${professionId}.html`;
 
@@ -15,7 +16,7 @@ function indexPage(game: GameIndex): Page {
     ${pageHeading(t('Crafters'), t('Each profession is a crafter with a level from 1 to 100. Every craft earns experience.'))}
     ${cardGrid(Object.entries(game.data.professions).map(([professionId, professionName]) => {
       const makes = game.data.baseItems.filter((base) => base.profession === professionId);
-      return card(crafterPath(professionId), professionName, [t('Makes {items}', { items: makes.map((base) => base.name).join(t(', ')) || t('nothing yet') })]);
+      return card(crafterPath(professionId), professionName, [t('Makes {items}', { items: makes.map((base) => base.name).join(t(', ')) || t('nothing yet') })], undefined, pixelArt('crafters', professionId, professionName, 2));
     }))}
     ${panel(t('Crafting levels'), craftingNumbers(game))}
     ${panel(t('Item upgrades'), upgradeOdds(game))}
@@ -91,6 +92,7 @@ function crafterPage(game: GameIndex, text: GameText, professionId: string, prof
     [text.slotName(slotId), html`<ul class="item-list">${makes.filter((base) => base.slot === slotId).map((base) => html`<li>${itemLink(game, base)}</li>`)}</ul>`]);
   const body = html`
     ${pageHeading(professionName)}
+    <div class="portrait">${pixelArt('crafters', professionId, professionName, 4)}</div>
     ${panel(t('Makes'), makes.length ? definitionList(makesBySlot) : html`<p class="muted">${t('Nothing yet.')}</p>`)}
     ${panel(t('Recipes'), rows.length ? dataTable([t('Result'), t('Slot'), t('Crafter level'), t('Item level'), t('Base stats at item level'), t('Ingredients'), t('Crafter fee'), t('Craft time')], rows, { sortable: true }) : html`<p class="muted">${t('No recipes yet.')}</p>`)}
     ${panel(t('Crafting levels'), craftingNumbers(game))}`;

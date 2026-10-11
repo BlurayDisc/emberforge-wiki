@@ -5,7 +5,9 @@ import { pixelArt } from '../render/art';
 import { badge, commaList, dataTable, definitionList, iconLink, jumpLinks, loreText, pageHeading, panel, siteLink } from '../render/components';
 import { html, type Html } from '../render/html';
 import type { Page } from '../render/page';
+import { formatPercent } from '../render/format';
 import { t } from '../i18n/ui';
+import { materialLink } from './materials';
 
 const dungeonPath = (dungeon: Dungeon) => `dungeons/${dungeon.id}.html`;
 const monsterLink = (game: GameIndex, monsterId: string) => {
@@ -60,7 +62,11 @@ function dungeonPage(game: GameIndex, text: GameText, dungeon: Dungeon): Page {
       [t('Common'), commaList(dungeon.monsterIds.map((id) => monsterLink(game, id)))],
       [t('Rare'), dungeon.rareMonsterId ? monsterLink(game, dungeon.rareMonsterId) : html`<span class="muted">${t('none')}</span>`],
       [t('Boss'), dungeon.bossMonsterId ? monsterLink(game, dungeon.bossMonsterId) : html`<span class="muted">${t('none')}</span>`],
-    ]))}`;
+    ]))}
+    ${dungeon.bonusDrops.length ? panel(t('Bonus drops'), html`<p>${t('Each won fight can also give a basic material, on top of the drops of the monsters.')}</p>${definitionList(dungeon.bonusDrops.map((drop): [string, Html] => [
+      t('{chance} chance for {quantity}', { chance: formatPercent(drop.chance), quantity: drop.quantity }),
+      commaList(drop.materialIds.map((id) => materialLink(game.material(id)))),
+    ]))}`) : null}`;
   return { path: dungeonPath(dungeon), title: dungeon.name, section: 'dungeons', body, searchKind: t('Dungeon') };
 }
 

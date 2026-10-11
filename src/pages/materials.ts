@@ -13,7 +13,7 @@ import { t } from '../i18n/ui';
 
 const commaListText = (names: string[]): string => names.join(t(', '));
 const materialPath = (material: Material) => `materials/${material.id}.html`;
-const materialLink = (material: Material): Html => iconLink(materialPath(material), material.name, pixelArt('materials', material.id, material.name, 2));
+export const materialLink = (material: Material): Html => iconLink(materialPath(material), material.name, pixelArt('materials', material.id, material.name, 2));
 
 function materialTable(game: GameIndex, text: GameText, materials: Material[]): Html {
   const rows = [...materials]

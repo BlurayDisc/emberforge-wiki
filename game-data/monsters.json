@@ -19,7 +19,8 @@
     "statFactor": 0.92,
     "attackSeconds": 1.4,
     "drops": [
-      { "materialId": "sharp-fang", "chance": 0.8, "minQuantity": 1, "maxQuantity": 2 }
+      { "materialId": "sharp-fang", "chance": 0.8, "minQuantity": 1, "maxQuantity": 2 },
+      { "materialId": "quartz", "chance": 0.02, "minQuantity": 1, "maxQuantity": 1, "canBeGuaranteed": false }
     ]
   },
   {
@@ -31,7 +32,7 @@
     "attackSeconds": 1.65,
     "drops": [
       { "materialId": "bone-shard", "chance": 0.8, "minQuantity": 1, "maxQuantity": 2 },
-      { "materialId": "quartz", "chance": 0.2, "minQuantity": 1, "maxQuantity": 1 }
+      { "materialId": "quartz", "chance": 0.04, "minQuantity": 1, "maxQuantity": 1, "canBeGuaranteed": false }
     ]
   },
   {
@@ -43,9 +44,7 @@
     "attackSeconds": 1.4,
     "drops": [
       { "materialId": "rawhide", "chance": 1, "minQuantity": 2, "maxQuantity": 3 },
-      { "materialId": "copper-ore", "chance": 1, "minQuantity": 2, "maxQuantity": 3 },
-      { "materialId": "faint-essence", "chance": 0.5, "minQuantity": 1, "maxQuantity": 2 },
-      { "materialId": "tarnished-catalyst", "chance": 1, "minQuantity": 1, "maxQuantity": 1 }
+      { "materialId": "copper-ore", "chance": 1, "minQuantity": 2, "maxQuantity": 3 }
     ]
   },
   {
@@ -69,9 +68,7 @@
     "attackSeconds": 1.8,
     "drops": [
       { "materialId": "linen", "chance": 1, "minQuantity": 2, "maxQuantity": 3 },
-      { "materialId": "pine-wood", "chance": 1, "minQuantity": 2, "maxQuantity": 3 },
-      { "materialId": "faint-essence", "chance": 0.5, "minQuantity": 1, "maxQuantity": 2 },
-      { "materialId": "tarnished-catalyst", "chance": 1, "minQuantity": 1, "maxQuantity": 1 }
+      { "materialId": "pine-wood", "chance": 1, "minQuantity": 2, "maxQuantity": 3 }
     ]
   },
   {
@@ -83,8 +80,7 @@
     "attackSeconds": 1.4,
     "drops": [
       { "materialId": "sharp-fang", "chance": 1, "minQuantity": 2, "maxQuantity": 3 },
-      { "materialId": "faint-essence", "chance": 0.5, "minQuantity": 1, "maxQuantity": 2 },
-      { "materialId": "tarnished-catalyst", "chance": 1, "minQuantity": 1, "maxQuantity": 1 }
+      { "materialId": "quartz", "chance": 0.06, "minQuantity": 1, "maxQuantity": 1, "canBeGuaranteed": false }
     ]
   },
   {
@@ -95,7 +91,8 @@
     "statFactor": 1.04,
     "attackSeconds": 1.8,
     "drops": [
-      { "materialId": "toadskin", "chance": 0.8, "minQuantity": 1, "maxQuantity": 2 }
+      { "materialId": "toadskin", "chance": 0.8, "minQuantity": 1, "maxQuantity": 2 },
+      { "materialId": "quartz", "chance": 0.03, "minQuantity": 1, "maxQuantity": 1, "canBeGuaranteed": false }
     ]
   },
   {
@@ -107,8 +104,7 @@
     "attackSeconds": 1.8,
     "drops": [
       { "materialId": "toadskin", "chance": 1, "minQuantity": 2, "maxQuantity": 3 },
-      { "materialId": "faint-essence", "chance": 0.5, "minQuantity": 1, "maxQuantity": 2 },
-      { "materialId": "tarnished-catalyst", "chance": 1, "minQuantity": 1, "maxQuantity": 1 }
+      { "materialId": "quartz", "chance": 0.09, "minQuantity": 1, "maxQuantity": 1, "canBeGuaranteed": false }
     ]
   },
   {
@@ -120,9 +116,7 @@
     "attackSeconds": 1.65,
     "drops": [
       { "materialId": "bone-shard", "chance": 1, "minQuantity": 2, "maxQuantity": 3 },
-      { "materialId": "quartz", "chance": 0.6, "minQuantity": 1, "maxQuantity": 2 },
-      { "materialId": "faint-essence", "chance": 0.5, "minQuantity": 1, "maxQuantity": 2 },
-      { "materialId": "tarnished-catalyst", "chance": 1, "minQuantity": 1, "maxQuantity": 1 }
+      { "materialId": "quartz", "chance": 0.12, "minQuantity": 1, "maxQuantity": 1, "canBeGuaranteed": false }
     ]
   },
   {
@@ -130,13 +124,11 @@
     "name": "Goblin Chief",
     "rank": "boss",
     "spriteKey": "monster-goblin-chief",
-    "flatStats": {"hp": 1600, "damage": 148, "armour": 19, "resistance": 8, "attackSeconds": 1.65},
+    "flatStats": {"hp": 1800, "damage": 148, "armour": 19, "resistance": 8, "attackSeconds": 1.5},
     "spellIds": ["goblin-chief.cowing-roar", "goblin-chief.war-cry", "goblin-chief.crushing-cleaver"],
     "drops": [
       { "materialId": "coarse-sinew", "chance": 1, "minQuantity": 3, "maxQuantity": 5 },
-      { "materialId": "quartz", "chance": 1, "minQuantity": 2, "maxQuantity": 3 },
-      { "materialId": "faint-essence", "chance": 1, "minQuantity": 2, "maxQuantity": 3 },
-      { "materialId": "tarnished-catalyst", "chance": 1, "minQuantity": 2, "maxQuantity": 2 }
+      { "materialId": "quartz", "chance": 0.15, "minQuantity": 1, "maxQuantity": 1, "canBeGuaranteed": false }
     ],
     "itemDrops": [
       { "baseId": "ring", "quality": "uncommon", "itemLevel": 7, "chance": 0.35 }
@@ -147,10 +139,11 @@
     "name": "Bark Spider",
     "rank": "normal",
     "spriteKey": "monster-spider",
-    "statFactor": 0.95,
+    "statFactor": 0.9,
     "attackSeconds": 1.5,
     "drops": [
-      { "materialId": "spider-silk", "chance": 0.8, "minQuantity": 1, "maxQuantity": 2 }
+      { "materialId": "spider-silk", "chance": 0.8, "minQuantity": 1, "maxQuantity": 2 },
+      { "materialId": "quartz", "chance": 0.05, "minQuantity": 1, "maxQuantity": 1, "canBeGuaranteed": false }
     ],
     "itemDrops": [
       { "baseId": "ring", "quality": "common", "itemLevel": 7, "chance": 0.05 }
@@ -161,12 +154,11 @@
     "name": "Hobgoblin",
     "rank": "normal",
     "spriteKey": "monster-hobgoblin",
-    "statFactor": 1.12,
+    "statFactor": 0.83,
     "attackSeconds": 1.8,
     "drops": [
       { "materialId": "coarse-sinew", "chance": 0.7, "minQuantity": 1, "maxQuantity": 2 },
-      { "materialId": "quartz", "chance": 0.25, "minQuantity": 1, "maxQuantity": 1 },
-      { "materialId": "faint-essence", "chance": 0.2, "minQuantity": 1, "maxQuantity": 1 }
+      { "materialId": "quartz", "chance": 0.06, "minQuantity": 1, "maxQuantity": 1, "canBeGuaranteed": false }
     ]
   },
   {
@@ -178,8 +170,7 @@
     "attackSeconds": 1.5,
     "drops": [
       { "materialId": "spider-silk", "chance": 1, "minQuantity": 2, "maxQuantity": 3 },
-      { "materialId": "faint-essence", "chance": 0.5, "minQuantity": 1, "maxQuantity": 2 },
-      { "materialId": "tarnished-catalyst", "chance": 1, "minQuantity": 1, "maxQuantity": 1 }
+      { "materialId": "quartz", "chance": 0.15, "minQuantity": 1, "maxQuantity": 1, "canBeGuaranteed": false }
     ]
   }
 ]

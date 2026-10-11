@@ -5,7 +5,7 @@ import type { GameText } from '../data/text';
 import { jumpLinks } from '../render/components';
 import { pixelArt } from '../render/art';
 import { activeLanguage, t } from '../i18n/ui';
-import { html, type Html } from '../render/html';
+import { html, raw, type Html } from '../render/html';
 import type { Page } from '../render/page';
 
 const sectionAnchor = (version: ChangelogVersion, section: ChangelogSection) => `${version.version}-${section.id}`;
@@ -49,9 +49,27 @@ function renderVersion(version: ChangelogVersion): Html {
   </article>`;
 }
 
+const LATEST_PATH = 'changelog/index.html';
+const versionPath = (version: ChangelogVersion) => `changelog/${version.version}.html`;
+
+function versionLinks(versions: ChangelogVersion[], shown: ChangelogVersion): Html | false {
+  if (versions.length < 2) return false;
+  const latest = versions[0];
+  const link = (version: ChangelogVersion) => {
+    const path = version === latest ? LATEST_PATH : versionPath(version);
+    const current = version === shown ? raw(' aria-current="page"') : raw('');
+    return html`<a href="@/${path}"${current}>${version.version}</a>`;
+  };
+  return html`<nav class="jump-links" aria-label="${t('Versions')}">${versions.map(link)}</nav>`;
+}
+
+// The newest version is the changelog index page. Every older version has its own page.
 export function buildChangelogPages(_game: GameIndex, _text: GameText): Page[] {
   const versions = loadChangelog(activeLanguage());
-  const versionLinks = versions.length > 1 && html`<nav class="jump-links" aria-label="${t('Versions')}">${versions.map((version) => html`<a href="#${version.version}">${version.version}</a>`)}</nav>`;
-  const body = html`${versionLinks}${versions.map(renderVersion)}`;
-  return [{ path: 'changelog/index.html', title: t('Changelog'), section: 'changelog', body }];
+  return versions.map((version, position): Page => ({
+    path: position === 0 ? LATEST_PATH : versionPath(version),
+    title: position === 0 ? t('Changelog') : t('Version {number}', { number: version.version.replace(/^v/, '') }),
+    section: 'changelog',
+    body: html`${versionLinks(versions, version)}${renderVersion(version)}`,
+  }));
 }

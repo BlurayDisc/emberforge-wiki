@@ -21,7 +21,7 @@
       "intelligence": { "start": 8, "gainPerLevel": 0.9 }
     },
     "baseHp": 213,
-    "baseDamage": 13,
+    "baseDamage": 11,
     "baseDefence": 5,
     "baseResistance": 3,
     "baseAttackSeconds": 1.65,

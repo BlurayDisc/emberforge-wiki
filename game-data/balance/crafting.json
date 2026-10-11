@@ -1,7 +1,7 @@
 {
   "maximumLevel": 100,
-  "experienceToNextByLevel": [43, 47, 98, 116, 153, 215, 400, 410],
-  "experienceToNextBase": 58,
+  "experienceToNextByLevel": [43, 47, 98, 108, 130, 180, 330, 345],
+  "experienceToNextBase": 48,
   "experienceToNextExponent": 1.3,
   "maximumLevelsPerCraft": 2,
   "levelsPerCraftCapBelowLevel": 2,

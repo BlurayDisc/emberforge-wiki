@@ -1,0 +1,67 @@
+{
+  "version": "v0.6.2",
+  "date": "2026-10-11",
+  "compare": {
+    "from": "4c13ef6",
+    "to": "a199339"
+  },
+  "summary": "All item, material and spell icons are drawn again, and set gear looks different. An upgrade level now adds more to the sell value. v0.6.1 is listed on its own page.",
+  "highlights": [
+    {
+      "title": "New icons",
+      "text": "Items, materials and spells have new, clearer icons. Each spell family has its own picture.",
+      "art": {
+        "folder": "items",
+        "file": "broadsword--copper-ore"
+      }
+    },
+    {
+      "title": "Icons per spell family",
+      "text": "Each spell family has one icon, and its ranks share it.",
+      "art": {
+        "folder": "spells/icons",
+        "file": "archer.aimed-shot"
+      }
+    }
+  ],
+  "sections": [
+    {
+      "id": "gameplay",
+      "title": "Gameplay",
+      "kind": "gameplay",
+      "groups": [
+        {
+          "heading": "Dungeon bonus drops",
+          "tag": "Changed",
+          "items": [
+            "The chance of a bonus drop is 20% (was 15%)."
+          ]
+        },
+        {
+          "heading": "Crafting",
+          "tag": "Changed",
+          "items": [
+            "Each upgrade level adds 15% to the sell value of an item (was 3%)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui",
+      "title": "Screens and art",
+      "kind": "ui",
+      "groups": [
+        {
+          "heading": "Icons",
+          "tag": "New",
+          "items": [
+            "Item icons are 16 by 16 pixels. Melee, caster, ranged and armour items have new shapes.",
+            "Material and dungeon icons are drawn again.",
+            "Each spell family has one icon, and its ranks share it.",
+            "Set pieces have their own tint and a corner emblem, so Fang and Bone gear no longer look the same."
+          ]
+        }
+      ]
+    }
+  ]
+}

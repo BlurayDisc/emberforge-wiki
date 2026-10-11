@@ -24,7 +24,7 @@
   "sellAddedValueCopperPerItem": 1,
   "sellAddedValueCopperPerAffix": 5,
   "sellQualityFactor": { "common": 1, "uncommon": 1.1, "magic": 1.2, "rare": 1.5 },
-  "sellGrowthPerUpgradeLevel": 0.03,
+  "sellGrowthPerUpgradeLevel": 0.15,
   "largeItemCellThreshold": 6,
   "setMaterialSmallItem": 1,
   "setMaterialLargeItem": 2,
